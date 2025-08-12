@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/12 20:30:54 by mleschev         ###   ########.fr       */
+/*   Created: 2025/04/01 17:58:17 by mleschev          #+#    #+#             */
+/*   Updated: 2025/04/02 11:41:48 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_parse.h"
+#include "libft.h"
 
-int	main(void)
+char	*ft_strchr( const char *string, int searchedChar )
 {
-	int	exit_status;
-	char *input;
-	exit_status = 0;
-	while (exit_status != 1)
+	int	i;
+
+	i = 0;
+	while (string[i])
 	{
-		input = readline(PROMPT_LINE);
-
-
-
-
-		if (ft_strncmp(input, "exit", ft_strlen(input)) == 0)
-			exit_status = 1;
+		if (string[i] == (unsigned char)searchedChar)
+			return ((char *)(string + i));
+		i++;
 	}
-	return (0);
+	if (string[i] == (unsigned char)searchedChar)
+		return ((char *)(string + i));
+	return (NULL);
 }
-
-

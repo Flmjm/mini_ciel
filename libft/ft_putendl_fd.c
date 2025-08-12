@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/12 20:30:54 by mleschev         ###   ########.fr       */
+/*   Created: 2025/04/03 19:22:42 by mleschev          #+#    #+#             */
+/*   Updated: 2025/04/03 19:26:30 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_parse.h"
+#include "libft.h"
 
-int	main(void)
+void	ft_putendl_fd(char *s, int fd)
 {
-	int	exit_status;
-	char *input;
-	exit_status = 0;
-	while (exit_status != 1)
+	if (!s)
 	{
-		input = readline(PROMPT_LINE);
-
-
-
-
-		if (ft_strncmp(input, "exit", ft_strlen(input)) == 0)
-			exit_status = 1;
+		return ;
 	}
-	return (0);
+	write(fd, s, ft_strlen(s));
+	write(fd, "\n", 1);
 }
-
-

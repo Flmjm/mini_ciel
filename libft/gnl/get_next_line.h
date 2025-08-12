@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/12 20:30:54 by mleschev         ###   ########.fr       */
+/*   Created: 2025/04/08 20:46:37 by mleschev          #+#    #+#             */
+/*   Updated: 2025/04/27 01:06:05 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_parse.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-int	main(void)
-{
-	int	exit_status;
-	char *input;
-	exit_status = 0;
-	while (exit_status != 1)
-	{
-		input = readline(PROMPT_LINE);
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
 
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include "../libft.h"
 
+char	*extract(char *str);
+char	*get_next_line(int fd);
+char	*clean(char *str);
+char	*reading(char *bank, int e_read, int fd, char *buffer);
 
-
-		if (ft_strncmp(input, "exit", ft_strlen(input)) == 0)
-			exit_status = 1;
-	}
-	return (0);
-}
-
-
+#endif

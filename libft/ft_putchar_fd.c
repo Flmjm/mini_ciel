@@ -1,33 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/12 20:30:54 by mleschev         ###   ########.fr       */
+/*   Created: 2025/04/03 17:16:40 by mleschev          #+#    #+#             */
+/*   Updated: 2025/04/04 09:22:56 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_parse.h"
+#include "libft.h"
 
-int	main(void)
+void	ft_putchar_fd(char c, int fd)
 {
-	int	exit_status;
-	char *input;
-	exit_status = 0;
-	while (exit_status != 1)
-	{
-		input = readline(PROMPT_LINE);
-
-
-
-
-		if (ft_strncmp(input, "exit", ft_strlen(input)) == 0)
-			exit_status = 1;
-	}
-	return (0);
+	write(fd, &c, 1);
 }
-
-
+// int main(void) {
+// 	ft_putchar_fd(42, 1);
+// 	return (0);
+// }

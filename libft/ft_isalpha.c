@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/12 20:30:54 by mleschev         ###   ########.fr       */
+/*   Created: 2025/03/31 09:27:44 by mleschev          #+#    #+#             */
+/*   Updated: 2025/04/01 11:28:48 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_parse.h"
+#include "libft.h"
 
-int	main(void)
+int	ft_isalpha(int c)
 {
-	int	exit_status;
-	char *input;
-	exit_status = 0;
-	while (exit_status != 1)
-	{
-		input = readline(PROMPT_LINE);
-
-
-
-
-		if (ft_strncmp(input, "exit", ft_strlen(input)) == 0)
-			exit_status = 1;
-	}
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
 	return (0);
 }
-
-
+/*
+int	main(void)
+{
+	char c = 'a';
+	printf("%d", ft_isalpha(c));
+}*/

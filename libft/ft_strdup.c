@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/12 20:30:54 by mleschev         ###   ########.fr       */
+/*   Created: 2025/04/01 21:13:42 by mleschev          #+#    #+#             */
+/*   Updated: 2025/04/03 11:54:50 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_parse.h"
+#include "libft.h"
 
-int	main(void)
+char	*ft_strdup(const char *str1)
 {
-	int	exit_status;
-	char *input;
-	exit_status = 0;
-	while (exit_status != 1)
-	{
-		input = readline(PROMPT_LINE);
+	size_t	i;
+	char	*array;
 
-
-
-
-		if (ft_strncmp(input, "exit", ft_strlen(input)) == 0)
-			exit_status = 1;
-	}
-	return (0);
+	i = ft_strlen(str1);
+	array = (char *)malloc((i + 1) * sizeof(char));
+	ft_strlcpy(array, str1, i + 1);
+	return (array);
 }
+// int	main()
+// {
+// 	char	aled[] = "oskour    aled";
+// 	printf("%s\n", ft_strdup(aled));
+// 	printf("%s\n", strdup(aled));
 
-
+// }

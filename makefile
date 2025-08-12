@@ -51,11 +51,9 @@ OBJ_LIBFT		= $(LIBFT:.c=.o)
 %.o: %.c
 	@$(CC) $(FLAGS) -c $< -o $@
 
-# La librairie doit être compilée avant le binaire
 $(LIBFT_NAME): $(OBJ_LIBFT)
 	@ar rcs $@ $^
 
-# Le binaire dépend de ses objets ET de la librairie
 $(NAME): $(OBJ) $(LIBFT_NAME)
 	@$(CC) $(FLAGS) $(OBJ) $(LIBFT_NAME) -o $(NAME) -lreadline
 

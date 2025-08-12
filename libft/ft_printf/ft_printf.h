@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/12 20:30:54 by mleschev         ###   ########.fr       */
+/*   Created: 2025/04/13 17:42:21 by mleschev          #+#    #+#             */
+/*   Updated: 2025/04/16 23:04:51 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_parse.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-int	main(void)
-{
-	int	exit_status;
-	char *input;
-	exit_status = 0;
-	while (exit_status != 1)
-	{
-		input = readline(PROMPT_LINE);
+# include <stdarg.h>
+# include <stdio.h>
+# include <unistd.h>
 
+int	ft_printf(const char *str, ...);
+int	printf_putstr(char *str);
+int	printf_putnbr_base(long long nbr, const char *base);
+int	printf_putnbr_p(void *p, const char *base);
+int	printf_putnbr_x(int x, const char *base);
 
-
-
-		if (ft_strncmp(input, "exit", ft_strlen(input)) == 0)
-			exit_status = 1;
-	}
-	return (0);
-}
-
-
+#endif

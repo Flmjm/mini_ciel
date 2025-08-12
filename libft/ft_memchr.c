@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/12 20:30:54 by mleschev         ###   ########.fr       */
+/*   Created: 2025/04/01 19:01:11 by mleschev          #+#    #+#             */
+/*   Updated: 2025/04/04 11:11:45 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_parse.h"
+#include "libft.h"
 
-int	main(void)
+void	*ft_memchr(const void *memoryBlock, int searchedChar, size_t size)
 {
-	int	exit_status;
-	char *input;
-	exit_status = 0;
-	while (exit_status != 1)
+	size_t	i;
+
+	i = 0;
+	if (size == 0)
+		return (NULL);
+	while (i < size)
 	{
-		input = readline(PROMPT_LINE);
-
-
-
-
-		if (ft_strncmp(input, "exit", ft_strlen(input)) == 0)
-			exit_status = 1;
+		if (*(unsigned char *)(memoryBlock + i) == (unsigned char)searchedChar)
+			return ((void *)(memoryBlock + i));
+		i++;
 	}
-	return (0);
+	return (NULL);
 }
-
-

@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/12 20:30:54 by mleschev         ###   ########.fr       */
+/*   Created: 2025/04/03 17:09:42 by mleschev          #+#    #+#             */
+/*   Updated: 2025/04/12 15:19:28 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_parse.h"
+#include "libft.h"
 
-int	main(void)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int	exit_status;
-	char *input;
-	exit_status = 0;
-	while (exit_status != 1)
+	unsigned int	n;
+	char			*tab;
+
+	n = 0;
+	if (!s)
+		return (NULL);
+	tab = malloc((ft_strlen(s) + 1) * sizeof(char));
+	if (!tab)
+		return (NULL);
+	tab[ft_strlen(s)] = '\0';
+	while (s[n])
 	{
-		input = readline(PROMPT_LINE);
-
-
-
-
-		if (ft_strncmp(input, "exit", ft_strlen(input)) == 0)
-			exit_status = 1;
+		tab[n] = f(n, s[n]);
+		n++;
 	}
-	return (0);
+	return (tab);
 }
-
-
