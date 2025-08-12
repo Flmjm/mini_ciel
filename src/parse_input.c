@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 18:21:57 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/12 20:24:58 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/08/12 21:03:48 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,32 @@ void	init_input(t_input *input, const char *str) //test
 			i++;
 		}
 		cmd++;
-		while (str[i] == ' ')
-			i++;
-		while (str[i] != ' ')
+		while (check_operator_in_str(str[i]) == 0)
 		{
 
 		}
 
 
 	}
+}
+
+int	check_operator_in_str(const char *str) //test
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == ' ')
+		return (0);
+	else
+	{
+		if (str[i] == '>'
+			|| str[i] == '<'
+			|| str[i] == ';'
+			|| str[i] == '|'
+			|| str[i] == '&'
+			|| str[i] == '\\'
+			|| str[i] == '*')
+			return (1);
+	}
+	return (0);
 }

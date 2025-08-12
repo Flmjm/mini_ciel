@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/12 20:24:34 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/08/12 21:01:41 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ typedef struct t_input
 // parse_input.c
 char manage_input(const char *str);
 void	init_input(t_input *input, const char *str);
-
+int	check_operator_in_str(const char *str);
 
 # endif
