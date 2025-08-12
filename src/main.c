@@ -16,16 +16,16 @@ int	main(void)
 {
 	int	exit_status;
 	char *input;
+
 	exit_status = 0;
 	while (exit_status != 1)
 	{
 		input = readline(PROMPT_LINE);
 		manage_input(input);
 
-
-
 		if (ft_strncmp(input, "exit", 4) == 0)
 			exit_status = 1;
+		free(input);
 	}
 	return (0);
 }

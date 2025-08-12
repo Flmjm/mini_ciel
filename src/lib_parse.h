@@ -14,18 +14,15 @@
 # define LIB_PARSE_H
 
 # ifndef PROMPT_LINE
-# define PROMPT_LINE ".>"
+# define PROMPT_LINE ".> "
 # endif
 
-typedef struct t_input
+typedef struct t_input_info
 {
-	char	*commands;
-	char	**arguments;
-	char	*operators;
 	int		nbr_commands;
 	int		nbr_arguments;
 	int		nbr_operators;
-} t_input;
+} t_input_info;
 
 # include <stdio.h>
 # include <unistd.h>
@@ -35,9 +32,9 @@ typedef struct t_input
 # include "../libft/libft.h"
 
 // parse_input.c
-t_input *manage_input(const char *str);
-void	init_input(t_input *input, const char *str);
-int	check_operator_in_str(const char *str);
+t_input_info *manage_input(const char *str);
+void	init_info(t_input_info *input, const char *str);
+int		check_operator_in_str(const char str);
 
 
 # endif
