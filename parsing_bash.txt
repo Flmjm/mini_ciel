@@ -1,0 +1,198 @@
+# L'analyseur syntaxique Bash
+
+Il est impératif que vous ayez une bonne compréhension de la façon dont Bash lit vos commandes et les analyse pour en faire du code exécutable. Comprendre comment Bash fonctionne avec votre code est la clé pour écrire du code qui fonctionne bien avec Bash.
+
+Note : Le chapitre de Chet Ramey dans The Architecture of Open Source Applications décrit également l'analyseur syntaxique Bash en détail.
+
+## Étape 1 : Lire les données à exécuter
+
+Bash lit toujours votre script ou vos commandes à l'invite de commande bash ligne par ligne. Si votre ligne se termine par une barre oblique inverse, bash lit une autre ligne avant de traiter la commande et ajoute cette autre ligne à la ligne courante, avec un retour à la ligne littéral entre les deux. (Je me référerai désormais au bloc de données que Bash a lu comme la ligne de données ; même s'il est techniquement possible que cette ligne contienne un ou plusieurs retours à la ligne.)
+
+**Entrée de l'étape :**
+```
+echo "What's your name?"
+read name; echo "$name"
+```
+
+**Sortie de l'étape :**
+```
+echo "What's your name?"
+```
+
+et
+
+```
+read name; echo "$name"
+```
+
+## Étape 2 : Traiter les guillemets
+
+Une fois que Bash a lu votre ligne de données, il la parcourt à la recherche de guillemets. Le premier guillemet qu'il trouve déclenche un état entre guillemets pour tous les caractères qui suivent jusqu'au prochain guillemet du même type. Si l'état entre guillemets a été déclenché par un guillemet double ("..."), tous les caractères sauf $, ", ` et \ perdent toute signification spéciale qu'ils pourraient avoir. Cela inclut les guillemets simples, les espaces et les retours à la ligne, etc. Si l'état entre guillemets a été déclenché par un guillemet simple ('...'), tous les caractères sauf ' perdent leur signification spéciale. Oui, aussi $ et \.
+
+Par conséquent, la commande suivante produira une sortie littérale :
+
+```
+$ echo 'Back\Slash $dollar "Quote"'
+Back\Slash $dollar "Quote"
+```
+
+Le fait que la barre oblique inverse perde sa capacité à annuler la signification du caractère suivant signifie que ceci ne fonctionnera pas :
+
+```
+$ echo 'Don\'t do this'
+>
+```
+
+Bash vous demandera la ligne d'entrée suivante car contrairement à ce que nous pensions faire, le second guillemet, celui que nous avons essayé d'échapper avec la barre oblique inverse, a en fait fermé notre état entre guillemets, ce qui signifie que `t do this` n'était pas entre guillemets. Le dernier guillemet de la ligne a alors rouvert notre état entre guillemets, et bash demande plus d'entrée jusqu'à ce qu'il soit fermé à nouveau (il essaie de terminer l'étape 1 : il lit des données jusqu'à ce qu'il trouve un retour à la ligne non échappé. L'état de guillemet simple ouvert échappe notre retour à la ligne).
+
+Maintenant que bash sait quels caractères de la ligne de données sont échappés (dépouillés de leur capacité à signifier quelque chose de spécial pour Bash) et lesquels ne le sont pas, Bash supprime les guillemets qui ont été utilisés pour déterminer cela des données et passe à l'étape suivante.
+
+**Entrée de l'étape :**
+```
+echo "What's your name?"
+```
+
+**Sortie de l'étape :**
+```
+echo What's your name?
+```
+
+(Note : Chaque caractère originellement entre les guillemets doubles a été marqué comme échappé. Je marquerai les caractères échappés dans ces exemples en les mettant en italique.)
+
+## Étape 3 : Diviser les données lues en commandes
+
+Notre ligne est maintenant divisée en commandes séparées en utilisant ; comme séparateur de commande. Souvenez-vous de l'étape précédente que tous les caractères ; qui étaient entre guillemets ou échappés n'ont plus leur signification spéciale et ne seront pas utilisés pour la division des commandes. Ils apparaîtront juste littéralement dans la ligne de commande résultante :
+
+```
+$ echo "What a lovely day; and sunny, too!"
+What a lovely day; and sunny, too!
+```
+
+**Entrée de l'étape :**
+```
+read name; echo $name
+```
+
+**Sortie de l'étape :**
+```
+read name
+```
+
+et
+
+```
+echo $name
+```
+
+Les étapes suivantes sont exécutées pour chaque commande qui résulte de la division de la ligne de données :
+
+## Étape 4 : Analyser les opérateurs spéciaux
+
+Parcourir la commande pour voir s'il y a des opérateurs spéciaux tels que {..}, <(..), < ..., <<< .., .. | .., etc. Ceux-ci sont tous traités dans un ordre spécifique. Les opérateurs de redirection sont supprimés de la ligne de commande, les autres opérateurs sont remplacés par leur expression résultante (par exemple {a..c} est remplacé par a b c).
+
+**Entrée de l'étape :**
+```
+diff <(foo) <(bar)
+```
+
+**Sortie de l'étape :**
+```
+diff /dev/fd/63 /dev/fd/62
+```
+
+(Note : L'opérateur <(..) démarre un processus en arrière-plan pour exécuter la commande foo (et un pour bar, aussi) et envoie la sortie vers un fichier. Il se remplace ensuite par le nom de chemin de ce fichier.)
+
+## Étape 5 : Effectuer les expansions
+
+Bash a de nombreux opérateurs qui impliquent une expansion. Le plus simple de ceux-ci est $parameter. Le signe dollar suivi du nom d'un paramètre, qui peut optionnellement être entouré d'accolades, s'appelle l'Expansion de Paramètre. Ce que Bash fait ici est simplement remplacer l'opérateur d'Expansion de Paramètre par le contenu de ce paramètre. Ainsi, la commande `echo $USER` sera à cette étape convertie en `echo lhunath` avec moi. D'autres expansions incluent l'Expansion de Nom de Chemin (`echo *.txt`), la Substitution de Commande (`rm "$(which nano)"`), etc.
+
+**Entrée de l'étape :**
+```
+echo "$PWD has these files that match *.txt :" *.txt
+```
+
+**Sortie de l'étape :**
+```
+echo /home/lhunath/docs has these files that match *.txt : bar.txt foo.txt
+```
+
+## Étape 6 : Diviser la commande en nom de commande et arguments
+
+Le nom de la commande que Bash doit exécuter est toujours le premier mot de la ligne. Le reste des données de commande est divisé en mots qui constituent les arguments. Ce processus s'appelle la Division en Mots. Bash coupe essentiellement la ligne de commande en morceaux partout où il voit des espaces blancs. Ces espaces blancs sont complètement supprimés et les morceaux sont appelés mots. Les espaces blancs dans ce contexte signifient : Tous espaces, tabulations ou retours à la ligne qui ne sont pas échappés. (Les espaces échappés, comme les espaces à l'intérieur des guillemets, perdent leur signification spéciale d'espaces blancs et ne sont pas utilisés pour diviser la ligne de commande. Ils apparaissent littéralement dans les arguments résultants.)
+
+Ainsi, si le nom de la commande que vous voulez exécuter ou l'un des arguments que vous voulez passer contient des espaces que vous ne voulez pas que bash utilise pour couper la ligne de commande en mots, vous pouvez utiliser des guillemets ou le caractère barre oblique inverse :
+
+```
+My Command /foo/bar   ## Ceci exécutera la commande nommée 'My' car c'est le premier mot.
+"My Command" /foo/bar ## Ceci exécutera la commande nommée 'My Command' car l'espace à l'intérieur des guillemets a perdu sa signification spéciale permettant de diviser les mots.
+```
+
+**Entrée de l'étape :**
+```
+echo "/home/lhunath/docs has these files that match *.txt :" bar.txt foo.txt
+```
+
+**Sortie de l'étape :**
+```
+Nom de commande : 'echo'
+Argument 1 : '/home/lhunath/docs has these files that match *.txt :'
+Argument 2 : 'bar.txt'
+Argument 3 : 'foo.txt'
+```
+
+## Étape 7 : Exécuter la commande
+
+Maintenant que la commande a été analysée en nom de commande et ensemble d'arguments, Bash exécute la commande et définit les arguments de la commande à la liste de mots qu'il a générée à l'étape précédente. Si le type de commande est une fonction ou un builtin, la commande est exécutée par le même processus Bash qui vient de passer par toutes ces étapes. Sinon, Bash va d'abord se diviser (créer un nouveau processus bash), initialiser le nouveau processus bash avec les paramètres qui ont été analysés à partir de cette commande (redirections, arguments, etc.) et exécuter la commande dans le processus bash dérivé (processus enfant). Le parent (le Bash qui a fait ces étapes) attend que l'enfant termine la commande.
+
+**Entrée de l'étape :**
+```
+sleep 5
+```
+
+**Cause :**
+```
+├┬· 33321 lhunath -bash
+│├──· 46931 lhunath sleep 5
+```
+
+Après ces étapes, la commande suivante, ou la ligne suivante est traitée. Une fois que la fin du fichier est atteinte (fin du script ou la session bash interactive est fermée), bash s'arrête et retourne le code de sortie de la dernière commande qu'il a exécutée.
+
+## Exemple graphique
+
+Pour un exemple plus simplifié du processus, voir : http://stuff.lhunath.com/parser.png
+
+## Erreurs courantes
+
+Ces étapes peuvent sembler du bon sens après les avoir regardées attentivement, mais elles peuvent souvent sembler contre-intuitives pour certains cas spécifiques. À titre d'exemple, permettez-moi d'énumérer quelques cas où les gens ont souvent fait des erreurs par rapport à la façon dont ils pensent que bash interprétera leur commande :
+
+**`start=1; end=5; for number in {$start..$end}`** : L'Expansion d'Accolades se produit à l'étape 4, tandis que l'Expansion de Paramètre se produit à l'étape 5. L'Expansion d'Accolades essaie d'étendre `{$start..$end}` mais n'y arrive pas. Elle voit le `$start` et `$end` comme des chaînes, pas des Expansions de Paramètre et abandonne :
+
+**Résultats de l'étape 4 :**
+```
+start=1
+end=5
+for number in {$start..$end}
+```
+
+**Résultats de l'étape 5 :**
+```
+start=1
+end=5
+for number in {1..5}
+```
+
+Et `number` deviendra maintenant `{1..5}` au lieu de 1. Aucune Expansion d'Accolades n'a été effectuée.
+
+**`[ $name = B. Foo ]`** : La Division en Mots cassera cet exemple. Le programme test (`[`) cherche quatre arguments dans ce cas. Un côté gauche, un opérateur, un côté droit, et un `]` de fermeture. Pour découvrir ce qui ne va pas avec cette commande, faites comme Bash : Coupez la commande en arguments. En supposant que `name` contient `B. Foo` :
+
+```
+[
+B.
+Foo
+=
+B.
+Foo
+]
+```
+
+Beaucoup plus que quatre. Vous devez utiliser des Guillemets pour empêcher l'espace entre `B.` et `Foo` de causer une Division en Mots. Mettez entre guillemets le `B. Foo` ET le `$name` de sorte que quand `$name` est étendu, l'espace blanc dans `B. Foo` soit traité de la même façon que du côté droit. Il est important de se rappeler que l'étape 5 (Effectuer l'Expansion) vient avant l'étape 6 (Diviser la commande en nom de commande et arguments). Cela signifie que `$name` n'est pas à l'abri d'avoir son résultat découpé, parce que le découpage se produit après que `$name` soit remplacé par la valeur contenue dans `name`.
