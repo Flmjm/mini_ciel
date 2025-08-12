@@ -20,7 +20,7 @@ int	main(void)
 	while (exit_status != 1)
 	{
 		input = readline(PROMPT_LINE);
-
+		manage_input(input);
 
 
 

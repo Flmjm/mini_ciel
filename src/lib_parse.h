@@ -35,8 +35,9 @@ typedef struct t_input
 # include "../libft/libft.h"
 
 // parse_input.c
-char manage_input(const char *str);
+t_input *manage_input(const char *str);
 void	init_input(t_input *input, const char *str);
 int	check_operator_in_str(const char *str);
+
 
 # endif

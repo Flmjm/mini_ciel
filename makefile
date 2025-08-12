@@ -4,7 +4,9 @@ LIBFT_NAME		= libft.a
 CC 				= gcc
 FLAGS 			= -Wall -Wextra -Werror -g
 
-SRC 			= src/main.c
+SRC 			= src/main.c \
+				  src/parse_input.c
+
 LIBFT			= libft/ft_bzero.c\
 				  libft/ft_isalnum.c\
 				  libft/ft_isalpha.c\
