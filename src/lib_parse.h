@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/12 21:01:41 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/08/13 08:59:29 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ typedef struct t_input_info
 # include "../libft/libft.h"
 
 // parse_input.c
-t_input_info *manage_input(const char *str);
-void	init_info(t_input_info *input, const char *str);
-int		check_operator_in_str(const char str);
+t_input_info 	*manage_input(const char *str);
+void			init_info(t_input_info *input, const char *str);
+int				check_operator_in_str(const char str);
 
 
 # endif

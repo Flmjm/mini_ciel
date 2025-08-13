@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 18:21:57 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/12 21:03:48 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/08/13 15:58:28 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,15 @@ t_input_info *manage_input(const char *str) //test
 
 	input = malloc(sizeof(t_input_info));
 	init_info(input, str);
+
 	free(input);
 	return (input);
 }
+
+// void	make_input_format(const char *str, t_input_info *info)
+// {
+
+// }
 
 void	init_info(t_input_info *input, const char *str)
 {
