@@ -61,8 +61,9 @@ $(NAME): $(OBJ) $(LIBFT_NAME)
 
 all: $(NAME)
 
-test: all
+test: $(LIBFT_NAME)
 	@echo "Compilation test terminée."
+	@$(CC) $(SRC) $(LIBFT_NAME) -o $(NAME) -lreadline
 
 clean:
 	@rm -f $(OBJ) $(OBJ_LIBFT)

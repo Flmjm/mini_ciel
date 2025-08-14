@@ -239,3 +239,20 @@ name="B. Foo"
 - [Architecture of Open Source Applications - Bash](http://www.aosabook.org/en/bash.html)
 - [Bash Manual](https://www.gnu.org/software/bash/manual/)
 - Schéma visuel : http://stuff.lhunath.com/parser.png
+
+
+
+
+| Catégorie                | Token(s)                                                                 | Usage / Description                               | Exemple                       |
+|---------------------------|-------------------------------------------------------------------------|--------------------------------------------------|-------------------------------|
+| **Commandes / mots**      | `echo`, `ls`, `grep`, `$HOME`, `file.txt`                               | Commandes exécutables ou arguments              | `echo hi`                     |
+| **Redirections**          | `<`, `>`, `>>`, `2>`, `&>`, `<<`                                        | Rediriger stdin/stdout/stderr                   | `echo hi > out.txt`           |
+| **Pipes**                 | `|`, `|&`                                                               | Connecter stdout → stdin                        | `echo hi | grep h`            |
+| **Contrôle de commandes** | `;`, `&&`, `||`, `&`                                                   | Séparer ou conditionner l’exécution            | `cmd1 && cmd2`                |
+| **Sous-shell / regroupement** | `()`, `{}`                                                          | Exécuter commandes dans un sous-shell ou bloc  | `(cd dir && ls)`              |
+| **Tests conditionnels**   | `[ ]`, `[[ ]]`                                                          | Tester conditions                               | `[ -f file.txt ]`             |
+| **Arithmétique**          | `(( ))`, `$(( ))`                                                       | Évaluer expressions numériques                  | `(( a = 3 + 4 ))`             |
+| **Quotes / échappements** | `'...'`, `"..."`, `` `...` ``, `\`                                      | Contrôler interprétation du texte               | `echo "Hello $USER"`          |
+| **Variables / expansions**| `$VAR`, `${VAR}`, `$(( expr ))`                                         | Accéder ou calculer des valeurs                | `echo $HOME`                  |
+| **Mots-clés Bash**        | `if`, `then`, `else`, `fi`, `for`, `while`, `do`, `done`, `case`, `esac`, `function`, `select`, `until`, `break`, `continue`, `return`, `exit`, `time`, `coproc`, `in` | Structure du langage, contrôle de flux | `if [ -f file ]; then echo "ok"; fi` |
+| **Commentaires**          | `#`                                                                     | Ignoré par le shell                             | `# Ceci est un commentaire`   |
