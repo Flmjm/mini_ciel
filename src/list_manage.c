@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   list_manage.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/14 16:05:40 by mleschev         ###   ########.fr       */
+/*   Created: 2025/08/14 16:14:22 by mleschev          #+#    #+#             */
+/*   Updated: 2025/08/14 16:34:16 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib_parse.h"
 
-int	main(void)
+void	manage_input_format(t_input_info *info, char *input_str)
 {
-	int	exit_status;
-	char *input;
-
-	exit_status = 0;
-	while (exit_status != 1)
-	{
-		input = readline(PROMPT_LINE);
-		manage_input(input);
-
-		if (ft_strncmp(input, "exit", 4) == 0)
-			exit_status = 1;
-		free(input);
-	}
-	return (0);
+	
 }
-
-

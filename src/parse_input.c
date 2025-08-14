@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 18:21:57 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/13 15:58:28 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/08/14 16:28:43 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,32 @@
 
 t_input_info *manage_input(const char *str) //test
 {
-	t_input_info	*input;
+	t_input_info	*info;
 
-	input = malloc(sizeof(t_input_info));
-	init_info(input, str);
+	info = malloc(sizeof(t_input_info));
+	init_info(info, str);
+	init_format(info);
 
-	free(input);
-	return (input);
+
+	printf("info.nbr_cmd: %d | info.nbr_ope: %d | info.nbr_arg: %d\n", info->nbr_commands, info->nbr_operators, info->nbr_arguments);
+
+	free(info);
+	return (info);
 }
 
-// void	make_input_format(const char *str, t_input_info *info)
-// {
+void	init_format(t_input_info *info)
+{
+	
+}
 
-// }
-
-void	init_info(t_input_info *input, const char *str)
+void	init_info(t_input_info *input, const char *str) //how much cmd, args and operators
 {
 	int	i;
+	int	j;
+	int	ltr;
 
+	ltr = 0;
+	j = 0;
 	i = 0;
 	input->nbr_arguments = 0;
 	input->nbr_commands = 0;
@@ -65,8 +73,9 @@ void	init_info(t_input_info *input, const char *str)
 				i++;
 		}
 	}
-	printf("info.nbr_cmd: %d | info.nbr_ope: %d | info.nbr_arg: %d\n", input->nbr_commands, input->nbr_operators, input->nbr_arguments);
 }
+
+
 
 
 int	check_operator_in_str(const char str) //test
