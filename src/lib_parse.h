@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/14 23:55:31 by root             ###   ########.fr       */
+/*   Updated: 2025/08/16 06:07:11 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define LIB_PARSE_H
 
 # ifndef PROMPT_LINE
-# define PROMPT_LINE ".> "
+# define PROMPT_LINE ".test> "
 # endif
 
 # ifndef FALSE
@@ -70,12 +70,13 @@ typedef struct t_outfiles
 # include "../libft/libft.h"
 
 // parse_input.c
-void 			*manage_input(char *str);
-void			init_info(t_input_info *input, const char *str);
-int				check_operator_in_char(const char lttr);
-void			init_input_format(t_input_info *info, const char *input_str);
-int				strlen_to_space(const char *str);
-void			trunc_spaces(t_input_info *info, const char *str);
+void *manage_input(char *str); //convertis l'input de readline en infos puis en **argv et en liste chainees
+void	init_info(t_input_info *infos, char *str);
+void	is_complete(char *str);
+int	find_end_operator(char *str, char end, char end2, int i);
+void	recall_readline(char *str);
+
+
 
 // list_manage.c
 int     		is_redirection(char *str);
