@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/14 19:13:12 by root             ###   ########.fr       */
+/*   Updated: 2025/08/18 21:35:26 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(void)
 
 		if (ft_strncmp(input, "exit", 4) == 0)
 			exit_status = 1;
-		free(input);
+		// free(input);
 	}
 	return (0);
 }

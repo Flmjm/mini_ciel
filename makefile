@@ -50,6 +50,16 @@ LIBFT			= libft/ft_bzero.c\
 OBJ 			= $(SRC:.c=.o)
 OBJ_LIBFT		= $(LIBFT:.c=.o)
 
+BLACK			=      "\033[30m"
+RED         	=		"\033[31m"
+GREEN       	=		"\033[32m"
+YELLOW      	=		"\033[33m"
+BLUE        	=		"\033[34m"
+PURPLE      	=		"\033[35m"
+CYAN       		=		"\033[36m"
+WHITE       	=		"\033[37m"
+RESET       	=		"\033[0m"
+
 %.o: %.c
 	@$(CC) $(FLAGS) -c $< -o $@
 
@@ -62,13 +72,14 @@ $(NAME): $(OBJ) $(LIBFT_NAME)
 all: $(NAME)
 
 test: $(LIBFT_NAME)
-	@echo "Compilation test terminée."
+	@echo  $(RED)"Compilation test terminée." $(RESET)
 	@$(CC) $(SRC) $(LIBFT_NAME) -o $(NAME) -lreadline
 
 clean:
 	@rm -f $(OBJ) $(OBJ_LIBFT)
 
-fclean: clean
+fclean:
+	@rm -f $(OBJ) $(OBJ_LIBFT) # clean
 	@rm -f $(NAME) $(LIBFT_NAME)
 
 re: fclean all
