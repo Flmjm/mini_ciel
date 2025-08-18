@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_parse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/16 06:07:11 by root             ###   ########.fr       */
+/*   Updated: 2025/08/18 11:45:41 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void	init_info(t_input_info *infos, char *str);
 void	is_complete(char *str);
 int	find_end_operator(char *str, char end, char end2, int i);
 void	recall_readline(char *str);
+int		have_quote(char *str);
+void	replace_backslash(char *str);
 
 
 
