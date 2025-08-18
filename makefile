@@ -72,16 +72,20 @@ $(NAME): $(OBJ) $(LIBFT_NAME)
 all: $(NAME)
 
 test: $(LIBFT_NAME)
-	@echo  $(RED)"Compilation test terminée." $(RESET)
 	@$(CC) $(SRC) $(LIBFT_NAME) -o $(NAME) -lreadline
+	@echo  $(PURPLE)"Compilation test terminée." $(RESET)
 
 clean:
 	@rm -f $(OBJ) $(OBJ_LIBFT)
-
+	@echo $(YELLOW)"*.o delete "$(RESET)
 fclean:
 	@rm -f $(OBJ) $(OBJ_LIBFT) # clean
 	@rm -f $(NAME) $(LIBFT_NAME)
+	@echo $(RED)" ./ delete"$(RESET)
 
-re: fclean all
+re:
+	@rm -f $(OBJ) $(OBJ_LIBFT) # clean
+	@rm -f $(NAME) $(LIBFT_NAME) #fclean
+	@echo  $(BLUE)"Make re complete !" $(RESET)
 
 .PHONY: all clean fclean re test
