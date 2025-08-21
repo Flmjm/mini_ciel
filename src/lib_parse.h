@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_parse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/19 00:20:42 by root             ###   ########.fr       */
+/*   Updated: 2025/08/20 10:34:51 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@
 
 typedef struct t_input_info
 {
-	int		nbr_commands;
-	int		nbr_arguments;
-	int		nbr_operators;
-	int		args;
+	int		nbr_args;
 	char	*input;
 } t_input_info;
 
@@ -71,14 +68,25 @@ typedef struct t_outfiles
 
 // parse_input.c
 void 			*manage_input(char *str); //gere l'input, convertis en infos puis en **argv et en liste chainees
+void			erase_in_str(t_input_info *infos, int i);
+void			clean_quote(t_input_info *infos);
+int				how_much_args(t_input_info *infos, int i);
+int				next_space(char *str, int i);
+int				strlen_of_args(t_input_info *infos, int arg_search, int start);
+void			convert_input_to_array(t_input_info *infos);
+
+
+
+
+// list_manage.c
+int     		is_redirection(char *str);
+int				check_operator_in_str(const char *str);
+
+// check_input.c
 void			is_complete(t_input_info *infos); // gere l'input et redirige en cas d'input incomplet
 void			recall_readline(t_input_info *infos); // rappele la fonction readline de maniere propre pour certeine condition
 int				next_simple_quote(t_input_info *infos, int i); //renvoi i = prochain " comme str[i] = '"'
 void			quote_next_char(t_input_info *infos, int i); //quote str[i + 1] proprement, ne renvoi pas i il faut penser a rajouter a 2 a sa valeur
 int				next_double_quote(t_input_info *infos, int i);//renvoi i = prochain ' comme str[i] = '\''
-
-// list_manage.c
-int     		is_redirection(char *str);
-int				check_operator_in_str(const char *str);
 
 # endif

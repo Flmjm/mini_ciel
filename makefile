@@ -5,7 +5,8 @@ CC 				= gcc
 FLAGS 			= -Wall -Wextra -Werror -g
 
 SRC 			= src/main.c \
-				  src/parse_input.c
+				  src/parse_input.c \
+				  src/check_input.c
 
 LIBFT			= libft/ft_bzero.c\
 				  libft/ft_isalnum.c\
@@ -72,7 +73,7 @@ $(NAME): $(OBJ) $(LIBFT_NAME)
 all: $(NAME)
 
 test: $(LIBFT_NAME)
-	@$(CC) $(SRC) $(LIBFT_NAME) -o $(NAME) -lreadline
+	clang $(SRC) $(LIBFT_NAME) -o $(NAME) -lreadline
 	@echo  $(PURPLE)"Compilation test terminée." $(RESET)
 
 clean:

@@ -3,128 +3,152 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 18:21:57 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/19 00:43:25 by root             ###   ########.fr       */
+/*   Updated: 2025/08/20 10:34:28 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib_parse.h"
 
-void *manage_input(char *str) //convertis l'input de readline en infos puis en **argv et en liste chainees
+void *manage_input(char *str) //gere l'input de readline et la passe en **argv et en liste chainees
 {
 	t_input_info *infos;
 	
 	infos = malloc(sizeof(t_input_info));
 	infos->input = str;
 	is_complete(infos);
+	convert_input_to_array(infos);
 	printf("input: %s\n", infos->input);
 	printf("lenght input: %d\n", ft_strlen(infos->input));
 	// printf("info.nbr_cmd: %d | info.nbr_ope: %d | info.nbr_arg: %d || args: %d\n", info->nbr_commands, info->nbr_operators, info->nbr_arguments, info->args);
+	
+	
+	free(infos);
 }
 
-void	is_complete(t_input_info *infos) // prend en charge \ ' " pour l'instant
+int		how_much_args(t_input_info *infos, int i)
 {
-	int		i;
+	int	result;
+
+	result = 0;
+	while (infos->input[i])
+	{
+		if (infos->input[i] == '"')
+		{
+			result++;
+			i = next_double_quote(infos, i);
+		}
+		else if (infos->input[i] == '\'')
+		{
+			result++;
+			i = next_simple_quote(infos, i);
+		}
+		else if (infos->input[i] != ' ')
+		{
+				result++;
+				while (infos->input[i] && infos->input[i] != ' ')
+					i++;
+		}
+		i++;
+	}
+	return (result);
+}
+
+void	convert_input_to_array(t_input_info *infos)
+{
+	char **buffer;
+	int	length;
+	int	i;
+
+	i = 0;
+	length = how_much_args(infos, 0);
+	buffer = malloc(sizeof(char *) * (length + 1));
+	buffer[length] = NULL;
+	while (buffer[i])
+	{
+		length = strlen_of_args(infos, i, 0);
+		printf("test strlen of args :%d    i:%d\n", length, i);
+		i++;
+	}
+	
+}
+int		strlen_of_args(t_input_info *infos, int arg_search, int start)
+{
+	int	result;
+
+	result = 0;
+	while (infos->input[start])
+	{
+		if (infos->input[start] == '"')
+		{
+			result++;
+			start = next_double_quote(infos, start);
+		}
+		else if (infos->input[start] == '\'')
+		{
+			result++;
+			start = next_simple_quote(infos, start);
+		}
+		else if (infos->input[start] != ' ')
+		{
+				result++;
+				if (result == arg_search)
+				{	
+					result = next_space(infos->input, start);
+					return (result);
+				}
+				while (infos->input[start] && infos->input[start] != ' ')
+					start++;
+		}
+		start++;
+	}
+	return (result);
+}
+
+int		next_space(char *str, int i)
+{
+	while (str[i])
+	{
+		if (str[i] == ' ')
+			return (i);
+		i++;
+	}
+	return (i);
+}
+
+void	clean_quote(t_input_info *infos)
+{
+	int	i;
 
 	i = 0;
 	while (infos->input[i])
 	{
-		if (infos->input[i] == '\'')
-			i = next_simple_quote(infos, i);
 		if (infos->input[i] == '"')
 			i = next_double_quote(infos, i);
-		else if (infos->input[i] == '\\' && infos->input[i + 1] == '\0')
-		{	
-			infos->input[i] = '\n';
-			recall_readline(infos);
-		}
-		else if (infos->input[i] == '\\')
-		{	
-			quote_next_char(infos, i);
-			i =+ 2;
-		}
-		i++;
-	}
-
-
-}
-void	recall_readline(t_input_info *infos)
-{
-	char	*buffer;
-	char	*temp_input;
-
-	temp_input = readline(">");
-	if (ft_strlen(temp_input) == 0)
-		return ;
-	buffer = malloc(sizeof(char) * ft_strlen(infos->input));
-	ft_strlcpy(buffer, infos->input, ft_strlen(infos->input));
-	free(infos->input);
-	infos->input = malloc(sizeof(char) * (ft_strlen(buffer) + ft_strlen(temp_input) + 1));
-	ft_strlcpy(infos->input, buffer, (ft_strlen(buffer) + ft_strlen(temp_input)));
-	free(buffer);
-	ft_strlcat(infos->input, temp_input, ft_strlen(infos->input) + ft_strlen(temp_input) + 1);
-	free(temp_input);
-}
-
-int		next_simple_quote(t_input_info *infos, int i)
-{
-	i = i + 1;
-	while (infos->input[i] != '\'')
-	{
-		while (infos->input[i] == '\0')
-			recall_readline(infos);
 		if (infos->input[i] == '\'')
-			return (i);
-		i++;
-	}
-	return (i);
-}
-
-int		next_double_quote(t_input_info *infos, int i)
-{
-	i = i + 1;
-	while (infos->input[i] != '"')
-	{
-		while (infos->input[i] == '\0')
-			recall_readline(infos);
-		if (infos->input[i] == '"')
-			return (i);
-		else if (infos->input[i] == '\\')
 		{
-			if (infos->input[i + 1] == '$' || infos->input[i + 1] == '\\' || infos->input[i + 1] == '"' || infos->input[i + 1] == '`')
-			{	
-				quote_next_char(infos, i);
-				i =+ 2;
-			}
+			erase_in_str(infos, i);
+			i = 0;
 		}
-		// backquote a rajouter : `
 		i++;
 	}
-	return (i);
 }
 
-void	quote_next_char(t_input_info *infos, int i)
+void	erase_in_str(t_input_info *infos, int i)
 {
-	int	lenght;
 	char *buffer;
 	int	j;
-	int i_return;
-	
-	i_return = i + 2;
-	j = i;
-	lenght = ft_strlen(infos->input);
-	buffer = malloc(sizeof(char) * (lenght + 1));
-	ft_strlcpy(buffer, infos->input, j + 1);
-	buffer[j] = '\'';
-	j++;
-	buffer[j] = infos->input[i + 1];
-	i++;
-	j++;
-	buffer[j] = '\'';
-	j++;
-	while (j <= lenght)
+	j = 0;
+
+	buffer = malloc(sizeof(char) * (ft_strlen(infos->input)));
+	while (j < i)
+	{
+		buffer[j] = infos->input[j];
+		j++;
+	}
+	while (infos->input[i])
 	{
 		buffer[j] = infos->input[i + 1];
 		j++;
