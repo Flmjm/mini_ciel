@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_parse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/20 10:34:51 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/08/25 00:53:24 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 typedef struct t_input_info
 {
 	int		nbr_args;
+	char	**argv;
 	char	*input;
 } t_input_info;
 
@@ -57,26 +58,28 @@ typedef struct t_arguments
 typedef struct t_infiles
 {
 	char	*infile;
+	char	*type;
 	struct t_infiles *next;
 } t_infiles;
 
 typedef struct t_outfiles
 {
 	char	*outfile;
+	char	*type;
 	struct t_outfiles *next;
 } t_outfiles;
 
 // parse_input.c
 void 			*manage_input(char *str); //gere l'input, convertis en infos puis en **argv et en liste chainees
 void			erase_in_str(t_input_info *infos, int i);
-void			clean_quote(t_input_info *infos);
-int				how_much_args(t_input_info *infos, int i);
+void			clean_input(t_input_info *infos);
+int				how_much_args(t_input_info *infos);
 int				next_space(char *str, int i);
-int				strlen_of_args(t_input_info *infos, int arg_search, int start);
-void			convert_input_to_array(t_input_info *infos);
 
-
-
+// put_input_to_array.c
+int				strlen_of_args(t_input_info *infos, int start);
+char			**convert_input_to_array(t_input_info *infos);
+void			copy_arg(t_input_info *infos, char *buffer, int arg);
 
 // list_manage.c
 int     		is_redirection(char *str);

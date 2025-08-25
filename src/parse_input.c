@@ -3,108 +3,99 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 18:21:57 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/20 10:34:28 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/08/25 02:20:04 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib_parse.h"
 
-void *manage_input(char *str) //gere l'input de readline et la passe en **argv et en liste chainees
+void *manage_input(char *str) //verifie et gere l'input de readline et la passe en **argv et en liste chainees
 {
 	t_input_info *infos;
 	
 	infos = malloc(sizeof(t_input_info));
 	infos->input = str;
 	is_complete(infos);
-	convert_input_to_array(infos);
-	printf("input: %s\n", infos->input);
-	printf("lenght input: %d\n", ft_strlen(infos->input));
+	add_history(infos->input);
+	// format_input(infos);
+	// clean_input(infos);
+	printf("Clean Input:"RED"%s\n\n"RESET, infos->input);
+	// infos->argv = convert_input_to_array(infos);
+	
+	// int i = 0;
+	// while (infos->argv[i])
+	// {
+	// 	printf("%d|%s|\n",i, infos->argv[i]);
+	// 	i++;
+	// }
+
+	// convert_input_to_array(infos);
+	// printf("input: %s\n", infos->input);
+	// printf("lenght input: %d\n", ft_strlen(infos->input));
 	// printf("info.nbr_cmd: %d | info.nbr_ope: %d | info.nbr_arg: %d || args: %d\n", info->nbr_commands, info->nbr_operators, info->nbr_arguments, info->args);
 	
 	
 	free(infos);
 }
 
-int		how_much_args(t_input_info *infos, int i)
-{
-	int	result;
+// void	format_input(t_input_info *infos)
+// {
+// 	int	i;
 
-	result = 0;
-	while (infos->input[i])
-	{
-		if (infos->input[i] == '"')
-		{
-			result++;
-			i = next_double_quote(infos, i);
-		}
-		else if (infos->input[i] == '\'')
-		{
-			result++;
-			i = next_simple_quote(infos, i);
-		}
-		else if (infos->input[i] != ' ')
-		{
-				result++;
-				while (infos->input[i] && infos->input[i] != ' ')
-					i++;
-		}
-		i++;
-	}
-	return (result);
-}
+// 	i = 0;
+// 	while (infos->input[i])
+// 	{
+// 		if ()
+// 	}
+// }
 
-void	convert_input_to_array(t_input_info *infos)
+int		strlen_of_args(t_input_info *infos, int arg)
 {
-	char **buffer;
 	int	length;
-	int	i;
+	int i;
+	int	current_arg;
+	int j;
 
+	j = 0;
 	i = 0;
-	length = how_much_args(infos, 0);
-	buffer = malloc(sizeof(char *) * (length + 1));
-	buffer[length] = NULL;
-	while (buffer[i])
-	{
-		length = strlen_of_args(infos, i, 0);
-		printf("test strlen of args :%d    i:%d\n", length, i);
-		i++;
-	}
-	
-}
-int		strlen_of_args(t_input_info *infos, int arg_search, int start)
-{
-	int	result;
-
-	result = 0;
-	while (infos->input[start])
-	{
-		if (infos->input[start] == '"')
+	length = 0;
+	current_arg = 0;
+	while (infos->input[i])
+	{	
+		while (infos->input[i] == ' ')
+			i++;
+		if (infos->input[i] && infos->input[i] != ' ')
 		{
-			result++;
-			start = next_double_quote(infos, start);
-		}
-		else if (infos->input[start] == '\'')
-		{
-			result++;
-			start = next_simple_quote(infos, start);
-		}
-		else if (infos->input[start] != ' ')
-		{
-				result++;
-				if (result == arg_search)
-				{	
-					result = next_space(infos->input, start);
-					return (result);
+			if (current_arg == arg)
+			{
+				while (infos->input[i] && infos->input[i] != ' ')
+				{
+					if (infos->input[i] == '"')
+					{	
+						j = next_double_quote(infos, i);
+						length = j - i - 2 + length;
+						i = j;
+					}
+					if (infos->input[i] == '\'')
+					{	
+						j = next_simple_quote(infos, i);
+						length = j - i - 2 + length;
+						i = j;
+					}
+					length++;
+					i++;
 				}
-				while (infos->input[start] && infos->input[start] != ' ')
-					start++;
+				return (length);
+			}
+			while (infos->input[i] && infos->input[i] != ' ')
+				i++;
+			current_arg++;
 		}
-		start++;
 	}
-	return (result);
+	return (length);
 }
 
 int		next_space(char *str, int i)
@@ -118,23 +109,23 @@ int		next_space(char *str, int i)
 	return (i);
 }
 
-void	clean_quote(t_input_info *infos)
-{
-	int	i;
+// void	clean_input(t_input_info *infos)
+// {
+// 	int	i;
 
-	i = 0;
-	while (infos->input[i])
-	{
-		if (infos->input[i] == '"')
-			i = next_double_quote(infos, i);
-		if (infos->input[i] == '\'')
-		{
-			erase_in_str(infos, i);
-			i = 0;
-		}
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (infos->input[i])
+// 	{
+// 		if (infos->input[i] == '"')
+// 		{	
+// 			infos->input[i] = '\'';
+// 			i = next_double_quote(infos, i);
+// 			infos->input[i] = '\'';
+// 		}
+		
+// 		i++;
+// 	}
+// }
 
 void	erase_in_str(t_input_info *infos, int i)
 {

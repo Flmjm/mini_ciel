@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 08:51:44 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/20 09:27:17 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/08/25 00:53:31 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	is_complete(t_input_info *infos) // prend en charge \ ' " pour l'instant
 		}
 		else if (infos->input[i] == '\\')
 		{	
-			quote_next_char(infos, i);
+			// quote_next_char(infos, i);
 			i += 2;
 		}
 		i++;
