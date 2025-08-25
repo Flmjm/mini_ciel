@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/25 00:53:24 by root             ###   ########.fr       */
+/*   Updated: 2025/08/25 23:09:25 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,25 +71,25 @@ typedef struct t_outfiles
 
 // parse_input.c
 void 			*manage_input(char *str); //gere l'input, convertis en infos puis en **argv et en liste chainees
-void			erase_in_str(t_input_info *infos, int i);
-void			clean_input(t_input_info *infos);
-int				how_much_args(t_input_info *infos);
-int				next_space(char *str, int i);
+void			erase_in_str(t_input_info *infos, int i); //suprime proprement infos->input[i] dans sa chaine
+int				how_much_args(t_input_info *infos); // retourne le nombre d'arguments passer a readline
+int				next_space(char *str, int i); // useless
+void			replace_backslash_double_quote(t_input_info *infos); // useless
 
 // put_input_to_array.c
-int				strlen_of_args(t_input_info *infos, int start);
-char			**convert_input_to_array(t_input_info *infos);
-void			copy_arg(t_input_info *infos, char *buffer, int arg);
+int				strlen_of_args(t_input_info *infos, int start); //start = numeros de l'argument dans infos, retourne sa taille complete
+char			**convert_input_to_array(t_input_info *infos); //recupere l'input clean et le convertis en **argv
+void			copy_arg(t_input_info *infos, char *buffer, int arg); //copie l'argument numeros arg de infos->input a buffer
 
 // list_manage.c
-int     		is_redirection(char *str);
-int				check_operator_in_str(const char *str);
+int     		is_redirection(char *str); // check et renvoie selon si l'argument est une direction (a changer)
+int				check_operator_in_str(const char *str); // pareil a changer 
 
 // check_input.c
-void			is_complete(t_input_info *infos); // gere l'input et redirige en cas d'input incomplet
+void			is_complete(t_input_info *infos); // gere l'input et redirige en cas d'input incomplet + quote les backslash (note: rajouter une maniere de gerer l'historique de readline car la elle prend les deformations des backslash)
 void			recall_readline(t_input_info *infos); // rappele la fonction readline de maniere propre pour certeine condition
 int				next_simple_quote(t_input_info *infos, int i); //renvoi i = prochain " comme str[i] = '"'
 void			quote_next_char(t_input_info *infos, int i); //quote str[i + 1] proprement, ne renvoi pas i il faut penser a rajouter a 2 a sa valeur
-int				next_double_quote(t_input_info *infos, int i);//renvoi i = prochain ' comme str[i] = '\''
+int				next_double_quote(t_input_info *infos, int i, int init);//renvoi i = prochain ' comme str[i] = '\''
 
 # endif

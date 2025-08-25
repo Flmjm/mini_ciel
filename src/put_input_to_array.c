@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 18:16:36 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/25 02:19:05 by root             ###   ########.fr       */
+/*   Updated: 2025/08/25 22:00:49 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void	copy_arg(t_input_info *infos, char *buffer, int arg) //bug
 	int j;
 	int k;
 
-	printf("debug: %d\n", strlen_of_args(infos, arg));
-
 	k = 0;
 	j = 0;
 	i = 0;
@@ -59,23 +57,46 @@ void	copy_arg(t_input_info *infos, char *buffer, int arg) //bug
 				{
 					if (infos->input[i] == '"')
 					{	
-						j = next_double_quote(infos, i);
-						while (i < j)
+						k = next_double_quote(infos, i, FALSE);
+						i++;
+						while (i < k)
 						{
 							buffer[j] = infos->input[i];
-							printf("%c", buffer[j]);
 							i++;
 							j++;
 						}
-						i++;
 					}
-					if (ft_strlen(infos->input) > i)
+					else if (infos->input[i] == '\'')
+					{	
+						k = next_simple_quote(infos, i);
+						i++;
+						while (i < k)
+						{
+							buffer[j] = infos->input[i];
+							i++;
+							j++;
+						}
+					}
+					else if (infos->input[i] && infos->input[i] != ' ')
+					{	
+						buffer[j] = infos->input[i];
+						j++;
+					}
+					if (ft_strlen(infos->input) < i)
 						break ;
+					i++;
 				}
+				buffer[j] = '\0';
 				return ;
 			}
 			while (infos->input[i] && infos->input[i] != ' ')
+			{	
+				if (infos->input[i] == '"')
+					i = next_double_quote(infos, i, FALSE);
+				else if (infos->input[i] == '\'')
+					i = next_simple_quote(infos, i);
 				i++;
+			}
 			current_arg++;
 		}
 	}
@@ -99,9 +120,9 @@ int		how_much_args(t_input_info *infos)
 			while (infos->input[i] && infos->input[i] != ' ')
 			{	
 				if (infos->input[i] == '"')
-					i = next_double_quote(infos, i);
+					i = next_double_quote(infos, i, FALSE);
 				if (infos->input[i] == '\'')
-					i =  next_simple_quote(infos, i);
+					i = next_simple_quote(infos, i);
 				i++;
 			}
 			result++;

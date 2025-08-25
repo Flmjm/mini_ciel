@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 08:51:44 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/25 00:53:31 by root             ###   ########.fr       */
+/*   Updated: 2025/08/25 22:55:33 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	is_complete(t_input_info *infos) // prend en charge \ ' " pour l'instant
 		if (infos->input[i] == '\'')
 			i = next_simple_quote(infos, i);
 		if (infos->input[i] == '"')
-			i = next_double_quote(infos, i);
+			i = next_double_quote(infos, i, TRUE);
 		else if (infos->input[i] == '\\' && infos->input[i + 1] == '\0')
 		{	
 			infos->input[i] = '\n';
@@ -30,7 +30,7 @@ void	is_complete(t_input_info *infos) // prend en charge \ ' " pour l'instant
 		}
 		else if (infos->input[i] == '\\')
 		{	
-			// quote_next_char(infos, i);
+			quote_next_char(infos, i);
 			i += 2;
 		}
 		i++;
@@ -70,19 +70,25 @@ int		next_simple_quote(t_input_info *infos, int i)
 	return (i);
 }
 
-int		next_double_quote(t_input_info *infos, int i)
+int		next_double_quote(t_input_info *infos, int i, int init) // bug sur input: "\"
 {
 	i = i + 1;
 	while (infos->input[i] != '"')
 	{
-		while (infos->input[i] == '\0')
-			recall_readline(infos);
+		if (init == TRUE)
+		{
+			while (infos->input[i] == '\0')
+				recall_readline(infos);
+		}
 		if (infos->input[i] == '"')
 			return (i);
 		else if (infos->input[i] == '\\')
 		{
 			if (infos->input[i + 1] == '$' || infos->input[i + 1] == '\\' || infos->input[i + 1] == '"' || infos->input[i + 1] == '`')
+			{	
+				quote_next_char(infos, i);
 				i += 2;
+			}
 		}
 		// backquote a rajouter : `
 		i++;
