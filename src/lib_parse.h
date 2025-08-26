@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/25 23:09:25 by root             ###   ########.fr       */
+/*   Updated: 2025/08/26 22:59:37 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct t_input_info
 	char	*input;
 } t_input_info;
 
-typedef struct t_commands
+typedef struct t_commands // prochain commit je fait en sorte d'init les listes chainee promis
 {
 	int nbr_commands;
 	char *command;
@@ -91,5 +91,9 @@ void			recall_readline(t_input_info *infos); // rappele la fonction readline de 
 int				next_simple_quote(t_input_info *infos, int i); //renvoi i = prochain " comme str[i] = '"'
 void			quote_next_char(t_input_info *infos, int i); //quote str[i + 1] proprement, ne renvoi pas i il faut penser a rajouter a 2 a sa valeur
 int				next_double_quote(t_input_info *infos, int i, int init);//renvoi i = prochain ' comme str[i] = '\''
+
+// expand_parse.c
+void    		replace_var_input(t_input_info *infos); //pour ;'instant ne gere que les variables en dehors de quotes
+void    		expand_var(t_input_info *infos, int i); //expans les variables d'environnement et retourne info->input malloc avec la variable d'environnement si elle existe
 
 # endif

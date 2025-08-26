@@ -6,7 +6,7 @@
 /*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 18:21:57 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/25 22:51:15 by root             ###   ########.fr       */
+/*   Updated: 2025/08/26 22:11:08 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void *manage_input(char *str) //verifie l'input de readline et la passe en **arg
 	infos->input = str;
 	is_complete(infos);
 	add_history(infos->input);
-	// replace_backslash_double_quote(infos);
 	printf("Clean Input:"RED"%s\n"RESET"HMA:"RED"%d\n\n"RESET, infos->input, how_much_args(infos));
+	replace_var_input(infos);
 	infos->argv = convert_input_to_array(infos);
 	
 	int i = 0;
@@ -132,25 +132,6 @@ int		next_space(char *str, int i)
 	}
 	return (i);
 }
-
-// void	clean_input(t_input_info *infos)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (infos->input[i])
-// 	{
-// 		if (infos->input[i] == '"')
-// 		{	
-// 			infos->input[i] = '\'';
-// 			i = next_double_quote(infos, i);
-// 			infos->input[i] = '\'';
-// 		}
-		
-// 		i++;
-// 	}
-// }
-
 void	erase_in_str(t_input_info *infos, int i)
 {
 	char *buffer;

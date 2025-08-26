@@ -7,7 +7,8 @@ FLAGS 			= -Wall -Wextra -Werror -g
 SRC 			= src/main.c \
 				  src/parse_input.c \
 				  src/check_input.c \
-				  src/put_input_to_array.c
+				  src/put_input_to_array.c\
+				  src/expand_parse.c
 
 LIBFT			= libft/ft_bzero.c\
 				  libft/ft_isalnum.c\
