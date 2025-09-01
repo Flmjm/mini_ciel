@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_manage.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 16:14:22 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/24 18:49:30 by root             ###   ########.fr       */
+/*   Updated: 2025/09/01 13:03:16 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void    init_lists(t_commands **head, t_input_info *info)
             add_node_outfile();
         else if (is_operator())
         {
-            
+
             new_cmd = TRUE;
         }
         i++;
@@ -73,4 +73,12 @@ int	check_operator_in_str(const char *str)
         i++;
     }
 	return (0);
+}
+
+int is_operator(char *str)
+{
+    int i;
+
+    i = 0;
+    while ()
 }

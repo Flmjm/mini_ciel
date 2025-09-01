@@ -3,60 +3,89 @@
 /*                                                        :::      ::::::::   */
 /*   expand_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/26 21:45:37 by root              #+#    #+#             */
-/*   Updated: 2025/08/26 22:56:02 by root             ###   ########.fr       */
+/*   Created: 2025/08/26 21:45:37 by mleschev          #+#    #+#             */
+/*   Updated: 2025/09/01 13:48:18 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib_parse.h"
 
-void    replace_var_input(t_input_info *infos)
+void	replace_var_input(t_input_info *infos)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (infos->input[i])
-    {
-        while (infos->input[i] == ' ')
-            i++;
-        if (infos->input[i] == '"')
-            i = next_double_quote(infos, i, FALSE); // a remplacer par expand_var_in_double_quote
-        else if (infos->input[i] == '\'')
-            i = next_simple_quote(infos, i);
-        if (infos->input[i] == '$')
-            expand_var(infos, i);
-        i++;
-    }
+	i = 0;
+	while (infos->input[i])
+	{
+		while (infos->input[i] == ' ')
+			i++;
+		if (infos->input[i] == '"')
+			i = expand_in_quote(infos, i);
+		else if (infos->input[i] == '\'')
+			i = next_simple_quote(infos, i);
+		if (infos->input[i] == '$')
+			expand_var(infos, i, 0);
+		i++;
+	}
+}
+int	expand_in_quote(t_input_info *infos, int i)
+{
+	i++;
+	while (infos->input[i] != '"')
+	{
+		if (infos->input[i] == '"')
+			return (i);
+		else if (infos->input[i] == '\\' && infos->input[i + 1] == '$')
+			erase_in_str(infos, i);
+		else if (infos->input[i] == '$')
+			expand_var(infos, i, 1);
+		i++;
+	}
+	return (i);
 }
 
-void    expand_var(t_input_info *infos, int i)
+void	expand_var(t_input_info *infos, int i, int quote)
 {
-    char	*buffer;
 	char	*temp_input;
     char    env_input[20];
     int     j;
     int     length;
-    int     k;
-    int     x;
 
-    x = 0;
-    k = 0;
     j = 0;
     i++;
     while (infos->input[i] && infos->input[i] != ' ')
     {
+		if (quote)
+		{
+			if (infos->input[i] == '"')
+				break ;
+		}
         env_input[j] = infos->input[i];
         i++;
         j++;
     }
     env_input[j] = '\0';
+	printf("temp:%s\n", env_input);
 	temp_input = getenv(env_input);
 	if (!temp_input)
         return ;
+	resize_and_copy(infos, i, j, temp_input);
+}
+
+void resize_and_copy(t_input_info *infos, int i, int j, char *temp_input)
+{
+    char	*buffer;
+    int     k;
+    int     x;
+    int     length;
+
+    x = 0;
+    k = 0;
+
     length = ft_strlen(infos->input) - j + ft_strlen(temp_input) + 1;
-	buffer = malloc(sizeof(char) * length);
+    buffer = malloc(sizeof(char) * length);
 	while (k < i - j - 1)
     {
         buffer[k] = infos->input[x];
@@ -77,6 +106,7 @@ void    expand_var(t_input_info *infos, int i)
         i++;
     }
     buffer[k] = '\0';
+	printf("BUFFER:%s\n", buffer);
     free(infos->input);
     infos->input = buffer;
 }

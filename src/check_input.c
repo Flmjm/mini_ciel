@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 08:51:44 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/25 22:55:33 by root             ###   ########.fr       */
+/*   Updated: 2025/09/01 13:45:41 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void	is_complete(t_input_info *infos) // prend en charge \ ' " pour l'instant
 		if (infos->input[i] == '"')
 			i = next_double_quote(infos, i, TRUE);
 		else if (infos->input[i] == '\\' && infos->input[i + 1] == '\0')
-		{	
+		{
 			infos->input[i] = '\n';
 			recall_readline(infos);
 		}
 		else if (infos->input[i] == '\\')
-		{	
+		{
 			quote_next_char(infos, i);
 			i += 2;
 		}
@@ -84,11 +84,13 @@ int		next_double_quote(t_input_info *infos, int i, int init) // bug sur input: "
 			return (i);
 		else if (infos->input[i] == '\\')
 		{
-			if (infos->input[i + 1] == '$' || infos->input[i + 1] == '\\' || infos->input[i + 1] == '"' || infos->input[i + 1] == '`')
-			{	
+			if (infos->input[i + 1] == '\\' || infos->input[i + 1] == '"' || infos->input[i + 1] == '`')
+			{
 				quote_next_char(infos, i);
 				i += 2;
 			}
+			else if (infos->input[i + 1] == '$')
+				i += 2;
 		}
 		// backquote a rajouter : `
 		i++;
@@ -102,7 +104,7 @@ void	quote_next_char(t_input_info *infos, int i)
 	char *buffer;
 	int	j;
 	int i_return;
-	
+
 	i_return = i + 2;
 	j = i;
 	lenght = ft_strlen(infos->input);

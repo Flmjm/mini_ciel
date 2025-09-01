@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_parse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/26 22:59:37 by root             ###   ########.fr       */
+/*   Updated: 2025/09/01 13:40:39 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ char			**convert_input_to_array(t_input_info *infos); //recupere l'input clean e
 void			copy_arg(t_input_info *infos, char *buffer, int arg); //copie l'argument numeros arg de infos->input a buffer
 
 // list_manage.c
-int     		is_redirection(char *str); // check et renvoie selon si l'argument est une direction (a changer)
-int				check_operator_in_str(const char *str); // pareil a changer 
+int				is_redirection(char *str); // check et renvoie selon si l'argument est une direction (a changer)
+int				check_operator_in_str(const char *str); // pareil a changer
 
 // check_input.c
 void			is_complete(t_input_info *infos); // gere l'input et redirige en cas d'input incomplet + quote les backslash (note: rajouter une maniere de gerer l'historique de readline car la elle prend les deformations des backslash)
@@ -93,7 +93,18 @@ void			quote_next_char(t_input_info *infos, int i); //quote str[i + 1] propremen
 int				next_double_quote(t_input_info *infos, int i, int init);//renvoi i = prochain ' comme str[i] = '\''
 
 // expand_parse.c
-void    		replace_var_input(t_input_info *infos); //pour ;'instant ne gere que les variables en dehors de quotes
-void    		expand_var(t_input_info *infos, int i); //expans les variables d'environnement et retourne info->input malloc avec la variable d'environnement si elle existe
+void			replace_var_input(t_input_info *infos); //pour ;'instant ne gere que les variables en dehors de quotes
+void			expand_var(t_input_info *infos, int i, int quote); //expans les variables d'environnement et retourne info->input malloc avec la variable d'environnement si elle existe
+void			resize_and_copy(t_input_info *infos, int i, int j, char *temp_input);
+
+
+
+
+// test
+void	add_space_before(t_input_info *infos, int i);
+void	define_operator(t_input_info *infos);
+int		expand_in_quote(t_input_info *infos, int i);
+
+
 
 # endif
