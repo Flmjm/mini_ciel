@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 08:51:44 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/01 13:45:41 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/09/04 14:04:03 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,9 @@ void	quote_next_char(t_input_info *infos, int i)
 	int	lenght;
 	char *buffer;
 	int	j;
-	int i_return;
+	//int i_return;
 
-	i_return = i + 2;
+	//i_return = i + 2;
 	j = i;
 	lenght = ft_strlen(infos->input);
 	buffer = malloc(sizeof(char) * (lenght + 1));

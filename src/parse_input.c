@@ -3,43 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 18:21:57 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/01 12:56:38 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/09/04 14:03:17 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib_parse.h"
 
-void *manage_input(char *str) //verifie l'input de readline et la passe en **argv et en liste chainees
-{
-	t_input_info *infos;
+// void *manage_input(char *str) //verifie l'input de readline et la passe en **argv et en liste chainees
+// {
+// 	t_input_info *infos;
 
-	infos = malloc(sizeof(t_input_info));
-	infos->input = str;
-	is_complete(infos);
-	add_history(infos->input);
-	replace_var_input(infos);
-	define_operator(infos);
-	printf("Clean Input:"RED"%s\n"RESET"HMA:"RED"%d\n\n"RESET, infos->input, how_much_args(infos));
-	infos->argv = convert_input_to_array(infos);
+// 	infos = malloc(sizeof(t_input_info));
+// 	infos->input = str;
+// 	is_complete(infos);
+// 	add_history(infos->input);
+// 	replace_var_input(infos);
+// 	define_operator(infos);
+// 	printf("Clean Input:"RED"%s\n"RESET"HMA:"RED"%d\n\n"RESET, infos->input, how_much_args(infos));
+// 	infos->argv = convert_input_to_array(infos);
 
-	int i = 0;
-	while (infos->argv[i])
-	{
-		printf("%d|%s|\n",i, infos->argv[i]);
-		i++;
-	}
+// 	int i = 0;
+// 	while (infos->argv[i])
+// 	{
+// 		printf("%d|%s|\n",i, infos->argv[i]);
+// 		i++;
+// 	}
 
-	// convert_input_to_array(infos);
-	// printf("input: %s\n", infos->input);
-	// printf("lenght input: %d\n", ft_strlen(infos->input));
-	// printf("info.nbr_cmd: %d | info.nbr_ope: %d | info.nbr_arg: %d || args: %d\n", info->nbr_commands, info->nbr_operators, info->nbr_arguments, info->args);
+// 	// convert_input_to_array(infos);
+// 	// printf("input: %s\n", infos->input);
+// 	// printf("lenght input: %d\n", ft_strlen(infos->input));
+// 	// printf("info.nbr_cmd: %d | info.nbr_ope: %d | info.nbr_arg: %d || args: %d\n", info->nbr_commands, info->nbr_operators, info->nbr_arguments, info->args);
 
 
-	free(infos);
-}
+// 	free(infos);
+// }
 
 void	replace_backslash_double_quote(t_input_info *infos)
 {

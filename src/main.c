@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/24 19:15:12 by root             ###   ########.fr       */
+/*   Updated: 2025/09/04 15:34:39 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	main(void)
 	while (exit_status != 1)
 	{
 		input = readline(PROMPT_LINE);
-		manage_input(input);
+		ft_token(input);		// a arrêter 
+		//manage_input(input);
 
 		if (ft_strncmp(input, "exit", 4) == 0)
 			exit_status = 1;

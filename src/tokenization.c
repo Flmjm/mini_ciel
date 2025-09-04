@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 17:44:15 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/09/03 20:23:21 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/09/04 18:06:41 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,12 +121,12 @@ char *ft_get_word(char *input, int start)
                 in_quotes = 1;
                 quote = input[i];
             }
-            else if (input[i] == '|' || input[i] == '>'|| input[i] == '<'|| input[i] == '&' || input[i] == ';')
+            else if (input[i] == ' ' || input[i] == '\t' || input[i] == '|' || input[i] == '>'|| input[i] == '<'|| input[i] == '&' || input[i] == ';')
                 break ;
         }
         else
         {
-            if (input[i] = quote)
+            if (input[i] == quote)
                 in_quotes = 0;
         }
         i++;
@@ -135,6 +135,10 @@ char *ft_get_word(char *input, int start)
         word = ft_substr(input, start, i - start);
     return (word);
 }
+// j'ai ajoute les espaces et \t comme fin de mot donc maintenant une commande et ses arguments peuvent etre decomposes en plusieurs tokens
+// je pense qu'il faudra faire un truc du style if type == WORD et type->prev != WORD et type->next == WORD, alors c'est des arguments 
+// prevoir une liste doublement chainee ? 
+// ou alors quand type != WORD && ->next->type == WORD && ->next->next->type == WORD (c'est laborieux)
 
 void	ft_token(char *input)
 {
@@ -143,11 +147,11 @@ void	ft_token(char *input)
 	int op_length;
 	char *tmp_op;
 	int i;
-	int j;
     char *word;
 
 	i = 0;
 	token = malloc(sizeof(t_token));
+	token = NULL;
 	while (input && input[i])
 	{
 		op_length = ft_get_op_length(input, i, &type);
@@ -169,6 +173,7 @@ void	ft_token(char *input)
 			    i++;
 		}
 	}
+	print_tokens(token);
 }
 
 void    ft_free_tokens(t_token *tokens)
@@ -184,3 +189,20 @@ void    ft_free_tokens(t_token *tokens)
     }
 }
 
+
+// fonction test pour voir les tokens
+void print_tokens(t_token *tokens) {
+    printf("\n=== TOKENS ===\n");
+    t_token *current = tokens;
+    int index = 0;
+    
+    while (current) {
+        printf("[%d] %d: '%s'\n", 
+               index, 
+               current->type, 
+               current->value);
+        current = current->next;
+		index++;
+    }
+    printf("\n");
+}

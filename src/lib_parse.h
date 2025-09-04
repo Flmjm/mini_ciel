@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/03 20:23:44 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/09/04 18:06:52 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,8 @@ int	ft_get_op_length(char *input, int i, t_token_type *type);
 char *ft_get_word(char *input, int start);
 void	ft_token(char *input);
 void    ft_free_tokens(t_token *tokens);
+
+// a retirer
+void print_tokens(t_token *tokens); //test pour voir la tokenisation
 
 #endif
