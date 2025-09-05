@@ -6,26 +6,11 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 17:44:15 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/09/04 18:06:41 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/09/05 11:14:26 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib_parse.h"
-
-
-// typedef enum e_token_type
-// {
-// 	TOKEN_WORD,            // 0 - Arguments, commandes
-// 	TOKEN_PIPE,            // 1 - |
-// 	TOKEN_AND,             // 2 - &&
-// 	TOKEN_OR,              // 3 - ||
-// 	TOKEN_REDIRECT_IN,     // 4 - <
-// 	TOKEN_REDIRECT_OUT,    // 5 - >
-// 	TOKEN_REDIRECT_APPEND, // 6 - >>
-// 	TOKEN_HEREDOC,         // 7 - <<
-// 	TOKEN_SEMICOLON,       // 8 - ;
-// 	TOKEN_EOF              // 9 - Fin de ligne
-// }					t_token_type;
 
 t_token	*ft_lstnew_token(t_token_type type, char *content)
 {
@@ -34,6 +19,7 @@ t_token	*ft_lstnew_token(t_token_type type, char *content)
 	new = malloc(sizeof(*new));
 	if (!new)
 		return (NULL);
+	new->prev = NULL;
 	new->type = type;
 	new->value = content;
 	new->next = NULL;
@@ -54,6 +40,7 @@ void	ft_lstadd_token_back(t_token **lst, t_token *new)
 	last = *lst;
 	while (last->next != NULL)
 		last = last->next;
+	new->prev = last;
 	last->next = new;
 }
 
@@ -61,17 +48,7 @@ int	ft_get_op_length(char *input, int i, t_token_type *type)
 {
 	if (input[i] == '|')
 	{
-		if (input[i + 1] == '|')
-		{
-			*type = TOKEN_OR;
-			return (2);
-		}
 		*type = TOKEN_PIPE;
-		return (1);
-	}
-	else if (input[i] == '&' && input[i + 1] == '&')
-	{
-		*type = TOKEN_AND;
 		return (1);
 	}
 	else if (input[i] == '<')
@@ -92,11 +69,6 @@ int	ft_get_op_length(char *input, int i, t_token_type *type)
 			return (2);
 		}
 		*type = TOKEN_REDIRECT_OUT;
-		return (1);
-	}
-	else if (input[i] == ';')
-	{
-		*type = TOKEN_SEMICOLON;
 		return (1);
 	}
 	return (0);

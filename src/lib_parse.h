@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/04 18:06:52 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/09/05 11:10:39 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,13 @@
 
 typedef enum e_token_type
 {
-	TOKEN_WORD,            // 0 - Arguments, commandes
+	TOKEN_WORD,            // 0 - Arguments, commandes, fichiers
 	TOKEN_PIPE,            // 1 - |
-	TOKEN_AND,             // 2 - &&
-	TOKEN_OR,              // 3 - ||
-	TOKEN_REDIRECT_IN,     // 4 - <
-	TOKEN_REDIRECT_OUT,    // 5 - >
-	TOKEN_REDIRECT_APPEND, // 6 - >>
-	TOKEN_HEREDOC,         // 7 - <<
-	TOKEN_SEMICOLON,       // 8 - ;
-	TOKEN_EOF              // 9 - Fin de ligne
+	TOKEN_REDIRECT_IN,     // 2 - <
+	TOKEN_REDIRECT_OUT,    // 3 - >
+	TOKEN_REDIRECT_APPEND, // 4 - >>
+	TOKEN_HEREDOC,         // 5 - <<
+	TOKEN_EOF              // 6 - Fin de ligne
 }						t_token_type;
 
 typedef struct t_input_info
@@ -59,6 +56,7 @@ typedef struct s_token
 	t_token_type	type;
 	char			*value;
 	struct s_token	*next;
+	struct s_token	*prev;
 }						t_token;
 
 typedef struct t_commands
