@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 17:44:15 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/09/05 11:14:26 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/09/10 19:10:44 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	ft_get_op_length(char *input, int i, t_token_type *type)
 {
 	if (input[i] == '|')
 	{
+		if (input[i+1] == '|' || input[i-1] == '|')
+			return (-1);								// potentiellement message d'erreur sinon pas tokenisé
 		*type = TOKEN_PIPE;
 		return (1);
 	}
@@ -133,6 +135,8 @@ void	ft_token(char *input)
 			ft_lstadd_token_back(&token, ft_lstnew_token(type, tmp_op));
 			i += op_length;
 		}
+		//else if (op_length < 0)		// signifie que on a un || 
+			// exit_with_message_and_free("syntax error near unexpected token '|'\n", token, 2); // ou on l'envoie comme un mot et cmd not found ? 
 		else
 		{
             word = ft_get_word(input, i);
@@ -145,25 +149,14 @@ void	ft_token(char *input)
 			    i++;
 		}
 	}
+	//ft_lstadd_token_back(&token, ft_lstnew_token(TOKEN_NEWLINE, "newline"));
 	print_tokens(token);
-}
-
-void    ft_free_tokens(t_token *tokens)
-{
-    t_token *curr;
-    
-    while (tokens)
-    {
-        curr = tokens->next;
-        free(tokens->value);
-        free(tokens);
-        tokens = curr;
-    }
 }
 
 
 // fonction test pour voir les tokens
 void print_tokens(t_token *tokens) {
+	ft_check_next_token(tokens);
     printf("\n=== TOKENS ===\n");
     t_token *current = tokens;
     int index = 0;
@@ -177,4 +170,5 @@ void print_tokens(t_token *tokens) {
 		index++;
     }
     printf("\n");
+	//ft_check_next_token(tokens);
 }

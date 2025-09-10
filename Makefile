@@ -5,7 +5,7 @@ LIBS = -lreadline
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 
-SRCS =  src/main.c src/tokenization.c \
+SRCS =  src/main.c src/tokenization.c src/parsing.c \
       #src/parse_input.c \
       src/check_input.c \
       src/put_input_to_array.c \

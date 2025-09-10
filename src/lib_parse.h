@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/05 11:10:39 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/09/10 18:45:10 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ typedef enum e_token_type
 	TOKEN_REDIRECT_OUT,    // 3 - >
 	TOKEN_REDIRECT_APPEND, // 4 - >>
 	TOKEN_HEREDOC,         // 5 - <<
-	TOKEN_EOF              // 6 - Fin de ligne
+	TOKEN_EOF,             // 6 - EOF
+	//TOKEN_NEWLINE,		   // 7 - \n
 }						t_token_type;
 
 typedef struct t_input_info
@@ -58,6 +59,23 @@ typedef struct s_token
 	struct s_token	*next;
 	struct s_token	*prev;
 }						t_token;
+
+typedef struct s_redirect
+{
+	t_token_type	type;
+	char			*filename;
+	int				fd;
+	struct s_token	*next;
+	struct s_token	*prev;
+}						t_redirect;
+
+typedef struct s_ju_command
+{
+	char			**argv;
+	t_redirect		*redirection;
+	struct s_token	*next;
+	struct s_token	*prev;
+}						t_ju_command;
 
 typedef struct t_commands
 	// prochain commit je fait en sorte d'init les listes chainee promis
@@ -128,7 +146,18 @@ void	ft_lstadd_token_back(t_token **lst, t_token *new);
 int	ft_get_op_length(char *input, int i, t_token_type *type);
 char *ft_get_word(char *input, int start);
 void	ft_token(char *input);
+
+//parsing.c
+int	ft_is_file(t_token *token);
+void	ft_check_next_token(t_token *token);
+t_redirect	*ft_lstnew_redirect(char *filename);
+void	ft_lstadd_redirect_back(t_redirect **lst, t_redirect *new);
+
+// free_errors.c
+void	exit_with_message_and_free(char *str, t_token *token, int n);
 void    ft_free_tokens(t_token *tokens);
+
+
 
 // a retirer
 void print_tokens(t_token *tokens); //test pour voir la tokenisation
