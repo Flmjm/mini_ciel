@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 15:01:46 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/09/10 18:43:49 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/09/12 15:15:58 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void    ft_free_tokens(t_token *tokens)
 {
     t_token *curr;
     
+    if (!tokens)
+        return;
     while (tokens)
     {
         curr = tokens->next;

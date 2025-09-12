@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 17:44:15 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/09/10 19:10:44 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/09/12 14:52:52 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,12 +151,12 @@ void	ft_token(char *input)
 	}
 	//ft_lstadd_token_back(&token, ft_lstnew_token(TOKEN_NEWLINE, "newline"));
 	print_tokens(token);
+	ft_check_next_token(token);
 }
 
 
 // fonction test pour voir les tokens
 void print_tokens(t_token *tokens) {
-	ft_check_next_token(tokens);
     printf("\n=== TOKENS ===\n");
     t_token *current = tokens;
     int index = 0;
@@ -170,5 +170,20 @@ void print_tokens(t_token *tokens) {
 		index++;
     }
     printf("\n");
-	//ft_check_next_token(tokens);
+}
+
+void print_redir(t_redirect *redirection) {
+    printf("\n=== TOKENS ===\n");
+    t_redirect *current = redirection;
+    int index = 0;
+    
+    while (current) {
+        printf("[%d] %d: '%s'\n", 
+               index, 
+               current->type, 
+               current->filename);
+        current = current->next;
+		index++;
+    }
+    printf("\n");
 }

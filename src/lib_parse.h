@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/10 18:45:10 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/09/12 14:49:46 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ typedef struct s_redirect
 	t_token_type	type;
 	char			*filename;
 	int				fd;
-	struct s_token	*next;
-	struct s_token	*prev;
+	struct s_redirect	*next;
+	struct s_redirect	*prev;
 }						t_redirect;
 
 typedef struct s_ju_command
@@ -148,10 +148,18 @@ char *ft_get_word(char *input, int start);
 void	ft_token(char *input);
 
 //parsing.c
-int	ft_is_file(t_token *token);
 void	ft_check_next_token(t_token *token);
+void	ft_init_file(t_token *token);
 t_redirect	*ft_lstnew_redirect(char *filename);
 void	ft_lstadd_redirect_back(t_redirect **lst, t_redirect *new);
+
+//parse_check_next_token.c
+void	ft_check_next_token_heredoc(t_token *token);
+void	ft_check_next_token_pipe(t_token *token);
+void	ft_check_next_token_redir_in(t_token *token);
+void	ft_check_next_token_redir_out(t_token *token);
+void	ft_check_next_token_redir_append(t_token *token);
+//void	recall_readline(t_token *infos);
 
 // free_errors.c
 void	exit_with_message_and_free(char *str, t_token *token, int n);

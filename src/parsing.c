@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:37:56 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/09/10 18:42:31 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/09/12 14:53:35 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,38 +48,6 @@
 // 	struct s_token	*prev;
 // }						t_ju_command;
 
-int	ft_is_file(t_token *token)
-{
-	if (token->type == 0 && access(token->value, F_OK) == 0)
-		return (1);
-	return (0);
-}
-
-// int	ft_init_file(t_token *token)
-// {
-// 	t_redirect	*file;
-
-// 	file = malloc(sizeof(t_redirect));
-// 	if (!file)
-// 		return (0);
-// 	if (ft_is_file(token->value) > 0)
-// 	{
-// 		if (token->prev == NULL && token->next == NULL)
-// 		{
-// 			ft_printf("%s: Command not found", token->value);
-// 			exit_with_message_and_free(NULL, token, 127);
-// 		}
-// 		else if (token->prev == TOKEN_WORD)
-// 		{
-
-// 		}
-// 		ft_lstadd_redirect_back(file, ft_lstnew_redirect(token->value));
-// 		return (1);
-// 	}
-// 	free(file);
-// 	return (0);
-// }
-
 void	ft_init_word(t_token *token)
 {
 	t_ju_command	*command;
@@ -100,72 +68,15 @@ void	ft_check_next_token(t_token *token)
 	while (token != NULL)
 	{
 		if (token->type == TOKEN_HEREDOC)
-		{
-			if (token->next->type >= 1 && token->next->type <= 5)
-			{
-				ft_printf("syntax error near unexpected token '%s'\n",
-					token->next->value);
-				// exit_with_message_and_free(NULL, token, 2);
-			}
-			else
-				token->next->type = TOKEN_EOF;
-		}
+			ft_check_next_token_heredoc(token);
 		else if (token->type == TOKEN_PIPE)
-		{
-			if (token->next == NULL)
-				ft_printf("TEST A SUPPRIMER !!! renvoie le prompt en attendant\n");
-					// renvoie le prompt et attend une commande
-			else if (token->prev->type != TOKEN_WORD)
-			{
-				ft_printf("syntax error near unexpected token '%s'\n",
-					token->value);
-				// exit_with_message_and_free(NULL, token, 2);
-			}
-		}
+			ft_check_next_token_pipe(token);
 		else if (token->type == TOKEN_REDIRECT_IN)
-		{
-			// est ce qu'on initialise ici la struc redir ou est ce qu'on le fait séparément
-			if (token->next == NULL)
-			{
-				ft_printf("syntax error near unexpected token 'newline'\n");
-				// exit_with_message_and_free("syntax error near unexpected token 'newline'\n", token, 2);
-			}
-			else if (token->next->type != TOKEN_WORD)
-			{
-				ft_printf("syntax error near unexpected token '%s'\n",
-					token->next->value);
-				// exit_with_message_and_free(NULL, token, 2);
-			}
-			// si le fichier qui suit n'existe pas, parsing ou exec ?
-		}
+			ft_check_next_token_redir_in(token);
 		else if (token->type == TOKEN_REDIRECT_OUT)
-		{
-			if (token->next == NULL)
-			{
-				ft_printf("syntax error near unexpected token 'newline'\n");
-				// exit_with_message_and_free("syntax error near unexpected token 'newline'\n", token, 2);
-			}
-			else if (token->next->type != TOKEN_WORD)
-			{
-				ft_printf("syntax error near unexpected token '%s'\n",
-					token->next->value);
-				// exit_with_message_and_free(NULL, token, 2);
-			}
-		}
+			ft_check_next_token_redir_out(token);
 		else if (token->type == TOKEN_REDIRECT_APPEND)
-		{
-			if (token->next == NULL)
-			{
-				ft_printf("syntax error near unexpected token 'newline'\n");
-				// exit_with_message_and_free("syntax error near unexpected token 'newline'\n", token, 2);
-			}
-			else if (token->next->type != TOKEN_WORD)
-			{
-				ft_printf("syntax error near unexpected token '%s'\n",
-					token->next->value);
-				// exit_with_message_and_free(NULL, token, 2);
-			}
-		}
+			ft_check_next_token_redir_append(token);
 		token = token->next;
 	}
 }
@@ -182,30 +93,47 @@ t_redirect	*ft_lstnew_redirect(char *filename)
 		return (NULL);
 	new->filename = filename;
 	new->type = 0;
-	// new->fd = open(filename);			
+	new->fd = -1;			
 	// selon redirection, pipex init infile ou outfile ?
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);
 }
 
-// void	ft_lstadd_redirect_back(t_redirect **lst, t_redirect *new)
-// {
-// 	t_redirect	*last;
+void	ft_init_file(t_token *token)
+{
+	t_redirect	*file;
 
-// 	if (!lst || !new)
-// 		return ;
-// 	if (*lst == NULL)
-// 	{
-// 		*lst = new;
-// 		return ;
-// 	}
-// 	last = *lst;
-// 	while (last->next != NULL)
-// 		last = last->next;
-// 	new->prev = last;
-// 	last->next = new;
-// }
+	file = malloc(sizeof(t_redirect));
+	if (!file)
+		return ;
+	if (token->type == 0 && access(token->value, F_OK) == 0 && token->prev == NULL && token->next == NULL)
+	{
+		ft_printf("%s: Command not found", token->value);
+		//exit_with_message_and_free(NULL, token, 127);
+	}
+	else 
+		ft_lstadd_redirect_back(&file, ft_lstnew_redirect(token->value));
+	free(file); //? 
+}
+
+void	ft_lstadd_redirect_back(t_redirect **lst, t_redirect *new)
+{
+	t_redirect	*last;
+
+	if (!lst || !new)
+		return ;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	last = *lst;
+	while (last->next != NULL)
+		last = last->next;
+	new->prev = last;
+	last->next = new;
+}
 
 // < / > / >> avant ou apres : fichier ou commande   elle peut aussi etre apres le fichier - si pas de commande, redirige vers le fichier mais ne fait rien, code sortie 0
 // << avant : idem que <

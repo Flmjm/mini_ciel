@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 08:51:44 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/04 14:04:03 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/09/12 14:22:43 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	is_complete(t_input_info *infos) // prend en charge \ ' " pour l'instant
 
 
 }
+
 void	recall_readline(t_input_info *infos)
 {
 	char	*buffer;
