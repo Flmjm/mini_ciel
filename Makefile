@@ -2,16 +2,15 @@ NAME = Mini_Ciel
 
 LIBS = -lreadline
 
-CC = cc
+CC = clang
 CFLAGS = -Wall -Wextra -Werror -g
 
 SRCS =  src/main.c src/tokenization.c src/parsing.c src/parse_check_next_token.c \
-      #src/parse_input.c \
+      src/parse_input.c \
       src/check_input.c \
       src/put_input_to_array.c \
-      src/expand_parse.c \
-      src/list_manage.c# 
-		
+      src/expand_parse.c
+
 OBJS = $(SRCS:.c=.o)
 
 LIBFT_NAME = libft.a
@@ -40,11 +39,16 @@ ${NAME}: ${OBJS} ${LIBFT}
 		${CC} ${CFLAGS} ${OBJS} ${LIBFT} ${LIBS} -o ${NAME}
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) -c $< -o $@
 
 clean:
 		@${MAKE} -C ./libft fclean
 		@${RM} ${OBJS}
+
+
+test: ${OBJS} ${LIBFT}
+		${CC} ${OBJS} ${LIBFT} ${LIBS} -o ${NAME}
+
 
 fclean: clean
 		@${RM} ${NAME}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 17:44:15 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/09/12 14:52:52 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/09/15 19:04:05 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,11 @@ char *ft_get_word(char *input, int start)
     return (word);
 }
 // j'ai ajoute les espaces et \t comme fin de mot donc maintenant une commande et ses arguments peuvent etre decomposes en plusieurs tokens
-// je pense qu'il faudra faire un truc du style if type == WORD et type->prev != WORD et type->next == WORD, alors c'est des arguments 
-// prevoir une liste doublement chainee ? 
+// je pense qu'il faudra faire un truc du style if type == WORD et type->prev != WORD et type->next == WORD, alors c'est des arguments
+// prevoir une liste doublement chainee ?
 // ou alors quand type != WORD && ->next->type == WORD && ->next->next->type == WORD (c'est laborieux)
 
-void	ft_token(char *input)
+t_token	*ft_token(char *input) // '<<' segfault
 {
 	t_token *token;
 	t_token_type type;
@@ -135,8 +135,8 @@ void	ft_token(char *input)
 			ft_lstadd_token_back(&token, ft_lstnew_token(type, tmp_op));
 			i += op_length;
 		}
-		//else if (op_length < 0)		// signifie que on a un || 
-			// exit_with_message_and_free("syntax error near unexpected token '|'\n", token, 2); // ou on l'envoie comme un mot et cmd not found ? 
+		//else if (op_length < 0)		// signifie que on a un ||
+			// exit_with_message_and_free("syntax error near unexpected token '|'\n", token, 2); // ou on l'envoie comme un mot et cmd not found ?
 		else
 		{
             word = ft_get_word(input, i);
@@ -150,8 +150,8 @@ void	ft_token(char *input)
 		}
 	}
 	//ft_lstadd_token_back(&token, ft_lstnew_token(TOKEN_NEWLINE, "newline"));
-	print_tokens(token);
 	ft_check_next_token(token);
+	return (token);
 }
 
 
@@ -160,11 +160,11 @@ void print_tokens(t_token *tokens) {
     printf("\n=== TOKENS ===\n");
     t_token *current = tokens;
     int index = 0;
-    
+
     while (current) {
-        printf("[%d] %d: '%s'\n", 
-               index, 
-               current->type, 
+        printf("[%d] %d: '%s'\n",
+               index,
+               current->type,
                current->value);
         current = current->next;
 		index++;
@@ -176,11 +176,11 @@ void print_redir(t_redirect *redirection) {
     printf("\n=== TOKENS ===\n");
     t_redirect *current = redirection;
     int index = 0;
-    
+
     while (current) {
-        printf("[%d] %d: '%s'\n", 
-               index, 
-               current->type, 
+        printf("[%d] %d: '%s'\n",
+               index,
+               current->type,
                current->filename);
         current = current->next;
 		index++;

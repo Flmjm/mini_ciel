@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 21:45:37 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/01 13:48:18 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/09/14 13:02:01 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	expand_var(t_input_info *infos, int i, int quote)
 	char	*temp_input;
     char    env_input[20];
     int     j;
-    int     length;
 
     j = 0;
     i++;
@@ -67,7 +66,6 @@ void	expand_var(t_input_info *infos, int i, int quote)
         j++;
     }
     env_input[j] = '\0';
-	printf("temp:%s\n", env_input);
 	temp_input = getenv(env_input);
 	if (!temp_input)
         return ;
@@ -106,7 +104,6 @@ void resize_and_copy(t_input_info *infos, int i, int j, char *temp_input)
         i++;
     }
     buffer[k] = '\0';
-	printf("BUFFER:%s\n", buffer);
     free(infos->input);
     infos->input = buffer;
 }

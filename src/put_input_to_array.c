@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_input_to_array.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 18:16:36 by mleschev          #+#    #+#             */
-/*   Updated: 2025/08/26 21:41:51 by root             ###   ########.fr       */
+/*   Updated: 2025/09/14 12:49:42 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	copy_arg(t_input_info *infos, char *buffer, int arg) //bug
 	length = 0;
 	current_arg = 0;
 	while (infos->input[i])
-	{	
+	{
 		while (infos->input[i] == ' ')
 			i++;
 		if (infos->input[i] && infos->input[i] != ' ')
@@ -56,7 +56,7 @@ void	copy_arg(t_input_info *infos, char *buffer, int arg) //bug
 				while (infos->input[i] && infos->input[i] != ' ')
 				{
 					if (infos->input[i] == '"')
-					{	
+					{
 						k = next_double_quote(infos, i, FALSE);
 						i++;
 						while (i < k)
@@ -67,7 +67,7 @@ void	copy_arg(t_input_info *infos, char *buffer, int arg) //bug
 						}
 					}
 					else if (infos->input[i] == '\'')
-					{	
+					{
 						k = next_simple_quote(infos, i);
 						i++;
 						while (i < k)
@@ -78,7 +78,7 @@ void	copy_arg(t_input_info *infos, char *buffer, int arg) //bug
 						}
 					}
 					else if (infos->input[i] && infos->input[i] != ' ')
-					{	
+					{
 						buffer[j] = infos->input[i];
 						j++;
 					}
@@ -90,7 +90,7 @@ void	copy_arg(t_input_info *infos, char *buffer, int arg) //bug
 				return ;
 			}
 			while (infos->input[i] && infos->input[i] != ' ')
-			{	
+			{
 				if (infos->input[i] == '"')
 					i = next_double_quote(infos, i, FALSE);
 				else if (infos->input[i] == '\'')
@@ -101,6 +101,7 @@ void	copy_arg(t_input_info *infos, char *buffer, int arg) //bug
 		}
 	}
 }
+
 int		how_much_args(t_input_info *infos)
 {
 	int	result;
@@ -118,7 +119,7 @@ int		how_much_args(t_input_info *infos)
 		if (infos->input[i] && infos->input[i] != ' ')
 		{
 			while (infos->input[i] && infos->input[i] != ' ')
-			{	
+			{
 				if (infos->input[i] == '"')
 					i = next_double_quote(infos, i, FALSE);
 				if (infos->input[i] == '\'')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_parse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/12 14:49:46 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/09/15 21:41:31 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@
 # ifndef TRUE
 #  define TRUE 1
 # endif
+
+typedef	struct s_env
+{
+	const char **env_; //env qu'on recupere a ne pas modif
+	char **env;	//env qu'on utilise baser sur l'env en const, celui ci on peut modifier
+}						t_env;
+
 
 typedef enum e_token_type
 {
@@ -78,7 +85,6 @@ typedef struct s_ju_command
 }						t_ju_command;
 
 typedef struct t_commands
-	// prochain commit je fait en sorte d'init les listes chainee promis
 {
 	int nbr_commands;
 	char *command;
@@ -108,7 +114,7 @@ typedef struct t_outfiles
 }						t_outfiles;
 
 // parse_input.c
-void	*manage_input(char *str); // gere l'input, //convertis en infos puis en **argv et en liste chainees
+void	manage_input(char *str); // gere l'input, //convertis en infos puis en **argv et en liste chainees
 void	erase_in_str(t_input_info *infos, int i); // suprime proprement infos->input[i] dans sa chaine
 int		how_much_args(t_input_info *infos); // retourne le nombre d'arguments passer a readline
 int		next_space(char *str, int i); // useless
@@ -139,13 +145,14 @@ void	resize_and_copy(t_input_info *infos, int i, int j, char *temp_input);
 void	add_space_before(t_input_info *infos, int i);
 void	define_operator(t_input_info *infos);
 int		expand_in_quote(t_input_info *infos, int i);
+void	ft_env(t_env *struct_env);	//init la struct env
 
 //tokenization.c
 t_token	*ft_lstnew_token(t_token_type type, char *content);
 void	ft_lstadd_token_back(t_token **lst, t_token *new);
 int	ft_get_op_length(char *input, int i, t_token_type *type);
 char *ft_get_word(char *input, int start);
-void	ft_token(char *input);
+t_token	*ft_token(char *input);
 
 //parsing.c
 void	ft_check_next_token(t_token *token);
