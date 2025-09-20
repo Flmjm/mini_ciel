@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 18:21:57 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/15 19:02:25 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/09/20 16:28:22 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void manage_input(char *str) //verifie l'input de readline et la passe en **argv
 	replace_var_input(infos);
 	token = ft_token(infos->input);
 	print_tokens(token);
-
+	free(token);
 	free(infos);
 }
 

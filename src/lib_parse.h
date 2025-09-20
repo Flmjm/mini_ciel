@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/15 21:41:31 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/09/20 16:23:58 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/readline.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <signal.h>
 
 # ifndef PROMPT_LINE
 #  define PROMPT_LINE BBLUE ".~Mini_ciel~> " BWHITE
@@ -35,8 +36,8 @@
 
 typedef	struct s_env
 {
-	const char **env_; //env qu'on recupere a ne pas modif
-	char **env;	//env qu'on utilise baser sur l'env en const, celui ci on peut modifier
+	char **export;	//varibale d'en exporter
+	char **local_env; // varibale d'env locale + exporter
 }						t_env;
 
 
@@ -145,7 +146,6 @@ void	resize_and_copy(t_input_info *infos, int i, int j, char *temp_input);
 void	add_space_before(t_input_info *infos, int i);
 void	define_operator(t_input_info *infos);
 int		expand_in_quote(t_input_info *infos, int i);
-void	ft_env(t_env *struct_env);	//init la struct env
 
 //tokenization.c
 t_token	*ft_lstnew_token(t_token_type type, char *content);
@@ -153,6 +153,13 @@ void	ft_lstadd_token_back(t_token **lst, t_token *new);
 int	ft_get_op_length(char *input, int i, t_token_type *type);
 char *ft_get_word(char *input, int start);
 t_token	*ft_token(char *input);
+
+//built_in.c
+char		**ft_env(char **environ);	//init la struct env
+int			env(t_env *env); //a besoin du char **environt qui est pris par le main apres argc et argv;
+void		up_shell_level(char **env); //augmente le niveau du shell dans les variable d'env
+void	ft_exit(t_env *env);
+void	free_env(t_env *env);
 
 //parsing.c
 void	ft_check_next_token(t_token *token);
@@ -172,7 +179,8 @@ void	ft_check_next_token_redir_append(t_token *token);
 void	exit_with_message_and_free(char *str, t_token *token, int n);
 void    ft_free_tokens(t_token *tokens);
 
-
+//main.c
+void prompt_loop(char *input, t_env *env_s);
 
 // a retirer
 void print_tokens(t_token *tokens); //test pour voir la tokenisation
