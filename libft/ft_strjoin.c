@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:30:47 by mleschev          #+#    #+#             */
-/*   Updated: 2025/04/05 02:09:57 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:03:38 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	i = 0;
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
-	array = (char *)malloc((s1_len + s2_len + 1) * sizeof(char));
+	array = (char *)ft_malloc((s1_len + s2_len + 1) * sizeof(char), 0);
 	if (!array)
 		return (NULL);
 	while (i < s1_len)

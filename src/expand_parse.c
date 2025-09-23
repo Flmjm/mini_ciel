@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 21:45:37 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/14 13:02:01 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:04:24 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void resize_and_copy(t_input_info *infos, int i, int j, char *temp_input)
     k = 0;
 
     length = ft_strlen(infos->input) - j + ft_strlen(temp_input) + 1;
-    buffer = malloc(sizeof(char) * length);
+    buffer = ft_malloc(sizeof(char) * length, 0);
 	while (k < i - j - 1)
     {
         buffer[k] = infos->input[x];

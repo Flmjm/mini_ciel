@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 18:16:36 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/14 12:49:42 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/09/23 11:56:48 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ char	**convert_input_to_array(t_input_info *infos)
 
 	i = 0;
 	infos->nbr_args = how_much_args(infos);
-	buffer = malloc(sizeof(char *) * (infos->nbr_args + 1));
+	buffer = ft_malloc(sizeof(char *) * (infos->nbr_args + 1));
 	while (i < how_much_args(infos))
 	{
 		length = strlen_of_args(infos, i);
-		buffer[i] = malloc(sizeof(char) * (length + 1));
+		buffer[i] = ft_malloc(sizeof(char) * (length + 1));
 		copy_arg(infos, buffer[i], i);
 		i++;
 	}

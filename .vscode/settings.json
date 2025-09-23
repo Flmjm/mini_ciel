@@ -10,6 +10,7 @@
 		"readline.h": "c",
 		"functional": "c",
 		"termios.h": "c",
-		"lib_parse.h": "c"
+		"lib_parse.h": "c",
+		"libft.h": "c"
 	}
 }

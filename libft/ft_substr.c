@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 21:43:13 by mleschev          #+#    #+#             */
-/*   Updated: 2025/04/05 02:06:03 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:04:02 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len )
 		return (ft_strdup(""));
 	if ((int)len > ft_strlen(s) - (int)start)
 		len = (size_t)ft_strlen(s) - (size_t)start;
-	array = (char *)malloc((len + 1) * sizeof(char));
+	array = (char *)ft_malloc((len + 1) * sizeof(char), 0);
 	if (!array)
 		return (NULL);
 	array[len] = '\0';

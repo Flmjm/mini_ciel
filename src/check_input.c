@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 08:51:44 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/12 14:22:43 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:06:01 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ void	recall_readline(t_input_info *infos)
 	temp_input = readline(">");
 	if (ft_strlen(temp_input) == 0)
 		return ;
-	buffer = malloc(sizeof(char) * ft_strlen(infos->input));
+	buffer = ft_malloc(sizeof(char) * ft_strlen(infos->input), 0);
 	ft_strlcpy(buffer, infos->input, ft_strlen(infos->input) + 1);
-	free(infos->input);
-	infos->input = malloc(sizeof(char) * (ft_strlen(buffer) + ft_strlen(temp_input) + 1));
+	//free(infos->input);
+	infos->input = ft_malloc(sizeof(char) * (ft_strlen(buffer) + ft_strlen(temp_input) + 1), 0);
 	ft_strlcpy(infos->input, buffer, (ft_strlen(buffer) + ft_strlen(temp_input)));
-	free(buffer);
+	//free(buffer);
 	ft_strlcat(infos->input, temp_input, ft_strlen(infos->input) + ft_strlen(temp_input) + 1);
-	free(temp_input);
+	//free(temp_input);
 }
 
 int		next_simple_quote(t_input_info *infos, int i)
@@ -109,7 +109,7 @@ void	quote_next_char(t_input_info *infos, int i)
 	//i_return = i + 2;
 	j = i;
 	lenght = ft_strlen(infos->input);
-	buffer = malloc(sizeof(char) * (lenght + 1));
+	buffer = ft_malloc(sizeof(char) * (lenght + 1), 0);
 	ft_strlcpy(buffer, infos->input, j + 1);
 	buffer[j] = '\'';
 	j++;
@@ -125,6 +125,6 @@ void	quote_next_char(t_input_info *infos, int i)
 		i++;
 	}
 	buffer[j] = '\0';
-	free(infos->input);
+	//free(infos->input);
 	infos->input = buffer;
 }

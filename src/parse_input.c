@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 18:21:57 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/20 16:28:22 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:06:46 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ void manage_input(char *str) //verifie l'input de readline et la passe en **argv
 	t_input_info *infos;
 	t_token *token;
 
-	infos = malloc(sizeof(t_input_info));
+	infos = ft_malloc(sizeof(t_input_info), 0);
 	infos->input = str;
 	is_complete(infos);
 	add_history(infos->input);
 	replace_var_input(infos);
 	token = ft_token(infos->input);
 	print_tokens(token);
-	free(token);
-	free(infos);
+	//free(token);
+	//free(infos);
 }
 
 void	replace_backslash_double_quote(t_input_info *infos)
@@ -84,7 +84,7 @@ void	add_space_before(t_input_info *infos, int i)
 	int	j;
 
 	j = 0;
-	buffer = malloc(sizeof(char) * (ft_strlen(infos->input) + 2));
+	buffer = ft_malloc(sizeof(char) * (ft_strlen(infos->input) + 2), 0);
 	while (j < i)
 	{
 		buffer[j] = infos->input[j];
@@ -99,7 +99,7 @@ void	add_space_before(t_input_info *infos, int i)
 		i++;
 	}
 	buffer[j] = '\0';
-	free(infos->input);
+	//free(infos->input);
 	infos->input = buffer;
 }
 
@@ -173,7 +173,7 @@ void	erase_in_str(t_input_info *infos, int i)
 	int	j;
 	j = 0;
 
-	buffer = malloc(sizeof(char) * (ft_strlen(infos->input)));
+	buffer = ft_malloc(sizeof(char) * (ft_strlen(infos->input)), 0);
 	while (j < i)
 	{
 		buffer[j] = infos->input[j];
@@ -186,6 +186,6 @@ void	erase_in_str(t_input_info *infos, int i)
 		i++;
 	}
 	buffer[j] = '\0';
-	free(infos->input);
+	//free(infos->input);
 	infos->input = buffer;
 }

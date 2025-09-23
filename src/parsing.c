@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:37:56 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/09/12 14:53:35 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:06:50 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_init_word(t_token *token)
 	t_ju_command	*command;
 	int				i;
 
-	command = malloc(sizeof(t_ju_command));
+	command = ft_malloc(sizeof(t_ju_command), 0);
 	i = 0;
 	if (!command)
 		return ;
@@ -88,12 +88,12 @@ t_redirect	*ft_lstnew_redirect(char *filename)
 {
 	t_redirect	*new;
 
-	new = malloc(sizeof(*new));
+	new = ft_malloc(sizeof(*new), 0);
 	if (!new)
 		return (NULL);
 	new->filename = filename;
 	new->type = 0;
-	new->fd = -1;			
+	new->fd = -1;
 	// selon redirection, pipex init infile ou outfile ?
 	new->next = NULL;
 	new->prev = NULL;
@@ -104,17 +104,17 @@ void	ft_init_file(t_token *token)
 {
 	t_redirect	*file;
 
-	file = malloc(sizeof(t_redirect));
+	file = ft_malloc(sizeof(t_redirect), 0);
 	if (!file)
 		return ;
 	if (token->type == 0 && access(token->value, F_OK) == 0 && token->prev == NULL && token->next == NULL)
 	{
 		ft_printf("%s: Command not found", token->value);
-		//exit_with_message_and_free(NULL, token, 127);
+		//exit_with_message_and_//free(NULL, token, 127);
 	}
-	else 
+	else
 		ft_lstadd_redirect_back(&file, ft_lstnew_redirect(token->value));
-	free(file); //? 
+	//free(file); //?
 }
 
 void	ft_lstadd_redirect_back(t_redirect **lst, t_redirect *new)
@@ -141,9 +141,9 @@ void	ft_lstadd_redirect_back(t_redirect **lst, t_redirect *new)
 // | avant et apres : commande,     si rien apres, renvoie le prompt en attente d'une commande
 
 // Fichier :
-//      si le fichier est un argument (ex cat fichier) :    avant = commande      
+//      si le fichier est un argument (ex cat fichier) :    avant = commande
 	// apres = arguments ou operateur
-//      si le fichier est une redirection :                 avant = < ou > ou >>  
+//      si le fichier est une redirection :                 avant = < ou > ou >>
 	// apres = commande ou redirection
 //      si fichier seul :                                   "command not found" 127
 // prendre que la derniere redirection

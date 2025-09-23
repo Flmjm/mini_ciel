@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 21:13:42 by mleschev          #+#    #+#             */
-/*   Updated: 2025/04/03 11:54:50 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:08:33 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strdup(const char *str1)
 	char	*array;
 
 	i = ft_strlen(str1);
-	array = (char *)malloc((i + 1) * sizeof(char));
+	array = (char *)ft_malloc((i + 1) * sizeof(char), 0);
 	ft_strlcpy(array, str1, i + 1);
 	return (array);
 }

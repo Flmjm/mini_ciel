@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 17:44:15 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/09/15 19:04:05 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:06:54 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_token	*ft_lstnew_token(t_token_type type, char *content)
 {
 	t_token	*new;
 
-	new = malloc(sizeof(*new));
+	new = ft_malloc(sizeof(*new), 0);
 	if (!new)
 		return (NULL);
 	new->prev = NULL;
@@ -124,7 +124,7 @@ t_token	*ft_token(char *input) // '<<' segfault
     char *word;
 
 	i = 0;
-	token = malloc(sizeof(t_token));
+	token = ft_malloc(sizeof(t_token), 0);
 	token = NULL;
 	while (input && input[i])
 	{
@@ -136,7 +136,7 @@ t_token	*ft_token(char *input) // '<<' segfault
 			i += op_length;
 		}
 		//else if (op_length < 0)		// signifie que on a un ||
-			// exit_with_message_and_free("syntax error near unexpected token '|'\n", token, 2); // ou on l'envoie comme un mot et cmd not found ?
+			// exit_with_message_and_//free("syntax error near unexpected token '|'\n", token, 2); // ou on l'envoie comme un mot et cmd not found ?
 		else
 		{
             word = ft_get_word(input, i);

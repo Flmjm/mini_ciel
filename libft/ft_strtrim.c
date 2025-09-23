@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:56:12 by mleschev          #+#    #+#             */
-/*   Updated: 2025/04/05 14:36:36 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:03:59 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 			return (ft_strdup(""));
 		end = findend(s1, set) + 1;
 	}
-	result = malloc((end - start + 1) * sizeof(char));
+	result = ft_malloc((end - start + 1) * sizeof(char), 0);
 	if (!result)
 		return (NULL);
 	copy(result, s1, start, end);

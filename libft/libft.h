@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 09:36:19 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/03 16:30:12 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:02:04 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,12 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+
+void *ft_malloc(size_t size, int param);
+void *delete_all(t_list **head);
+void init_lst(t_list **head, void *ptr);
+void ft_lst_malloc(t_list **head, t_list *new);
+void	make_malloc(void *ptr, t_list **head);
+void *lst_last(t_list **head);
 
 #endif

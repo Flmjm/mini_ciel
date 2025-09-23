@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_errors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 15:01:46 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/09/12 15:15:58 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:06:30 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void	exit_with_message_and_free(char *str, t_token *token, int n)
 void    ft_free_tokens(t_token *tokens)
 {
     t_token *curr;
-    
+
     if (!tokens)
         return;
     while (tokens)
     {
         curr = tokens->next;
-        free(tokens->value);
-        free(tokens);
+        // free(tokens->value);
+        // free(tokens);
         tokens = curr;
     }
 }
