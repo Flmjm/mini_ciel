@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_parse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/23 12:13:36 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/09/24 16:01:11 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ typedef enum e_token_type
 	TOKEN_REDIRECT_APPEND, // 4 - >>
 	TOKEN_HEREDOC,         // 5 - <<
 	TOKEN_EOF,             // 6 - EOF
-	//TOKEN_NEWLINE,		   // 7 - \n
-}						t_token_type;
+	TOKEN_HERESTRING	   // 7 - <<<
+	}						t_token_type;
 
 typedef struct t_input_info
 {
@@ -173,6 +173,7 @@ void	ft_check_next_token_pipe(t_token *token);
 void	ft_check_next_token_redir_in(t_token *token);
 void	ft_check_next_token_redir_out(t_token *token);
 void	ft_check_next_token_redir_append(t_token *token);
+void	ft_check_next_token_herestring(t_token *token);
 //void	recall_readline(t_token *infos);
 
 // free_errors.c

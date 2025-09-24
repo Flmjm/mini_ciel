@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_check_next_token.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:09:39 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/09/23 12:06:42 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/09/24 16:02:50 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,22 @@ void	ft_check_next_token_heredoc(t_token *token)
 	}
 	else
 		token->next->type = TOKEN_EOF;
+}
+
+void	ft_check_next_token_herestring(t_token *token)
+{
+	if ((token->next->type >= 1 && token->next->type <= 5) || token->next->type == 7)
+	{
+		ft_printf("syntax error near unexpected token '%s'\n", token->next->value);
+		// exit_with_message_and_//free(NULL, token, 2);
+		exit(2);
+	}
+	else
+	{
+		ft_printf("<<<: here_string not supported\n");
+		// exit_with_message_and_//free(NULL, token, 2);
+		exit(2);
+	}
 }
 
 void	ft_check_next_token_pipe(t_token *token)

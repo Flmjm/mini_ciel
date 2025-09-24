@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 17:44:15 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/09/23 12:06:54 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/09/24 15:51:02 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,12 @@ int	ft_get_op_length(char *input, int i, t_token_type *type)
 	}
 	else if (input[i] == '<')
 	{
-		if (input[i + 1] == '<')
+		if (input[i + 1] == '<' && input[i + 2] == '<')
+		{
+			*type = TOKEN_HERESTRING;
+			return (3);
+		}
+		else if (input[i + 1] == '<')
 		{
 			*type = TOKEN_HEREDOC;
 			return (2);

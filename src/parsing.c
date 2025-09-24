@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:37:56 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/09/23 12:06:50 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/09/24 16:00:52 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,9 @@ void	ft_check_next_token(t_token *token)
 {
 	while (token != NULL)
 	{
-		if (token->type == TOKEN_HEREDOC)
+		if (token->type == TOKEN_HERESTRING)
+			ft_check_next_token_herestring(token);
+		else if (token->type == TOKEN_HEREDOC)
 			ft_check_next_token_heredoc(token);
 		else if (token->type == TOKEN_PIPE)
 			ft_check_next_token_pipe(token);
