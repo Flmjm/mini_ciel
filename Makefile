@@ -2,7 +2,7 @@ NAME = Mini_Ciel
 
 LIBS = -lreadline
 
-CC = clang
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g
 
 SRCS =  src/main.c src/tokenization.c src/parsing.c src/parse_check_next_token.c \

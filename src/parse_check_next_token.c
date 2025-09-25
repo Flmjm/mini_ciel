@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_check_next_token.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:09:39 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/09/24 16:02:50 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/09/25 01:29:48 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ void	ft_check_next_token_herestring(t_token *token)
 	{
 		ft_printf("syntax error near unexpected token '%s'\n", token->next->value);
 		// exit_with_message_and_//free(NULL, token, 2);
-		exit(2);
+		// exit(2);
 	}
 	else
 	{
 		ft_printf("<<<: here_string not supported\n");
 		// exit_with_message_and_//free(NULL, token, 2);
-		exit(2);
+		// exit(2);
 	}
 }
 

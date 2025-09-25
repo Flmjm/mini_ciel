@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_parse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/24 16:01:11 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/09/25 11:39:42 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,8 @@ typedef struct s_ju_command
 
 typedef struct t_commands
 {
-	int nbr_commands;
-	char *command;
-	struct t_arguments *arguments;
+	char **argv;
+	struct t_commands	*next;
 	struct t_infiles *infiles;
 	struct t_outfiles *outfiles;
 }						t_commands;
@@ -103,14 +102,12 @@ typedef struct t_arguments
 typedef struct t_infiles
 {
 	char				*infile;
-	char				*type;
 	struct t_infiles	*next;
 }						t_infiles;
 
 typedef struct t_outfiles
 {
 	char				*outfile;
-	char				*type;
 	struct t_outfiles	*next;
 }						t_outfiles;
 
@@ -185,5 +182,13 @@ void prompt_loop(char *input, t_env *env_s);
 
 // a retirer
 void print_tokens(t_token *tokens); //test pour voir la tokenisation
+
+
+
+t_commands	*sep_cmd(t_token *input);
+void	add_node_cmds(t_commands **commands, t_commands	*new);
+int		how_many_args(t_token	*input);
+void print_cmds(t_commands *cmds);
+void	print_test(t_commands **test);
 
 #endif

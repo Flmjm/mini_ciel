@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 17:44:15 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/09/24 15:51:02 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/09/25 12:16:36 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ char *ft_get_word(char *input, int start)
 // prevoir une liste doublement chainee ?
 // ou alors quand type != WORD && ->next->type == WORD && ->next->next->type == WORD (c'est laborieux)
 
-t_token	*ft_token(char *input) // '<<' segfault
+t_token	*ft_token(char *input) // segfault : '<<' , '<<<'
 {
 	t_token *token;
 	t_token_type type;
@@ -140,8 +140,9 @@ t_token	*ft_token(char *input) // '<<' segfault
 			ft_lstadd_token_back(&token, ft_lstnew_token(type, tmp_op));
 			i += op_length;
 		}
-		//else if (op_length < 0)		// signifie que on a un ||
-			// exit_with_message_and_//free("syntax error near unexpected token '|'\n", token, 2); // ou on l'envoie comme un mot et cmd not found ?
+		else if (op_length < 0)
+			return (NULL);		// signifie que on a un ||
+			// exit_with_message_and_free("syntax error near unexpected token '|'\n", token, 2); // ou on l'envoie comme un mot et cmd not found ?
 		else
 		{
             word = ft_get_word(input, i);

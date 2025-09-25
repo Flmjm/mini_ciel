@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/23 12:06:35 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/09/25 12:25:14 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	prompt_loop(char *input, t_env *env_s)
 
 		if (ft_strncmp(input, "exit", ft_strlen(input)) == 0) //temporaire -------
 			ft_exit(env_s);
-		else if (ft_strncmp(input, "env", ft_strlen(input)) == 0)
-			env(env_s);
+		// else if (ft_strncmp(input, "env", ft_strlen(input)) == 0)
+		// 	env(env_s);
 		// else if (ft_strncmp(input, "export", ft_strlen(input)))
 			// export()
 		//--------------------------------------------------------------------------
