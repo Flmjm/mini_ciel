@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_check_next_token.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:09:39 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/09/25 01:29:48 by root             ###   ########.fr       */
+/*   Updated: 2025/09/30 11:14:15 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,12 @@ void	ft_check_next_token_redir_in(t_token *token)
         ft_printf("%s: No such file or directory\n", token->next->value);
         // exit_with_message_and_//free(NULL, token, 1);
     }
-	// si le fichier qui suit n'existe pas, parsing ou exec ?
+	else if (token->next->type == TOKEN_WORD && access(token->value, F_OK) == 0)
+    {
+        ft_printf("***************A MODIFIER********* initialisation du fichier\n");
+    }
+	else
+		ft_printf("unexpected error while checking next token\n");
 }
 
 void	ft_check_next_token_redir_out(t_token *token)
@@ -104,6 +109,12 @@ void	ft_check_next_token_redir_out(t_token *token)
 		ft_printf("syntax error near unexpected token '%s'\n", token->next->value);
 		// exit_with_message_and_//free(NULL, token, 2);
 	}
+	else if (token->next == TOKEN_WORD)
+	{
+		ft_printf("***************A MODIFIER********* initialisation du fichier\n");
+	}
+	else
+		ft_printf("unexpected error while checking next token\n");
 }
 
 void	ft_check_next_token_redir_append(t_token *token)
@@ -118,4 +129,10 @@ void	ft_check_next_token_redir_append(t_token *token)
 		ft_printf("syntax error near unexpected token '%s'\n", token->next->value);
 		// exit_with_message_and_//free(NULL, token, 2);
 	}
+	else if (token->next == TOKEN_WORD)
+	{
+		ft_printf("***************A MODIFIER********* initialisation du fichier\n");
+	}
+	else
+		ft_printf("unexpected error while checking next token\n");
 }
