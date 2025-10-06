@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_parse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/25 11:39:42 by root             ###   ########.fr       */
+/*   Updated: 2025/10/06 15:06:09 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,13 @@ typedef enum e_token_type
 	TOKEN_HERESTRING	   // 7 - <<<
 	}						t_token_type;
 
+typedef enum e_file_type
+{
+	FILE_REDIRECT_IN,		// 0 - < 
+	FILE_REDIRECT_OUT,    	// 1 - >
+	FILE_REDIRECT_APPEND, 	// 2 - >>
+}							t_file_type;
+
 typedef struct t_input_info
 {
 	int					nbr_args;
@@ -68,9 +75,10 @@ typedef struct s_token
 	struct s_token	*prev;
 }						t_token;
 
+
 typedef struct s_redirect
 {
-	t_token_type	type;
+	t_file_type		type;
 	char			*filename;
 	int				fd;
 	struct s_redirect	*next;
@@ -161,7 +169,7 @@ void	free_env(t_env *env);
 //parsing.c
 void	ft_check_next_token(t_token *token);
 void	ft_init_file(t_token *token);
-t_redirect	*ft_lstnew_redirect(char *filename);
+t_redirect	*ft_lstnew_redirect(char *filename, t_file_type type);
 void	ft_lstadd_redirect_back(t_redirect **lst, t_redirect *new);
 
 //parse_check_next_token.c

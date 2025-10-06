@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:37:56 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/09/30 15:23:50 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/06 14:17:32 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int	count_words(t_token *token)
 		count++;
 	return (count);
 }
-void	ft_init_word(t_token *token)
+
+void	ft_init_word(t_token *token) 	// gérer l'ordre des commandes et fichiers 
 {
 	t_ju_command *command;
 	int i;
@@ -79,18 +80,10 @@ void	ft_init_word(t_token *token)
 				i++;
 				token = token->next;
 			}
-			if (token->type == TOKEN_REDIRECT_IN)
-			{
-				
-			}
-			else if (token->type == TOKEN_REDIRECT_OUT)
-			{
-				
-			}
+			if (token->type == TOKEN_REDIRECT_OUT)
+				command->redirection = ft_lstnew_redirect(token->next->value, FILE_REDIRECT_OUT);
 			else if (token->type == TOKEN_REDIRECT_APPEND)
-			{
-				
-			}
+				command->redirection = ft_lstnew_redirect(token->next->value, FILE_REDIRECT_APPEND);
 			command = command->next;
 		}
 			token = token->next;
