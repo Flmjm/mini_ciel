@@ -9,6 +9,7 @@ SRCS =  src/main.c src/tokenization.c src/parsing.c src/parse_check_next_token.c
       src/parse_input.c \
       src/check_input.c \
       src/put_input_to_array.c \
+	  src/init_redir.c \
       src/expand_parse.c \
 	  src/built_in.c
 

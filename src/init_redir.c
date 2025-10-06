@@ -6,53 +6,45 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 11:15:55 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/06 15:31:25 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/06 18:05:39 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lib_parse.h"
 
-
-t_redirect	*ft_lstnew_redirect(char *filename, t_file_type type)
+t_infiles	*ft_lstnew_redirect_in(char *filename)
 {
-	t_redirect	*new;
+	t_infiles	*new;
 
 	new = ft_malloc(sizeof(t_redirect), 0);
 	if (!new)
 		return (NULL);
-	new->filename = filename;
-	if (type == FILE_REDIRECT_IN)
-		new->type = FILE_REDIRECT_IN;
-	else if (type == FILE_REDIRECT_OUT)
+	new->infile = filename;
+	new->fd = -1;
+	new->next = NULL;
+	return (new);
+}
+
+t_outfiles	*ft_lstnew_redirect_out(char *filename, t_file_type type)
+{
+	t_outfiles	*new;
+
+	new = ft_malloc(sizeof(t_redirect), 0);
+	if (!new)
+		return (NULL);
+	new->outfile = filename;
+	if (type == FILE_REDIRECT_OUT)
 		new->type = FILE_REDIRECT_OUT;
 	else if (type == FILE_REDIRECT_APPEND)
 		new->type == FILE_REDIRECT_APPEND;
 	new->fd = -1;
 	new->next = NULL;
-	new->prev = NULL;
 	return (new);
 }
 
-// void	ft_init_file(t_token *token)
-// {
-// 	t_redirect	*file;
-
-// 	file = ft_malloc(sizeof(t_redirect), 0);
-// 	if (!file)
-// 		return ;
-// 	if (token->type == 0 && access(token->value, F_OK) == 0 && token->prev == NULL && token->next == NULL)
-// 	{
-// 		ft_printf("%s: Command not found", token->value);
-// 		//exit_with_message_and_//free(NULL, token, 127);
-// 	}
-// 	else
-// 		ft_lstadd_redirect_back(&file, ft_lstnew_redirect(token->value));
-// 	//free(file); //?
-// }
-
-void	ft_lstadd_redirect_back(t_redirect **lst, t_redirect *new)
+void	ft_lstadd_infiles_back(t_infiles **lst, t_infiles *new)
 {
-	t_redirect	*last;
+	t_infiles	*last;
 
 	if (!lst || !new)
 		return ;
@@ -64,6 +56,58 @@ void	ft_lstadd_redirect_back(t_redirect **lst, t_redirect *new)
 	last = *lst;
 	while (last->next != NULL)
 		last = last->next;
-	new->prev = last;
 	last->next = new;
+}
+
+void	ft_lstadd_outfiles_back(t_outfiles **lst, t_outfiles *new)
+{
+	t_outfiles	*last;
+
+	if (!lst || !new)
+		return ;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	last = *lst;
+	while (last->next != NULL)
+		last = last->next;
+	last->next = new;
+}
+
+void	ft_init_redir(t_commands *cmds)
+{
+	int i;
+
+	while (cmds)
+	{
+		i = 0;
+		while (cmds && cmds->argv[i])
+		{
+			if (ft_strncmp(cmds->argv[i], "<", 1) == 0)
+			{
+				i++;
+				ft_lstadd_infiles_back(&cmds->infiles,
+					ft_lstnew_redirect_in(cmds->argv[i]));
+			}
+			else if (ft_strncmp(cmds->argv[i], ">>", 2) == 0)
+			{
+				i++;
+				ft_lstadd_outfiles_back(&cmds->outfiles,
+					ft_lstnew_redirect_out(cmds->argv[i],
+						FILE_REDIRECT_APPEND));
+				printf("je suis la [%d]\n", i);
+			}
+			else if (ft_strncmp(cmds->argv[i], ">", 1) == 0)
+			{
+				i++;
+				ft_lstadd_outfiles_back(&cmds->outfiles,
+					ft_lstnew_redirect_out(cmds->argv[i], FILE_REDIRECT_OUT));
+									printf("je suis la [%d]\n", i);
+			}
+			i++;
+		}
+		cmds = cmds->next;
+	}
 }

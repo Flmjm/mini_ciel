@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:09:39 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/09/30 11:14:15 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/06 15:38:26 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,12 @@ void	ft_check_next_token_redir_in(t_token *token)
 		ft_printf("syntax error near unexpected token '%s'\n", token->next->value);
 		// exit_with_message_and_//free(NULL, token, 2);
 	}
-    else if (token->next->type == TOKEN_WORD && access(token->value, F_OK) != 0)
+    else if (token->next->type == TOKEN_WORD && access(token->next->value, F_OK) != 0)
     {
         ft_printf("%s: No such file or directory\n", token->next->value);
         // exit_with_message_and_//free(NULL, token, 1);
     }
-	else if (token->next->type == TOKEN_WORD && access(token->value, F_OK) == 0)
+	else if (token->next->type == TOKEN_WORD && access(token->next->value, F_OK) == 0)
     {
         ft_printf("***************A MODIFIER********* initialisation du fichier\n");
     }
@@ -109,7 +109,7 @@ void	ft_check_next_token_redir_out(t_token *token)
 		ft_printf("syntax error near unexpected token '%s'\n", token->next->value);
 		// exit_with_message_and_//free(NULL, token, 2);
 	}
-	else if (token->next == TOKEN_WORD)
+	else if (token->next->type == TOKEN_WORD)
 	{
 		ft_printf("***************A MODIFIER********* initialisation du fichier\n");
 	}
@@ -129,7 +129,7 @@ void	ft_check_next_token_redir_append(t_token *token)
 		ft_printf("syntax error near unexpected token '%s'\n", token->next->value);
 		// exit_with_message_and_//free(NULL, token, 2);
 	}
-	else if (token->next == TOKEN_WORD)
+	else if (token->next->type == TOKEN_WORD)
 	{
 		ft_printf("***************A MODIFIER********* initialisation du fichier\n");
 	}

@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/06 15:06:09 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/06 17:55:56 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,8 @@ typedef enum e_token_type
 
 typedef enum e_file_type
 {
-	FILE_REDIRECT_IN,		// 0 - < 
-	FILE_REDIRECT_OUT,    	// 1 - >
-	FILE_REDIRECT_APPEND, 	// 2 - >>
+	FILE_REDIRECT_OUT,    	// 0 - >
+	FILE_REDIRECT_APPEND, 	// 1 - >>
 }							t_file_type;
 
 typedef struct t_input_info
@@ -101,21 +100,18 @@ typedef struct t_commands
 	struct t_outfiles *outfiles;
 }						t_commands;
 
-typedef struct t_arguments
-{
-	char				*arg;
-	struct t_arguments	*next;
-}						t_arguments;
-
 typedef struct t_infiles
 {
 	char				*infile;
+	int					fd;
 	struct t_infiles	*next;
 }						t_infiles;
 
 typedef struct t_outfiles
 {
 	char				*outfile;
+	int					fd;
+	t_file_type			type;
 	struct t_outfiles	*next;
 }						t_outfiles;
 
@@ -198,5 +194,14 @@ void	add_node_cmds(t_commands **commands, t_commands	*new);
 int		how_many_args(t_token	*input);
 void print_cmds(t_commands *cmds);
 void	print_test(t_commands **test);
+
+// init_redir.c
+t_infiles	*ft_lstnew_redirect_in(char *filename);
+t_outfiles	*ft_lstnew_redirect_out(char *filename, t_file_type type);
+void	ft_lstadd_infiles_back(t_infiles **lst, t_infiles *new);
+void	ft_lstadd_outfiles_back(t_outfiles **lst, t_outfiles *new);
+void	ft_init_redir(t_commands *cmds);
+void	print_redirections(t_commands *cmds);
+//retirer le print
 
 #endif

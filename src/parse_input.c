@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 18:21:57 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/25 12:19:45 by root             ###   ########.fr       */
+/*   Updated: 2025/10/06 17:24:14 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ void manage_input(char *str) //verifie l'input de readline et la passe en **argv
 	print_tokens(token);
 	cmds = sep_cmd(token); //debut commande separer
 	print_test(&cmds); 
-	// print_cmds(cmds);
+	ft_init_redir(cmds);
+	print_redirections(cmds);
+	//print_cmds(cmds);
 	//free(token);
 	//free(infos);
 }
@@ -210,7 +212,7 @@ t_commands	*sep_cmd(t_token *input)
 	i = 0;
 	while (current)
 	{
-		if ((current->type == TOKEN_WORD) && (i == 0))
+		if ((current->type == TOKEN_WORD || current->type == TOKEN_REDIRECT_IN) && (i == 0))
 		{
 			j = 0;
 			new = ft_malloc(sizeof(t_commands), 0);
@@ -269,6 +271,8 @@ void	print_test(t_commands **cmds)
 	}
 }
 
+
+
 void	add_node_cmds(t_commands **commands, t_commands	*new)
 {
 	t_commands	*current;
@@ -314,3 +318,51 @@ void print_cmds(t_commands *cmds) {
     }
     printf("\n");
 }
+
+void	print_redirections(t_commands *cmds)
+{
+int			i;
+t_infiles	*in;
+t_outfiles	*out;
+int			cmd_index;
+cmd_index = 1;
+while (cmds)
+{
+	printf("=== Commande %d ===\n", cmd_index);
+	i = 0;
+	while (cmds->argv && cmds->argv[i])
+	{
+		printf("  argv[%d]: %s\n", i, cmds->argv[i]);
+		i++;
+	}
+	in = cmds->infiles;
+	out = cmds->outfiles;
+	if (!in && !out)
+		printf("  (Aucune redirection)\n");
+	if (in)
+	{
+		printf("  Infiles:\n");
+		while (in)
+		{
+			printf("    - %s (fd: %d)\n", in->infile, in->fd);
+			in = in->next;
+		}
+	}
+	if (out)
+	{
+		printf("  Outfiles:\n");
+		while (out)
+		{
+			if (out->type == FILE_REDIRECT_APPEND)
+				printf("    - %s (type: >>)\n", out->outfile);
+			else if (out->type == FILE_REDIRECT_OUT)
+				printf("    - %s (type: >)\n", out->outfile);
+			out = out->next;
+		}
+	}
+	printf("\n");
+	cmds = cmds->next;
+	cmd_index++;
+}
+}
+
