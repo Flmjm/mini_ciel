@@ -3,7 +3,7 @@ NAME = Mini_Ciel
 LIBS = -lreadline
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g -fPIE
+CFLAGS = -Wall -Wextra -Werror -g -no-pie
 
 SRCS =  src/main.c src/tokenization.c src/parsing.c src/parse_check_next_token.c \
       src/parse_input.c \
@@ -52,7 +52,7 @@ test: ${OBJS} ${LIBFT}
 
 
 fclean: clean
-		@${RM} ${NAME}
+		@${RM} ${NAME} $(LIBFT_NAME)
 
 re: fclean all
 
