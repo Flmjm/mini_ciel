@@ -1,4 +1,4 @@
-#include "../../include/exec.h"
+#include "../include/exec.h"
 
 size_t	ft_strlen(const char *str)
 {

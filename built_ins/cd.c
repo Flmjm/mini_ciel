@@ -6,11 +6,11 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:01:42 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/09/23 14:31:20 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/07 15:04:50 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/exec.h"
+#include "../include/exec.h"
 
 // a modifier pour le .h du projet
 
