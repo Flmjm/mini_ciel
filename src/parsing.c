@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:37:56 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/08 17:38:08 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/09 17:35:30 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,16 @@ int	count_words(t_token *token)
 
 	count = 0;
 	curr = token;
-	while (curr && curr->type == TOKEN_WORD)
+	while (curr && curr->type != TOKEN_PIPE)
 	{
-		count++;
-		curr = curr->next;
+		while (curr && (curr->type >= TOKEN_REDIRECT_IN && curr->type <= TOKEN_REDIRECT_APPEND))
+			curr = curr->next;
+		while (curr && curr->type == TOKEN_WORD)
+		{
+			if (curr->prev == NULL || curr->prev->type == TOKEN_WORD || curr->prev->type == TOKEN_PIPE || curr->prev->type == TOKEN_EOF)
+				count++;
+			curr = curr->next;
+		}
 	}
 	return (count);
 }
@@ -56,6 +62,36 @@ void	ft_lstadd_cmd_back(t_commands **lst, t_commands *new)
 	last->next = new;
 }
 
+t_token	*ft_add_redir(t_token *token, t_commands *node)
+{
+	while (token && (token->type == TOKEN_REDIRECT_IN || token->type == TOKEN_REDIRECT_OUT || token->type == TOKEN_REDIRECT_APPEND))
+	{
+		if (token->type == TOKEN_REDIRECT_IN)
+			ft_lstadd_infiles_back(&node->infiles, ft_lstnew_redirect_in(token->next->value));
+		else if (token->type == TOKEN_REDIRECT_OUT)
+			ft_lstadd_outfiles_back(&node->outfiles, ft_lstnew_redirect_out(token->next->value, FILE_REDIRECT_OUT));
+		else if (token->type == TOKEN_REDIRECT_APPEND)
+			ft_lstadd_outfiles_back(&node->outfiles, ft_lstnew_redirect_out(token->next->value, FILE_REDIRECT_APPEND));
+		token = token->next->next;
+	}
+	return(token);
+}
+
+// t_token	*ft_add_cmd_in_node(t_token *token, t_commands *command, t_commands *node)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (token && token->type == TOKEN_WORD)
+// 			{
+// 				node->argv[i] = ft_strdup(token->value);
+// 				i++;
+// 				token = token->next;
+// 			}
+// 			node->argv[i] = NULL;
+// 			ft_lstadd_cmd_back(&command, node);
+// 	return (token);
+// }
 
 t_commands	*ft_init_cmd(t_token *token)
 {
@@ -63,37 +99,30 @@ t_commands	*ft_init_cmd(t_token *token)
 	int i;
 	int	cmd_count;
 	t_commands *node;
+	t_token	*tmp_token;
 
 	cmd_count = 0;
 	command = NULL;
+	tmp_token = token;
 	while (token)
 	{
-		//prevoir si ca commence pas par un word
-		if (token->type == TOKEN_WORD)
+		cmd_count = count_words(token);  
+		node = ft_lstnew_command(cmd_count);
+		tmp_token = ft_add_redir(token, node);
+		if (tmp_token->type == TOKEN_WORD)
 		{
-			cmd_count = count_words(token);  
-			node = ft_lstnew_command(cmd_count);
 			i = 0;
-			while (token && token->type == TOKEN_WORD)
+			while (tmp_token && tmp_token->type == TOKEN_WORD)
 			{
-				node->argv[i] = ft_strdup(token->value);
+				node->argv[i] = ft_strdup(tmp_token->value);
 				i++;
-				token = token->next;
+				tmp_token = tmp_token->next;
 			}
 			node->argv[i] = NULL;
 			ft_lstadd_cmd_back(&command, node);
-			while (token && (token->type == TOKEN_REDIRECT_IN || token->type == TOKEN_REDIRECT_OUT || token->type == TOKEN_REDIRECT_APPEND))
-			{
-				if (token->type == TOKEN_REDIRECT_IN)
-					ft_lstadd_infiles_back(&node->infiles, ft_lstnew_redirect_in(token->next->value));
-				else if (token->type == TOKEN_REDIRECT_OUT)
-					ft_lstadd_outfiles_back(&node->outfiles, ft_lstnew_redirect_out(token->next->value, FILE_REDIRECT_OUT));
-				else if (token->type == TOKEN_REDIRECT_APPEND)
-					ft_lstadd_outfiles_back(&node->outfiles, ft_lstnew_redirect_out(token->next->value, FILE_REDIRECT_APPEND));
-				token = token->next->next;
-			}
-			continue ;
 		}
+		token = ft_add_redir(tmp_token, node);
+		if(token)
 			token = token->next;
 	}
 	return(command);
