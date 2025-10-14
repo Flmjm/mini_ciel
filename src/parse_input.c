@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 18:21:57 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/08 17:45:40 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/14 14:41:59 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,6 +309,8 @@ void print_cmds(t_commands *cmds) {
 	int j = 0;
 
     while (current) {
+
+
         printf("[%d] %d: '%s'\n",index,j,current->argv[j]);
 		current = current->next;
 		index++;
@@ -341,7 +343,10 @@ while (cmds)
 		printf("  Infiles:\n");
 		while (in)
 		{
-			printf("    - %s (fd: %d)\n", in->infile, in->fd);
+			if (in->type == FILE_HEREDOC)
+				printf("    - %s (type: << // EOF: %s)\n", in->infile, in->word_eof);
+			else if (in->type == FILE_REDIRECT_IN)
+				printf("    - %s (type: < // EOF: %s)\n", in->infile, in->word_eof);
 			in = in->next;
 		}
 	}

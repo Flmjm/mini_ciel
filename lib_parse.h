@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/08 17:40:31 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/14 14:18:10 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,10 @@ typedef enum e_token_type
 
 typedef enum e_file_type
 {
+	FILE_REDIRECT_IN = 2,		// <
 	FILE_REDIRECT_OUT = 3,    	// >
 	FILE_REDIRECT_APPEND = 4, 	// >>
+	FILE_HEREDOC = 5, 			// <<
 }							t_file_type;
 
 typedef struct t_input_info
@@ -104,6 +106,8 @@ typedef struct t_infiles
 {
 	char				*infile;
 	int					fd;
+	t_file_type			type;
+	char				*word_eof;
 	struct t_infiles	*next;
 }						t_infiles;
 
@@ -196,7 +200,7 @@ void print_cmds(t_commands *cmds);
 void	print_test(t_commands **test);
 
 // init_redir.c
-t_infiles	*ft_lstnew_redirect_in(char *filename);
+t_infiles	*ft_lstnew_redirect_in(char *filename, t_file_type type, char *word);
 t_outfiles	*ft_lstnew_redirect_out(char *filename, t_file_type type);
 void	ft_lstadd_infiles_back(t_infiles **lst, t_infiles *new);
 void	ft_lstadd_outfiles_back(t_outfiles **lst, t_outfiles *new);

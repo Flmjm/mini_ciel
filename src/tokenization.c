@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 17:44:15 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/08 17:45:06 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/14 14:08:33 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,12 @@ char *ft_get_word(char *input, int start)
     int     i;
     int     in_quotes;
     char    quote;
+	int		q;
 
     i = start;
     in_quotes = 0;
     word = NULL;
+	q = 0;
     while (input[i])
     {
         if (in_quotes == 0)
@@ -106,12 +108,12 @@ char *ft_get_word(char *input, int start)
         else
         {
             if (input[i] == quote)
-                in_quotes = 0;
+				in_quotes = 0;
         }
         i++;
     }
     if (i > start)
-        word = ft_substr(input, start, i - start);
+	    word = ft_substr(input, start, i - start);
     return (word);
 }
 // j'ai ajoute les espaces et \t comme fin de mot donc maintenant une commande et ses arguments peuvent etre decomposes en plusieurs tokens

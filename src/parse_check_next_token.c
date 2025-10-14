@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:09:39 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/08 17:47:57 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/14 14:29:49 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,9 @@ void	ft_check_next_token_pipe(t_token *token)
             ft_printf("TEST A SUPPRIMER !!! renvoie le prompt en attendant\n"); // renvoie le prompt et attend une commande
             //recall_readline(token);
         }
-	else if (token->prev->type != TOKEN_WORD)
+	else if (token->prev->type != TOKEN_WORD && token->prev->type != TOKEN_EOF)
 	{
+		printf("token type prev : %d\n", token->prev->type);
 		ft_printf("syntax error near unexpected token '%s'\n", token->value);
 		// exit_with_message_and_//free(NULL, token, 2);
 	}

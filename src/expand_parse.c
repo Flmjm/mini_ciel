@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 21:45:37 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/07 15:03:12 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/14 14:42:20 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	replace_var_input(t_input_info *infos)
 	i = 0;
 	while (infos->input[i])
 	{
-		while (infos->input[i] == ' ')
+		while (infos->input[i] && infos->input[i] == ' ')
 			i++;
 		if (infos->input[i] == '"')
 			i = expand_in_quote(infos, i);

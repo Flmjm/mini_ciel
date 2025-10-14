@@ -6,19 +6,24 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 11:15:55 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/08 16:53:41 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/14 14:52:32 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lib_parse.h"
 
-t_infiles	*ft_lstnew_redirect_in(char *filename)
+t_infiles	*ft_lstnew_redirect_in(char *filename, t_file_type type, char *word)
 {
 	t_infiles	*new;
 
-	new = ft_malloc(sizeof(t_redirect), 0);
+	new = ft_malloc(sizeof(*new), 0);
 	if (!new)
 		return (NULL);
+	if (type == FILE_REDIRECT_IN)
+		new->type = FILE_REDIRECT_IN;
+	else if (type == FILE_HEREDOC)
+		new->type = FILE_HEREDOC;
+	new->word_eof = word;
 	new->infile = filename;
 	new->fd = -1;
 	new->next = NULL;
@@ -29,7 +34,7 @@ t_outfiles	*ft_lstnew_redirect_out(char *filename, t_file_type type)
 {
 	t_outfiles	*new;
 
-	new = ft_malloc(sizeof(t_redirect), 0);
+	new = ft_malloc(sizeof(*new), 0);
 	if (!new)
 		return (NULL);
 	new->outfile = filename;
@@ -63,6 +68,7 @@ void	ft_lstadd_outfiles_back(t_outfiles **lst, t_outfiles *new)
 {
 	t_outfiles	*last;
 
+	last = NULL;
 	if (!lst || !new)
 		return ;
 	if (*lst == NULL)
