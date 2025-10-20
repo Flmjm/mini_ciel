@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 08:51:44 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/07 15:03:03 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/21 00:46:18 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,25 @@ int		next_simple_quote(t_input_info *infos, int i)
 	while (infos->input[i] != '\'')
 	{
 		while (infos->input[i] == '\0')
+		{
+			replace_azt(infos, i);
 			recall_readline(infos);
+		}
 		if (infos->input[i] == '\'')
 			return (i);
 		i++;
 	}
 	return (i);
+}
+
+void	replace_azt(t_input_info *info, int i)
+{
+	char *temp;
+
+	temp = ft_malloc(sizeof(char) * (ft_strlen(info->input) + 2), 0);
+	ft_strlcpy(temp, info->input, ft_strlen(info->input) + 1);
+	info->input[i] = '\n';
+	info->input[i + 1] = '\0';
 }
 
 int		next_double_quote(t_input_info *infos, int i, int init) // bug sur input: "\"
@@ -79,7 +92,10 @@ int		next_double_quote(t_input_info *infos, int i, int init) // bug sur input: "
 		if (init == TRUE)
 		{
 			while (infos->input[i] == '\0')
+			{
+				replace_azt(infos, i);
 				recall_readline(infos);
+			}
 		}
 		if (infos->input[i] == '"')
 			return (i);

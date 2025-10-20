@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/20 23:49:44 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/10/21 00:45:03 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef	struct s_env
 {
 	char **export;	//varibale d'en exporter
 	char **local_env; // varibale d'env locale + exporter
+	char *oldpwd;
+	char *pwd;
 }						t_env;
 
 
@@ -125,6 +127,7 @@ void	erase_in_str(t_input_info *infos, int i); // suprime proprement infos->inpu
 int		how_much_args(t_input_info *infos); // retourne le nombre d'arguments passer a readline
 int		next_space(char *str, int i); // useless
 void	replace_backslash_double_quote(t_input_info *infos); // useless
+void		replace_azt(t_input_info *info, int i);
 
 // put_input_to_array.c
 int		strlen_of_args(t_input_info *infos, int start); // start = numeros de l'argument dans infos, retourne sa taille complete
@@ -160,7 +163,7 @@ char *ft_get_word(char *input, int start);
 t_token	*ft_token(char *input);
 
 //built_in.c
-char		**ft_env(char **environ);	//init la struct env
+char		**ft_env(char **environ, t_env *env);	//init la struct env
 int			env_built_in(t_env *env); //a besoin du char **environt qui est pris par le main apres argc et argv;
 void		up_shell_level(char **env); //augmente le niveau du shell dans les variable d'env
 void	ft_exit(t_env *env);

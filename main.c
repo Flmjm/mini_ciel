@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/20 02:44:17 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/10/21 00:26:55 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,9 @@ int	main(int argc, char **argv, char **environt)
 	t_env *env_s;
 
 	env_s = ft_malloc(sizeof(t_env), 0);
-	env_s->export = ft_env(environt);
-	env_s->local_env = ft_env(environt);	//sert a init la struct et a avoir une copie des variables d'environnement
-
+	env_s->export = ft_env(environt, env_s);
+	env_s->local_env = ft_env(environt, env_s);	//sert a init la struct et a avoir une copie des variables d'environnement
 	prompt_loop(input, env_s); //la boucle principal du shell
-
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 19:46:26 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/20 23:49:21 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/10/21 00:24:04 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	env_built_in(t_env *env) //a besoin du char **environ qui est pris par le ma
 	return (0);
 }
 
-char	**ft_env(char **environ)
+char	**ft_env(char **environ, t_env *env)
 {
 	int	i;
 	int	length;
@@ -42,6 +42,10 @@ char	**ft_env(char **environ)
 	{
 		env_copy[i] = ft_malloc(sizeof(char) * (ft_strlen(environ[i]) + 1), 0);
 		ft_strlcpy(env_copy[i], environ[i], ft_strlen(environ[i]) + 1);
+		if (ft_strncmp("OLDPWD=", env_copy[i], 7) == 0)
+			env->oldpwd = env_copy[i];
+		else if (ft_strncmp("PWD=", env_copy[i], 4) == 0)
+			env->pwd = env_copy[i];
 		i++;
 	}
 	env_copy[i] = NULL;

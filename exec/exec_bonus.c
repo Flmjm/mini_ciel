@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:34 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/20 23:49:54 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/10/21 00:04:11 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,11 @@ int	exec_main(t_commands *cmds, t_env *env)
 	int			ret;
 
 	ret = 0;
-	if ((ft_strlen(cmds->argv[0]) == 4) || (ft_strlen(cmds->argv[0]) == 3)) //built-in
-	{
-		if ((ft_strlen(cmds->argv[0]) == 4) && (ft_strncmp("exit", cmds->argv[0], 4) == 0))
-			ft_exit(env);
-		else if ((ft_strlen(cmds->argv[0]) == 3) && (ft_strncmp("env", cmds->argv[0], 3) == 0))
-			env_built_in(env);
-	}
-	else //cmd non built-in
+	if ((ft_strlen(cmds->argv[0]) == 4) && (ft_strncmp("exit", cmds->argv[0], 4) == 0))
+		ft_exit(env);
+	else if ((ft_strlen(cmds->argv[0]) == 3) && (ft_strncmp("env", cmds->argv[0], 3) == 0))
+		env_built_in(env);
+	else //cmd non built-in--------------------------------------------------------------------------------------
 	{
 	pipex = ft_malloc(sizeof(t_pipex_b), 0);
 	if (!pipex)
@@ -35,7 +32,7 @@ int	exec_main(t_commands *cmds, t_env *env)
 	create_pipe(pipex);
 	ft_pipex(pipex, cmds, env->local_env);
 	ret = ft_waitpid(pipex);
-	}
+	}//------------------------------------------------------------------------------------------------------------
 	return (ret);
 }
 

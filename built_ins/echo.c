@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 10:32:07 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/10/07 15:04:11 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/20 23:52:53 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/exec.h"
+#include "../exec/pipex_bonus.h"
 // a modifier pour le .h du projet
 
 
 int check_option_n(char *str)
 {
     size_t i;
-    
+
     i = 0;
     if (str[i] && str[i] == '-')
     {
@@ -57,11 +57,11 @@ int    ft_echo(char **cmd) //(char **cmd, int fd)
 //gestion erreurs
 
 // echo -n = echo -nnnnnn = echo -n -n -n ... retire le \n
-// est ce qu'on gère le fd ici ou ailleurs ? 
+// est ce qu'on gère le fd ici ou ailleurs ?
 // ex echo hello > fichier --> ft_putstr_fd("hello", fichier)
 
 // int main(int ac, char **av)
-// {    
+// {
 //     if (ac > 1)
 //         ft_echo(av+1);
 // }

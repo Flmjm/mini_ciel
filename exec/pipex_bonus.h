@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:45 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/20 02:57:37 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/10/21 00:07:44 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+# ifndef PATH_MAX
+# define PATH_MAX 100
+# endif
 
 typedef struct s_pipex_b
 {
@@ -67,5 +71,7 @@ int			ft_waitpid(t_pipex_b *pipex);
 void		create_pipe(t_pipex_b *pipex);
 int	ft_lstlen(struct t_commands *cmds);
 int	exec_main(t_commands *cmds, t_env *env);
+
+// ----> built_ins
 
 #endif
