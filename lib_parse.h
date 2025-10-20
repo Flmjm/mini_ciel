@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/21 00:45:03 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/10/21 01:13:15 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,9 @@ void	add_node_cmds(t_commands **commands, t_commands	*new);
 int		how_many_args(t_token	*input);
 void print_cmds(t_commands *cmds);
 void	print_test(t_commands **test);
+char	*clean_simple_quote(char *str); // faut rajouter le cas <<''>>
+void	clean_quote_in_argv(char **argv);
+char	*clean_double_quote(char *str); // faut rajouter le cas <<"">>
 
 // init_redir.c
 t_infiles	*ft_lstnew_redirect_in(char *filename, t_file_type type, char *word);

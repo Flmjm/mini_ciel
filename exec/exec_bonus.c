@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:34 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/21 00:04:11 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/10/21 01:13:03 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	exec_main(t_commands *cmds, t_env *env)
 	int			ret;
 
 	ret = 0;
+	clean_quote_in_argv(cmds->argv);
 	if ((ft_strlen(cmds->argv[0]) == 4) && (ft_strncmp("exit", cmds->argv[0], 4) == 0))
 		ft_exit(env);
 	else if ((ft_strlen(cmds->argv[0]) == 3) && (ft_strncmp("env", cmds->argv[0], 3) == 0))
@@ -34,6 +35,51 @@ int	exec_main(t_commands *cmds, t_env *env)
 	ret = ft_waitpid(pipex);
 	}//------------------------------------------------------------------------------------------------------------
 	return (ret);
+}
+
+void	clean_quote_in_argv(char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (argv[i])
+	{
+		if (argv[i][0] == '\'')
+			argv[i] = clean_simple_quote(argv[i]);
+		else if (argv[i][0] == '"')
+			argv[i] = clean_double_quote(argv[i]);
+		i++;
+	}
+}
+
+char	*clean_simple_quote(char *str) // faut rajouter le cas <<''>>
+{
+	char *temp;
+	int	i;
+
+	i = 1;
+	temp = ft_malloc(sizeof (char) * (ft_strlen(str) - 2), 0);
+	while (str[i] != '\'')
+	{
+		temp[i - 1] = str[i];
+		i++;
+	}
+	return (temp);
+}
+
+char	*clean_double_quote(char *str) // faut rajouter le cas <<"">>
+{
+	char *temp;
+	int	i;
+
+	i = 1;
+	temp = ft_malloc(sizeof (char) * (ft_strlen(str) - 2), 0);
+	while (str[i] != '"')
+	{
+		temp[i - 1] = str[i];
+		i++;
+	}
+	return (temp);
 }
 
 void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, char **env)
