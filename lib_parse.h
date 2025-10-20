@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/14 14:18:10 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/20 17:12:01 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,24 +76,6 @@ typedef struct s_token
 	struct s_token	*prev;
 }						t_token;
 
-
-typedef struct s_redirect
-{
-	t_file_type		type;
-	char			*filename;
-	int				fd;
-	struct s_redirect	*next;
-	struct s_redirect	*prev;
-}						t_redirect;
-
-typedef struct s_ju_command
-{
-	char			**argv;
-	t_redirect		*redirection;
-	struct s_token	*next;
-	struct s_token	*prev;
-}						t_ju_command;
-
 typedef struct t_commands
 {
 	char **argv;
@@ -152,9 +134,11 @@ void	add_space_before(t_input_info *infos, int i);
 void	define_operator(t_input_info *infos);
 int		expand_in_quote(t_input_info *infos, int i);
 
-//tokenization.c
+//tokenization_utils.c
 t_token	*ft_lstnew_token(t_token_type type, char *content);
 void	ft_lstadd_token_back(t_token **lst, t_token *new);
+
+//tokenization.c
 int	ft_get_op_length(char *input, int i, t_token_type *type);
 char *ft_get_word(char *input, int start);
 t_token	*ft_token(char *input);
@@ -171,16 +155,23 @@ int	count_words(t_token *token);
 t_commands	*ft_lstnew_command(int words);
 void	ft_lstadd_cmd_back(t_commands **lst, t_commands *new);
 t_commands	*ft_init_cmd(t_token *token);
-void	ft_check_next_token(t_token *token);
+
+//parse_quotes_in_cmds.c
+void	ft_check_quotes_struct_cmd(t_commands *commands);
+char *ft_check_quotes_argv(char *cmds, int len);
 
 //parse_check_next_token.c
 void	ft_check_next_token_heredoc(t_token *token);
 void	ft_check_next_token_pipe(t_token *token);
 void	ft_check_next_token_redir_in(t_token *token);
 void	ft_check_next_token_redir_out(t_token *token);
-void	ft_check_next_token_redir_append(t_token *token);
 void	ft_check_next_token_herestring(t_token *token);
 //void	recall_readline(t_token *infos);
+
+//parse_check_next_token2.c
+void	ft_check_next_token_redir_append(t_token *token);
+void	ft_check_next_token(t_token *token);
+
 
 // free_errors.c
 void	exit_with_message_and_free(char *str, t_token *token, int n);
@@ -204,6 +195,8 @@ t_infiles	*ft_lstnew_redirect_in(char *filename, t_file_type type, char *word);
 t_outfiles	*ft_lstnew_redirect_out(char *filename, t_file_type type);
 void	ft_lstadd_infiles_back(t_infiles **lst, t_infiles *new);
 void	ft_lstadd_outfiles_back(t_outfiles **lst, t_outfiles *new);
+t_token	*ft_add_redir(t_token *token, t_commands *node);
+
 void	print_redirections(t_commands *cmds);
 //retirer le print
 

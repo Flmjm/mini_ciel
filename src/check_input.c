@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 08:51:44 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/07 15:03:03 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/20 16:45:31 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	recall_readline(t_input_info *infos)
 	temp_input = readline(">");
 	if (ft_strlen(temp_input) == 0)
 		return ;
-	buffer = ft_malloc(sizeof(char) * ft_strlen(infos->input), 0);
+	buffer = ft_malloc(sizeof(char) * ft_strlen(infos->input) + 1, 0);
 	ft_strlcpy(buffer, infos->input, ft_strlen(infos->input) + 1);
 	//free(infos->input);
 	infos->input = ft_malloc(sizeof(char) * (ft_strlen(buffer) + ft_strlen(temp_input) + 1), 0);

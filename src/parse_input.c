@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 18:21:57 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/14 14:41:59 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/20 16:47:05 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void manage_input(char *str) //verifie l'input de readline et la passe en **argv
 	token = ft_token(infos->input);
 	print_tokens(token);
 	cmds = ft_init_cmd(token);
+	ft_check_quotes_struct_cmd(cmds);
 	print_redirections(cmds);
-	//print_cmds(cmds);
 	//free(token);
 	//free(infos);
 }
@@ -194,99 +194,6 @@ void	erase_in_str(t_input_info *infos, int i)
 	infos->input = buffer;
 }
 
-t_commands	*sep_cmd(t_token *input)
-{
-	int	i;
-	int	j;
-	t_token		*current;
-	t_commands	*commands;
-	t_commands	*new;
-	int nbr;
-
-	current = input;
-	commands = NULL;
-	new = NULL;
-	nbr = 1;
-	i = 0;
-	while (current)
-	{
-		if ((current->type == TOKEN_WORD || current->type == TOKEN_REDIRECT_IN) && (i == 0))
-		{
-			j = 0;
-			new = ft_malloc(sizeof(t_commands), 0);
-			nbr = how_many_args(current) + 1;
-			new->argv = ft_malloc(sizeof(char *) * nbr, 0);
-			new->argv[j] = current->value;
-			i = 1;
-		}
-		if (!current->next && new)
-		{
-			if (current->type == TOKEN_PIPE)
-				new->argv[j] = NULL;
-			else
-			{
-				new->argv[j] = current->value;
-				new->argv[j + 1] = NULL;
-			}
-			add_node_cmds(&commands, new);
-			i = 0;
-		}
-		else if ((current->type != TOKEN_PIPE) && (i = 1) && new)
-			new->argv[j] = current->value;
-		else if ((current->type == TOKEN_PIPE) && new)
-		{
-			new->argv[j] = NULL;
-			add_node_cmds(&commands, new);
-			i = 0;
-		}
-		j++;
-		current = current->next;
-	}
-	return (commands);
-}
-
-void	print_test(t_commands **cmds)
-{
-	int	i;
-	t_commands	*test;
-
-	test = *cmds;
-	int j;
-	i = 0;
-	j = 0;
-	while (test)
-	{
-		while (test->argv[i])
-		{
-			printf("%d: %s\n", i, test->argv[i]);
-			i++;
-		}
-		if (test->next)
-			printf("\nNEXT\n\n");
-		test = test->next;
-		i = 0;
-		j++;
-	}
-}
-
-void	add_node_cmds(t_commands **commands, t_commands	*new)
-{
-	t_commands	*current;
-
-	current = *commands;
-	if (!current)
-	{
-		new->next = NULL;
-		*commands = new;
-		return ;	
-	}
-	new->next = NULL;
-	while (current->next)
-		current = current->next;
-	current->next = new;
-}
-
-
 int	how_many_args(t_token	*input)
 {
 	int	i;
@@ -300,22 +207,6 @@ int	how_many_args(t_token	*input)
 		i++;
 	}
 	return (i);
-}
-
-void print_cmds(t_commands *cmds) {
-    printf("\n=== TOKENS ===\n");
-    t_commands *current = cmds;
-    int index = 0;
-	int j = 0;
-
-    while (current) {
-
-
-        printf("[%d] %d: '%s'\n",index,j,current->argv[j]);
-		current = current->next;
-		index++;
-    }
-    printf("\n");
 }
 
 void	print_redirections(t_commands *cmds)
