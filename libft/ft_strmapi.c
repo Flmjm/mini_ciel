@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 17:09:42 by mleschev          #+#    #+#             */
-/*   Updated: 2025/04/12 15:19:28 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:03:45 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	n = 0;
 	if (!s)
 		return (NULL);
-	tab = malloc((ft_strlen(s) + 1) * sizeof(char));
+	tab = ft_malloc((ft_strlen(s) + 1) * sizeof(char), 0);
 	if (!tab)
 		return (NULL);
 	tab[ft_strlen(s)] = '\0';
