@@ -16,7 +16,7 @@ void	exit_with_message_and_free(char *str, t_token *token, int n)
 {
 	if (str)
 		ft_putendl_fd(str, 2);
-	ft_free_tokens(token);
+	// ft_free_tokens(token);
 	// exit(n);
 }
 

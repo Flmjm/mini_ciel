@@ -34,7 +34,8 @@ void	prompt_loop(char *input, t_env *env_s)
 	{
 		input = readline(PROMPT_LINE);
 		cmds = manage_input(input);	//j'ai mis ft_token a l'interieur
-		exec_main(cmds, env_s);
+		if (cmds)
+			exec_main(cmds, env_s);
 
 		// if (ft_strncmp(input, "exit", ft_strlen(input)) == 0) //temporaire -------
 		// 	ft_exit(env_s);

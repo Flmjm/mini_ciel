@@ -19,21 +19,14 @@ int	exec_main(t_commands *cmds, t_env *env)
 	int			ret;
 
 	ret = 0;
-	clean_quote_in_argv(cmds->argv);
-	if ((ft_strlen(cmds->argv[0]) == 4) && (ft_strncmp("exit", cmds->argv[0], 4) == 0))
-		ft_exit(env);
-	else if ((ft_strlen(cmds->argv[0]) == 3) && (ft_strncmp("env", cmds->argv[0], 3) == 0))
-		env_built_in(env);
-	else //cmd non built-in--------------------------------------------------------------------------------------
-	{
-	pipex = ft_malloc(sizeof(t_pipex_b), 0);
-	if (!pipex)
-		printf("malloc pipex\n");
-	init_struct_exec(pipex, cmds, env->local_env);
-	create_pipe(pipex);
-	ft_pipex(pipex, cmds, env->local_env);
-	ret = ft_waitpid(pipex);
-	}//------------------------------------------------------------------------------------------------------------
+	// clean_quote_in_argv(cmds->argv);
+		printf("CMD NON BUILT IN\n");
+		pipex = ft_malloc(sizeof(t_pipex_b), 0);
+		if (!pipex)
+			printf("malloc pipex\n");
+		init_struct_exec(pipex, cmds, env->local_env);
+		create_pipe(pipex);
+		ft_pipex(pipex, cmds, env);
 	return (ret);
 }
 
@@ -82,30 +75,34 @@ char	*clean_double_quote(char *str) // faut rajouter le cas <<"">>
 	return (temp);
 }
 
-void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, char **env)
+void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env)
 {
 	int	i;
 
 	i = 0;
-	while (i < pipex->cmd_count - 1)
+	while (i < pipex->cmd_count)
 	{
-		init_cmd(pipex, cmds);
-		pipex->pid[i] = fork();
-		if (pipex->pid[i] < 0)
-			ft_printf("DEBUG : pid %d", pipex->pid);
-		if (pipex->pid[i] == 0 && pipex->pathname_cmd)
-			cmd_process(pipex, env, i);
-		else if (pipex->pid[i] == 0 && !pipex->pathname_cmd)
-			ft_printf("%s : Command not found\n", pipex->cmd[0]);
-		if (pipex->pipefd[i][1] != -1)
-			close(pipex->pipefd[i][1]);
-		if (i > 0 && pipex->pipefd[i - 1][0] != -1)
-			close(pipex->pipefd[i - 1][0]);
+		if ((ft_strlen(cmds->argv[0]) == 4) && (ft_strncmp("exit", cmds->argv[0], 4) == 0))
+			ft_exit(env);
+		else if ((ft_strlen(cmds->argv[0]) == 3) && (ft_strncmp("env", cmds->argv[0], 3) == 0))
+			env_built_in(env);
+		else
+		{
+			init_cmd(pipex, cmds);
+			pipex->pid[i] = fork();
+			if (pipex->pid[i] == 0 && pipex->pathname_cmd)
+				cmd_process(pipex, env->local_env, i);
+			else if (pipex->pid[i] == 0 && !pipex->pathname_cmd)
+			{	
+				ft_printf("%s : Command not found\n", pipex->cmd[0]);
+				exit (127);
+			}
+		}
 		if (cmds->next)
 			cmds = cmds->next;
 		i++;
+		ft_wait_last_cmd(pipex, i);
 	}
-	last_cmd(pipex, cmds, env, i);
 }
 
 void	last_cmd(t_pipex_b *pipex, t_commands *cmds, char **env, int i)
@@ -117,8 +114,7 @@ void	last_cmd(t_pipex_b *pipex, t_commands *cmds, char **env, int i)
 		printf("aled in lastcmd");
 	if (pipex->pid[i] == 0)
 		cmd_process(pipex, env, i);
-	printf("I:%d\n", i);
-	// if (pipex->pipefd[i - 1][0] != -1)
+	// if (i > 0pipex->pipefd[i - 1][0] != -1)
 	// 	close(pipex->pipefd[i - 1][0]);
 }
 
@@ -138,6 +134,18 @@ int	ft_waitpid(t_pipex_b *pipex)
 		i++;
 	}
 	return (ret);
+}
+
+void	ft_wait_last_cmd(t_pipex_b *pipex, int i_cmd)
+{
+	int	i;
+	int	ret;
+	int	status;
+
+	i = i_cmd - 1;
+	ret = 0;
+	status = 0;
+	waitpid(pipex->pid[i], &status, 0);
 }
 
 void	create_pipe(t_pipex_b *pipex)

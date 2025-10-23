@@ -24,6 +24,7 @@ int	env_built_in(t_env *env) //a besoin du char **environ qui est pris par le ma
 		printf("%s\n", env->export[i]);
 		i++;
 	}
+	printf("\n\nDEBUG FT ENV\n");
 	return (0);
 }
 
@@ -78,6 +79,7 @@ void up_shell_level(char **env)
 void	ft_exit(t_env *env)
 {
 	//free_env(env);
+	printf("FT EXIT\n");
 	rl_clear_history();
 	ft_malloc(0, 1);
 	exit(0);

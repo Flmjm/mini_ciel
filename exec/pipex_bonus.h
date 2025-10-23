@@ -65,12 +65,13 @@ void		init_cmd(t_pipex_b *pipex, t_commands *cmds);
 void		ft_free(void *ptr);
 
 ///////////////////////////// main.c ////////////////////////////////////
-void		ft_pipex(t_pipex_b *pipex, t_commands *cmds, char **env);
+void		ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env);
 void		last_cmd(t_pipex_b *pipex, t_commands *cmds, char **env, int i);
 int			ft_waitpid(t_pipex_b *pipex);
 void		create_pipe(t_pipex_b *pipex);
-int	ft_lstlen(struct t_commands *cmds);
-int	exec_main(t_commands *cmds, t_env *env);
+int			ft_lstlen(struct t_commands *cmds);
+int			exec_main(t_commands *cmds, t_env *env);
+void		ft_wait_last_cmd(t_pipex_b *pipex, int i_cmd);
 
 // ----> built_ins
 

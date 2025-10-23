@@ -94,11 +94,6 @@ void	get_pathname(char **cmd, t_pipex_b *pipex)
 	}
 	if (!path)
 		pipex->pathname_cmd = NULL;
-
-	if (!path)
-		printf("debug: g pas trouver le pathname de la cmd\n");
-	else
-		printf("DEBUG: %s\n", pipex->pathname_cmd);
 }
 
 // void	init_outfile(t_pipex_b *pipex)
