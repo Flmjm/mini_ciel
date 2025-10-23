@@ -20,7 +20,6 @@ int	exec_main(t_commands *cmds, t_env *env)
 
 	ret = 0;
 	// clean_quote_in_argv(cmds->argv);
-		printf("CMD NON BUILT IN\n");
 		pipex = ft_malloc(sizeof(t_pipex_b), 0);
 		if (!pipex)
 			printf("malloc pipex\n");
@@ -75,6 +74,16 @@ char	*clean_double_quote(char *str) // faut rajouter le cas <<"">>
 	return (temp);
 }
 
+int	argc_of_argv(char **cmds)
+{
+	int	i;
+
+	i = 0;
+	while (cmds[i])
+		i++;
+	return (i);
+}
+
 void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env)
 {
 	int	i;
@@ -83,19 +92,26 @@ void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env)
 	while (i < pipex->cmd_count)
 	{
 		if ((ft_strlen(cmds->argv[0]) == 4) && (ft_strncmp("exit", cmds->argv[0], 4) == 0))
-			ft_exit(env);
+			ft_exit(env, 0);
 		else if ((ft_strlen(cmds->argv[0]) == 3) && (ft_strncmp("env", cmds->argv[0], 3) == 0))
 			env_built_in(env);
+		else if ((ft_strlen(cmds->argv[0]) == 2) && (ft_strncmp("cd", cmds->argv[0], 2) == 0))
+			cd_main(argc_of_argv(cmds->argv), cmds->argv, env);
+		else if ((ft_strlen(cmds->argv[0]) == 4) && (ft_strncmp("echo", cmds->argv[0], 4) == 0))
+			ft_echo(cmds->argv);
+		else if ((ft_strlen(cmds->argv[0]) == 3) && (ft_strncmp("pwd", cmds->argv[0], 3) == 0))
+			ft_pwd();
 		else
 		{
 			init_cmd(pipex, cmds);
+			printf("DEBUG PID %d\n", getpid());
 			pipex->pid[i] = fork();
 			if (pipex->pid[i] == 0 && pipex->pathname_cmd)
 				cmd_process(pipex, env->local_env, i);
 			else if (pipex->pid[i] == 0 && !pipex->pathname_cmd)
 			{	
 				ft_printf("%s : Command not found\n", pipex->cmd[0]);
-				exit (127);
+				ft_exit(env, 127);
 			}
 		}
 		if (cmds->next)

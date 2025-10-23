@@ -72,7 +72,13 @@ void		create_pipe(t_pipex_b *pipex);
 int			ft_lstlen(struct t_commands *cmds);
 int			exec_main(t_commands *cmds, t_env *env);
 void		ft_wait_last_cmd(t_pipex_b *pipex, int i_cmd);
+int			argc_of_argv(char **cmds);
+char		*prompt_sentence(t_env *env);
+
 
 // ----> built_ins
+int			cd_main(int ac, char **av, t_env *envpwd);
+int		    ft_echo(char **cmd);
+int			ft_pwd();
 
 #endif

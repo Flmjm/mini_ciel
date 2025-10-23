@@ -1,11 +1,11 @@
 NAME = Mini_Ciel
 
-LIBS = -lreadline
+LIBS = -lreadline -lhistory
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g3 -O0 -no-pie -g
 
-SRCS =  $(wildcard *.c src/*.c exec/*.c)
+SRCS =  $(wildcard *.c src/*.c exec/*.c built_ins/*.c)
 
 
 OBJS = $(SRCS:.c=.o)

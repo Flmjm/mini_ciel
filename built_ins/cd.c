@@ -165,21 +165,21 @@
 ////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////
 
-char	*get_env_value(char *value, char **env)
-{
-	size_t	len_value;
-	size_t	i;
+// char	*get_env_value(char *value, char **env)
+// {
+// 	size_t	len_value;
+// 	size_t	i;
 
-	len_value = ft_strlen(value);
-	i = 0;
-	while (env && env[i])
-	{
-		if (ft_strncmp(env[i], value, len_value) == 0)
-			return (ft_strdup(env[i] + len_value));
-		i++;
-	}
-	return (NULL);
-}
+// 	len_value = ft_strlen(value);
+// 	i = 0;
+// 	while (env && env[i])
+// 	{
+// 		if (ft_strncmp(env[i], value, len_value) == 0)
+// 			return (ft_strdup(env[i] + len_value));
+// 		i++;
+// 	}
+// 	return (NULL);
+// }
 
 char	*get_pathname_dir(char *cmd)
 {
@@ -273,17 +273,17 @@ int	update_cwd(t_env *envpwd, char *s1_oldpwd, char *s2_pwd)
 	return (chdir(s2_pwd));
 }
 
-int	main(int ac, char **av, char **env)
+int cd_main(int ac, char **av, t_env *envpwd)
 {
-	t_env	*envpwd;
+	// t_env	*envpwd;
 	char		buf[PATH_MAX];
 
-	envpwd = ft_malloc(sizeof(t_env), 0);
-	envpwd->oldpwd = "/home/jmalaval/Cercle_3/mini_ciel/src/";
+	// envpwd = ft_malloc(sizeof(t_env), 0);
+	// envpwd->oldpwd = "OLDPWD=""/home/jmalaval/Cercle_3/mini_ciel/src/";
 	envpwd->pwd = getcwd(buf, PATH_MAX);
 	if (ac > 1)
 	{
-		ft_cd(av + 1, env, envpwd);
+		ft_cd(av + 1, envpwd->local_env, envpwd);
 	}
 }
 

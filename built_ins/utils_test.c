@@ -2,15 +2,16 @@
 
 #include "../exec/pipex_bonus.h"
 
-size_t	ft_strlen(const char *str)
-{
-	int	i;
+// size_t	ft_strlen(const char *str)
+// {
+// 	int	i;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
+// 	i = 0;
+// 	while (str[i])
+// 		i++;
+// 	return (i);
+// }
+
 void	ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);

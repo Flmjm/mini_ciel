@@ -14,6 +14,7 @@
 
 int	env_built_in(t_env *env) //a besoin du char **environ qui est pris par le main apres argc et argv
 {
+	printf("BUILT IN\n");
 	int	i;
 
 	i = 0;
@@ -76,13 +77,13 @@ void up_shell_level(char **env)
 	}
 }
 
-void	ft_exit(t_env *env)
+void	ft_exit(t_env *env, int nbr_return)
 {
 	//free_env(env);
 	printf("FT EXIT\n");
 	rl_clear_history();
 	ft_malloc(0, 1);
-	exit(0);
+	exit(nbr_return);
 }
 
 // void free_env(t_env *env)

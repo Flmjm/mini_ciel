@@ -166,7 +166,7 @@ t_token	*ft_token(char *input);
 char		**ft_env(char **environ, t_env *env);	//init la struct env
 int			env_built_in(t_env *env); //a besoin du char **environt qui est pris par le main apres argc et argv;
 void		up_shell_level(char **env); //augmente le niveau du shell dans les variable d'env
-void	ft_exit(t_env *env);
+void	ft_exit(t_env *env, int nbr_return);
 void	free_env(t_env *env);
 
 //parsing.c
@@ -190,7 +190,7 @@ void	ft_check_next_token_herestring(t_token *token);
 void    ft_free_tokens(t_token *tokens);
 
 //main.c
-void prompt_loop(char *input, t_env *env_s);
+void	prompt_loop(t_env *env_s);
 
 // a retirer
 void print_tokens(t_token *tokens); //test pour voir la tokenisation

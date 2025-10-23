@@ -16,9 +16,7 @@ void	cmd_process(t_pipex_b *pipex, char **env, int index)
 {
 	close_fd(pipex);
 	if (!pipex->pathname_cmd)
-	{	
 		ft_printf("%s : Command not found\n", pipex->cmd[0]);
-	}
 	else
 		execve(pipex->pathname_cmd, pipex->cmd, env);
 }
