@@ -52,7 +52,10 @@ void	ft_dup2_and_close(int fd, int n)
 void	init_cmd(t_pipex_b *pipex, t_commands *cmds)
 {
 	pipex->cmd = cmds->argv;
-	get_pathname(pipex->cmd, pipex);
+	if (is_relative_or_absolute_path(cmds->argv[0]) == 0)
+		get_pathname(pipex->cmd, pipex);
+	else
+		pipex->pathname_cmd = cmds->argv[0];
 }
 
 void	ft_free(void *ptr)
@@ -62,4 +65,18 @@ void	ft_free(void *ptr)
 		free(ptr);
 		ptr = NULL;
 	}
+}
+
+int	is_relative_or_absolute_path(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '/')
+			return (1);
+		i++;
+	}
+	return (0);
 }

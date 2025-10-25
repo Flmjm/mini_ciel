@@ -91,6 +91,7 @@ void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *exit_c
 	i = 0;
 	while (i < pipex->cmd_count)
 	{
+		
 		if ((ft_strlen(cmds->argv[0]) == 4) && (ft_strncmp("exit", cmds->argv[0], 4) == 0))
 			ft_exit(env, 0);
 		else if ((ft_strlen(cmds->argv[0]) == 3) && (ft_strncmp("env", cmds->argv[0], 3) == 0))
