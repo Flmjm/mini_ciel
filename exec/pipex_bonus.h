@@ -64,6 +64,7 @@ void		ft_dup2_and_close(int fd, int n);
 void		init_cmd(t_pipex_b *pipex, t_commands *cmds);
 void		ft_free(void *ptr);
 int			is_relative_or_absolute_path(char *str);
+void	ft_dup_last_outfile(t_commands *cmds, t_pipex_b *pipex);
 
 ///////////////////////////// main.c ////////////////////////////////////
 void		ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *exit_code);

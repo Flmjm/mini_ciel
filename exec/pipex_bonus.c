@@ -18,7 +18,10 @@ void	cmd_process(t_pipex_b *pipex, char **env, int index)
 	if (!pipex->pathname_cmd)
 		ft_printf("%s : Command not found\n", pipex->cmd[0]);
 	else
-		execve(pipex->pathname_cmd, pipex->cmd, env);
+	{
+		if (pipex->outfile_error == 0)
+			ft_dup2_and_close(pipex->outfile, STDOUT_FILENO);
+		execve(pipex->pathname_cmd, pipex->cmd, env);}
 }
 
 void	close_fd(t_pipex_b *pipex)
@@ -56,6 +59,32 @@ void	init_cmd(t_pipex_b *pipex, t_commands *cmds)
 		get_pathname(pipex->cmd, pipex);
 	else
 		pipex->pathname_cmd = cmds->argv[0];
+	if (cmds->outfiles)
+		ft_dup_last_outfile(cmds, pipex);
+}
+
+void	ft_dup_last_outfile(t_commands *cmds, t_pipex_b *pipex)
+{
+	t_commands 	*current;
+	char		*last_outfile;
+
+	current = cmds;
+	while (current->outfiles && current->outfiles->next)
+		current->outfiles = current->outfiles->next;
+	last_outfile = ft_strjoin(ft_strjoin(getenv("PWD"), "/"), current->outfiles->outfile);
+	if (access(last_outfile, F_OK) == 0)
+	{
+		if (current->outfiles->type == TOKEN_REDIRECT_OUT)
+			pipex->outfile = open(current->outfiles->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		else if (current->outfiles->type == TOKEN_REDIRECT_APPEND)
+			pipex->outfile = open(current->outfiles->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (pipex->outfile > 0)
+			pipex->outfile_error = 0;
+		else
+			pipex->outfile_error = -1;
+	}
+	else
+		pipex->outfile_error = -1;
 }
 
 void	ft_free(void *ptr)

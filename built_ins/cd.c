@@ -279,7 +279,7 @@ int cd_main(int ac, char **av, t_env *envpwd)
 	char		buf[PATH_MAX];
 
 	// envpwd = ft_malloc(sizeof(t_env), 0);
-	// envpwd->oldpwd = "OLDPWD=""/home/jmalaval/Cercle_3/mini_ciel/src/";
+	// envpwd->pwd = "OLDPWD=""/home/";
 	envpwd->pwd = getcwd(buf, PATH_MAX);
 	if (ac > 1)
 	{
