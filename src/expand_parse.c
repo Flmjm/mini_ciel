@@ -12,7 +12,7 @@
 
 #include "../lib_parse.h"
 
-void	replace_var_input(t_input_info *infos)
+void	replace_var_input(t_input_info *infos, t_exitcode *exit_code)
 {
 	int	i;
 
@@ -22,15 +22,15 @@ void	replace_var_input(t_input_info *infos)
 		while (infos->input[i] && infos->input[i] == ' ')
 			i++;
 		if (infos->input[i] == '"')
-			i = expand_in_quote(infos, i);
+			i = expand_in_quote(infos, i, exit_code);
 		else if (infos->input[i] == '\'')
 			i = next_simple_quote(infos, i);
 		if (infos->input[i] == '$')
-			expand_var(infos, i, 0);
+			expand_var(infos, i, 0, exit_code);
 		i++;
 	}
 }
-int	expand_in_quote(t_input_info *infos, int i)
+int	expand_in_quote(t_input_info *infos, int i, t_exitcode *exit_code)
 {
 	i++;
 	while (infos->input[i] != '"')
@@ -40,13 +40,13 @@ int	expand_in_quote(t_input_info *infos, int i)
 		else if (infos->input[i] == '\\' && infos->input[i + 1] == '$')
 			erase_in_str(infos, i);
 		else if (infos->input[i] == '$')
-			expand_var(infos, i, 1);
+			expand_var(infos, i, 1, exit_code);
 		i++;
 	}
 	return (i);
 }
 
-void	expand_var(t_input_info *infos, int i, int quote)
+void	expand_var(t_input_info *infos, int i, int quote, t_exitcode *exit_code)
 {
 	char	*temp_input;
     char    env_input[20];
@@ -66,7 +66,10 @@ void	expand_var(t_input_info *infos, int i, int quote)
         j++;
     }
     env_input[j] = '\0';
-	temp_input = getenv(env_input);
+    if (ft_strlen(env_input) == 1)
+        temp_input = ft_itoa(exit_code->last_cmd);
+    else
+        temp_input = getenv(env_input);
 	if (!temp_input)
         return ;
 	resize_and_copy(infos, i, j, temp_input);

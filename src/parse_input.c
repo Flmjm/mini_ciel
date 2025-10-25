@@ -12,7 +12,7 @@
 
 #include "../lib_parse.h"
 
-t_commands *manage_input(char *str) //verifie l'input de readline et la passe en **argv et en liste chainees
+t_commands *manage_input(char *str, t_exitcode *exit_code) //verifie l'input de readline et la passe en **argv et en liste chainees
 {
 	t_input_info *infos;
 	t_token *token;
@@ -22,12 +22,11 @@ t_commands *manage_input(char *str) //verifie l'input de readline et la passe en
 	infos->input = str;
 	is_complete(infos);
 	add_history(infos->input);
-	replace_var_input(infos);
+	replace_var_input(infos, exit_code);
 	token = ft_token(infos->input);
 	// print_tokens(token);
 	cmds = ft_init_cmd(token);
 	// print_redirections(cmds);
-
 	return (cmds);
 
 	//print_cmds(cmds);

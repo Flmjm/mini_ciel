@@ -37,11 +37,9 @@ void	prompt_loop(t_env *env_s)
 	while (1)
 	{
 		// printf("DEBUG PWD ACTUEL REEL: %s\n", env_s->pwd);
-		printf("LAST ERROR CODE: %d\n", exit_code->last_cmd);
-
 		input = readline(prompt_sentence(env_s));
-		cmds = manage_input(input);	//j'ai mis ft_token a l'interieur
-		free(input);
+		cmds = manage_input(input, exit_code);	//j'ai mis ft_token a l'interieur
+		//free input dans expand var pour eviter de free des trucs utiles
 		if (cmds)
 			exec_main(cmds, env_s, exit_code);
 		// if (ft_strncmp(input, "exit", ft_strlen(input)) == 0) //temporaire -------

@@ -127,7 +127,7 @@ typedef struct t_outfiles
 }						t_outfiles;
 
 // parse_input.c
-t_commands	*manage_input(char *str); // gere l'input, //convertis en infos puis en **argv et en liste chainees
+t_commands	*manage_input(char *str, t_exitcode *exit_code); // gere l'input, //convertis en infos puis en **argv et en liste chainees
 void	erase_in_str(t_input_info *infos, int i); // suprime proprement infos->input[i] dans sa chaine
 int		how_much_args(t_input_info *infos); // retourne le nombre d'arguments passer a readline
 int		next_space(char *str, int i); // useless
@@ -151,14 +151,14 @@ void	quote_next_char(t_input_info *infos, int i); // quote str[i+ 1] proprement,
 int		next_double_quote(t_input_info *infos, int i, int init); // renvoi i = prochain ' comme str[i] = '\''
 
 // expand_parse.c
-void	replace_var_input(t_input_info *infos); // pour ;'instant ne gere que les variables en dehors de quotes
-void	expand_var(t_input_info *infos, int i, int quote); // expans les variables d'environnement et retourne info->input malloc avec la variable d'environnement si elle existe
+void	replace_var_input(t_input_info *infos, t_exitcode *exit_code); // pour ;'instant ne gere que les variables en dehors de quotes
+void	expand_var(t_input_info *infos, int i, int quote, t_exitcode *exit_code); // expans les variables d'environnement et retourne info->input malloc avec la variable d'environnement si elle existe
 void	resize_and_copy(t_input_info *infos, int i, int j, char *temp_input);
 
 // test
 void	add_space_before(t_input_info *infos, int i);
 void	define_operator(t_input_info *infos);
-int		expand_in_quote(t_input_info *infos, int i);
+int		expand_in_quote(t_input_info *infos, int i, t_exitcode *exit_code);
 
 //tokenization.c
 t_token	*ft_lstnew_token(t_token_type type, char *content);
