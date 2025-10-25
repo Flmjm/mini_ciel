@@ -21,6 +21,8 @@ void	cmd_process(t_pipex_b *pipex, char **env, int index)
 	{
 		if (pipex->outfile_error == 0)
 			ft_dup2_and_close(pipex->outfile, STDOUT_FILENO);
+		if (pipex->infile_error == 0)
+			ft_dup2_and_close(pipex->infile, STDIN_FILENO);
 		execve(pipex->pathname_cmd, pipex->cmd, env);}
 }
 
@@ -61,6 +63,8 @@ void	init_cmd(t_pipex_b *pipex, t_commands *cmds)
 		pipex->pathname_cmd = cmds->argv[0];
 	if (cmds->outfiles)
 		ft_dup_last_outfile(cmds, pipex);
+	if (cmds->infiles)
+		ft_dup_last_infiles(cmds, pipex);
 }
 
 void	ft_dup_last_outfile(t_commands *cmds, t_pipex_b *pipex)
@@ -82,6 +86,32 @@ void	ft_dup_last_outfile(t_commands *cmds, t_pipex_b *pipex)
 			pipex->outfile_error = 0;
 		else
 			pipex->outfile_error = -1;
+	}
+	else
+		pipex->outfile_error = -1;
+}
+
+void	ft_dup_last_infiles(t_commands *cmds, t_pipex_b *pipex)
+{
+	t_commands 	*current;
+	char		*last_infile;
+
+	current = cmds;
+	while (current->infiles && current->infiles->next)
+		current->infiles = current->infiles->next;
+	last_infile = ft_strjoin(ft_strjoin(getenv("PWD"), "/"), current->infiles->infile);
+	if (access(last_infile, F_OK) == 0)
+	{
+		if (current->infiles->type == TOKEN_REDIRECT_IN)
+			pipex->infile = open(current->infiles->infile, O_RDONLY);
+		else if (current->infiles->type == TOKEN_HEREDOC)
+			pipex->infile = open(current->infiles->infile, O_RDONLY);
+		else if (current->infiles->type == TOKEN_HERESTRING)
+			pipex->infile = open(current->infiles->infile, O_RDONLY);
+		if (pipex->infile > 0)
+			pipex->infile_error = 0;
+		else
+			pipex->infile_error = -1;
 	}
 	else
 		pipex->outfile_error = -1;
