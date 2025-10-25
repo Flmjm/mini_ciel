@@ -29,16 +29,21 @@ void	prompt_loop(t_env *env_s)
 {
 	t_commands *cmds;
 	char 		*input;
+	t_exitcode *exit_code;
+
+	exit_code = ft_malloc(sizeof(t_exitcode), 0);
+	exit_code->last_cmd = 0;
 
 	while (1)
 	{
-		printf("DEBUG PWD ACTUEL REEL: %s\n", env_s->pwd);
+		// printf("DEBUG PWD ACTUEL REEL: %s\n", env_s->pwd);
+		printf("LAST ERROR CODE: %d\n", exit_code->last_cmd);
 
 		input = readline(prompt_sentence(env_s));
 		cmds = manage_input(input);	//j'ai mis ft_token a l'interieur
 		free(input);
 		if (cmds)
-			exec_main(cmds, env_s);
+			exec_main(cmds, env_s, exit_code);
 		// if (ft_strncmp(input, "exit", ft_strlen(input)) == 0) //temporaire -------
 		// {	
 		// 	free(input);
@@ -55,7 +60,7 @@ char	*prompt_sentence(t_env *env)
 
 	i = 5;
 	result = ft_malloc(sizeof(int) * (ft_strlen(env->pwd) - 1), 0);
-	printf("DEBUG TAILLE ENVPWD: %d\n", ft_strlen(env->pwd));
+	// printf("DEBUG TAILLE ENVPWD: %d\n", ft_strlen(env->pwd));
 	while(env->pwd[i])
 	{
 		result[i - 5] = env->pwd[i];

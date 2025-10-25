@@ -34,6 +34,11 @@
 #  define TRUE 1
 # endif
 
+typedef struct s_exitcode
+{
+	int last_cmd;
+}	t_exitcode;
+
 typedef	struct s_env
 {
 	char **export;	//varibale d'en exporter

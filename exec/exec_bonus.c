@@ -13,7 +13,7 @@
 #include "pipex_bonus.h"
 #include "../lib_parse.h"
 
-int	exec_main(t_commands *cmds, t_env *env)
+int	exec_main(t_commands *cmds, t_env *env, t_exitcode *exit_code)
 {
 	t_pipex_b	*pipex;
 	int			ret;
@@ -25,7 +25,7 @@ int	exec_main(t_commands *cmds, t_env *env)
 			printf("malloc pipex\n");
 		init_struct_exec(pipex, cmds, env->local_env);
 		create_pipe(pipex);
-		ft_pipex(pipex, cmds, env);
+		ft_pipex(pipex, cmds, env, exit_code);
 	return (ret);
 }
 
@@ -84,7 +84,7 @@ int	argc_of_argv(char **cmds)
 	return (i);
 }
 
-void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env)
+void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *exit_code)
 {
 	int	i;
 
@@ -104,7 +104,6 @@ void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env)
 		else
 		{
 			init_cmd(pipex, cmds);
-			printf("DEBUG PID %d\n", getpid());
 			pipex->pid[i] = fork();
 			if (pipex->pid[i] == 0 && pipex->pathname_cmd)
 				cmd_process(pipex, env->local_env, i);
@@ -117,7 +116,7 @@ void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env)
 		if (cmds->next)
 			cmds = cmds->next;
 		i++;
-		ft_wait_last_cmd(pipex, i);
+		ft_wait_last_cmd(pipex, i, exit_code);
 	}
 }
 
@@ -152,7 +151,7 @@ int	ft_waitpid(t_pipex_b *pipex)
 	return (ret);
 }
 
-void	ft_wait_last_cmd(t_pipex_b *pipex, int i_cmd)
+void	ft_wait_last_cmd(t_pipex_b *pipex, int i_cmd, t_exitcode *exit_code)
 {
 	int	i;
 	int	ret;
@@ -162,6 +161,8 @@ void	ft_wait_last_cmd(t_pipex_b *pipex, int i_cmd)
 	ret = 0;
 	status = 0;
 	waitpid(pipex->pid[i], &status, 0);
+	if (WIFEXITED(status))
+		exit_code->last_cmd = WEXITSTATUS(status);
 }
 
 void	create_pipe(t_pipex_b *pipex)

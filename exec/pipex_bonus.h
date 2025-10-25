@@ -65,13 +65,13 @@ void		init_cmd(t_pipex_b *pipex, t_commands *cmds);
 void		ft_free(void *ptr);
 
 ///////////////////////////// main.c ////////////////////////////////////
-void		ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env);
+void		ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *exit_code);
 void		last_cmd(t_pipex_b *pipex, t_commands *cmds, char **env, int i);
 int			ft_waitpid(t_pipex_b *pipex);
 void		create_pipe(t_pipex_b *pipex);
 int			ft_lstlen(struct t_commands *cmds);
-int			exec_main(t_commands *cmds, t_env *env);
-void		ft_wait_last_cmd(t_pipex_b *pipex, int i_cmd);
+int			exec_main(t_commands *cmds, t_env *env, t_exitcode *exitcode);
+void		ft_wait_last_cmd(t_pipex_b *pipex, int i_cmd, t_exitcode *exit_code);
 int			argc_of_argv(char **cmds);
 char		*prompt_sentence(t_env *env);
 
