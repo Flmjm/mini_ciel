@@ -212,7 +212,7 @@ int	count_args(char **cmd)
 int	cd_home(t_env *envpwd, char *pathname, char **env)
 {
 	char	buf[PATH_MAX];
-
+	
 	pathname = get_env_value("HOME=", env);
 	if (!pathname)
 		{
@@ -288,4 +288,4 @@ int cd_main(int ac, char **av, t_env *envpwd)
 }
 
 // tester avec la struct env de Manu
-// locale
+// locale 

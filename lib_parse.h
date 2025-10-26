@@ -179,7 +179,10 @@ int	count_words(t_token *token);
 t_commands	*ft_lstnew_command(int words);
 void	ft_lstadd_cmd_back(t_commands **lst, t_commands *new);
 t_commands	*ft_init_cmd(t_token *token);
-void	ft_check_next_token(t_token *token);
+
+//parse_quotes_in_cmds.c
+void	ft_check_quotes_struct_cmd(t_commands *commands);
+char *ft_check_quotes_argv(char *cmds, int len);
 
 //parse_check_next_token.c
 void	ft_check_next_token_heredoc(t_token *token);
@@ -215,6 +218,8 @@ t_infiles	*ft_lstnew_redirect_in(char *filename, t_file_type type, char *word);
 t_outfiles	*ft_lstnew_redirect_out(char *filename, t_file_type type);
 void	ft_lstadd_infiles_back(t_infiles **lst, t_infiles *new);
 void	ft_lstadd_outfiles_back(t_outfiles **lst, t_outfiles *new);
+t_token	*ft_add_redir(t_token *token, t_commands *node);
+
 void	print_redirections(t_commands *cmds);
 //retirer le print
 

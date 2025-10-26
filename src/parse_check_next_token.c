@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_check_next_token.c                           :+:      :+:    :+:   */
+/*   parse_check_next_token copy.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:09:39 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/14 14:29:49 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/20 15:47:01 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,26 +112,6 @@ void	ft_check_next_token_redir_out(t_token *token)
 	else if (token->next->type == TOKEN_WORD)
 	{
 		 return ;
-	}
-	else
-		ft_printf("unexpected error while checking next token\n");
-}
-
-void	ft_check_next_token_redir_append(t_token *token)
-{
-	if (token->next == NULL)
-	{
-		ft_printf("syntax error near unexpected token 'newline'\n");
-		// exit_with_message_and_//free("syntax error near unexpected token 'newline'\n", token, 2);
-	}
-	else if (token->next->type != TOKEN_WORD)
-	{
-		ft_printf("syntax error near unexpected token '%s'\n", token->next->value);
-		// exit_with_message_and_//free(NULL, token, 2);
-	}
-	else if (token->next->type == TOKEN_WORD)
-	{
-		return ;
 	}
 	else
 		ft_printf("unexpected error while checking next token\n");

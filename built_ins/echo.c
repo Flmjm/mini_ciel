@@ -17,7 +17,7 @@
 int check_option_n(char *str)
 {
     size_t i;
-
+    
     i = 0;
     if (str[i] && str[i] == '-')
     {
@@ -57,11 +57,11 @@ int    ft_echo(char **cmd) //(char **cmd, int fd)
 //gestion erreurs
 
 // echo -n = echo -nnnnnn = echo -n -n -n ... retire le \n
-// est ce qu'on gère le fd ici ou ailleurs ?
+// est ce qu'on gère le fd ici ou ailleurs ? 
 // ex echo hello > fichier --> ft_putstr_fd("hello", fichier)
 
 // int main(int ac, char **av)
-// {
+// {    
 //     if (ac > 1)
 //         ft_echo(av+1);
 // }

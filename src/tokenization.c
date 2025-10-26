@@ -6,43 +6,12 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 17:44:15 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/14 14:08:33 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/20 16:42:07 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lib_parse.h"
 
-t_token	*ft_lstnew_token(t_token_type type, char *content)
-{
-	t_token	*new;
-
-	new = ft_malloc(sizeof(*new), 0);
-	if (!new)
-		return (NULL);
-	new->prev = NULL;
-	new->type = type;
-	new->value = content;
-	new->next = NULL;
-	return (new);
-}
-
-void	ft_lstadd_token_back(t_token **lst, t_token *new)
-{
-	t_token	*last;
-
-	if (!lst || !new)
-		return ;
-	if (*lst == NULL)
-	{
-		*lst = new;
-		return ;
-	}
-	last = *lst;
-	while (last->next != NULL)
-		last = last->next;
-	new->prev = last;
-	last->next = new;
-}
 
 int	ft_get_op_length(char *input, int i, t_token_type *type)
 {
@@ -116,10 +85,6 @@ char *ft_get_word(char *input, int start)
 	    word = ft_substr(input, start, i - start);
     return (word);
 }
-// j'ai ajoute les espaces et \t comme fin de mot donc maintenant une commande et ses arguments peuvent etre decomposes en plusieurs tokens
-// je pense qu'il faudra faire un truc du style if type == WORD et type->prev != WORD et type->next == WORD, alors c'est des arguments
-// prevoir une liste doublement chainee ?
-// ou alors quand type != WORD && ->next->type == WORD && ->next->next->type == WORD (c'est laborieux)
 
 t_token	*ft_token(char *input) // segfault : '<<' , '<<<'
 {
@@ -173,22 +138,6 @@ void print_tokens(t_token *tokens) {
                index,
                current->type,
                current->value);
-        current = current->next;
-		index++;
-    }
-    printf("\n");
-}
-
-void print_redir(t_redirect *redirection) {
-    printf("\n=== TOKENS ===\n");
-    t_redirect *current = redirection;
-    int index = 0;
-
-    while (current) {
-        printf("[%d] %d: '%s'\n",
-               index,
-               current->type,
-               current->filename);
         current = current->next;
 		index++;
     }

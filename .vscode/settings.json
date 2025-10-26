@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "lib_parse.h": "c",
+        "exec.h": "c"
+    }
+}

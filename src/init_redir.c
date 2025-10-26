@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 11:15:55 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/14 14:52:32 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/20 15:45:24 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,30 @@ void	ft_lstadd_outfiles_back(t_outfiles **lst, t_outfiles *new)
 	while (last->next != NULL)
 		last = last->next;
 	last->next = new;
+}
+
+t_token	*ft_add_redir(t_token *token, t_commands *node)
+{
+	while (token && (token->type == TOKEN_REDIRECT_IN
+			|| token->type == TOKEN_REDIRECT_OUT
+			|| token->type == TOKEN_REDIRECT_APPEND
+			|| token->type == TOKEN_HEREDOC))
+	{
+		if (token->type == TOKEN_REDIRECT_IN)
+			ft_lstadd_infiles_back(&node->infiles,
+				ft_lstnew_redirect_in(token->next->value, FILE_REDIRECT_IN,
+					NULL));
+		else if (token->type == TOKEN_REDIRECT_OUT)
+			ft_lstadd_outfiles_back(&node->outfiles,
+				ft_lstnew_redirect_out(token->next->value, FILE_REDIRECT_OUT));
+		else if (token->type == TOKEN_REDIRECT_APPEND)
+			ft_lstadd_outfiles_back(&node->outfiles,
+				ft_lstnew_redirect_out(token->next->value,
+					FILE_REDIRECT_APPEND));
+		else if (token->type == TOKEN_HEREDOC)
+			ft_lstadd_infiles_back(&node->infiles, ft_lstnew_redirect_in(NULL,
+					FILE_HEREDOC, token->next->value));
+		token = token->next->next;
+	}
+	return (token);
 }
