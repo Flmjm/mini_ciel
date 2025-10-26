@@ -29,6 +29,7 @@ void	prompt_loop(t_env *env_s)
 {
 	t_commands *cmds;
 	char 		*input;
+	char 		*buffer;
 	t_exitcode *exit_code;
 
 	exit_code = ft_malloc(sizeof(t_exitcode), 0);
@@ -38,8 +39,11 @@ void	prompt_loop(t_env *env_s)
 	{
 		// printf("DEBUG PWD ACTUEL REEL: %s\n", env_s->pwd);
 		input = readline(prompt_sentence(env_s));
+		// input = ft_malloc(sizeof(char) * (ft_strlen(buffer) + 1), 0);
+		// ft_strlcpy(input, buffer, ft_strlen(buffer) + 1);
 		cmds = manage_input(input, exit_code);	//j'ai mis ft_token a l'interieur
 		//free input dans expand var pour eviter de free des trucs utiles
+		// free(input);
 		if (cmds)
 			exec_main(cmds, env_s, exit_code);
 		// if (ft_strncmp(input, "exit", ft_strlen(input)) == 0) //temporaire -------
