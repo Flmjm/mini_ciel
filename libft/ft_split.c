@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:40:37 by mleschev          #+#    #+#             */
-/*   Updated: 2025/04/05 19:24:33 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:03:29 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,14 +102,14 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	count = cntwrd(s, c);
-	array = malloc((count + 1) * sizeof(char *));
+	array = ft_malloc((count + 1) * sizeof(char *), 0);
 	if (!array)
 		return (NULL);
 	array[count] = NULL;
 	i = -1;
 	while (++i < count)
 	{
-		array[i] = malloc((wrdlen(s, c, i + 1) + 1) * sizeof(char));
+		array[i] = ft_malloc((wrdlen(s, c, i + 1) + 1) * sizeof(char), 0);
 		if (!array[i])
 			return (freearray(array, i), NULL);
 		cpywrd(array[i], s, c, i + 1);
@@ -133,9 +133,9 @@ char	**ft_split(char const *s, char c)
 // 		printf("%s", dest[i]);
 // 		i++;
 // 	}
-// 	// char **dest = malloc(2 * sizeof(char *));
+// 	// char **dest = ft_malloc(2 * sizeof(char *));
 // 	// dest[1] = NULL;
-// 	// dest[0] = malloc((2));
+// 	// dest[0] = ft_malloc((2));
 // 	// dest[0][0] = clc( string, c, 0+1, 0);
 // 	// printf("%c", dest[0][0]);
 // 	// 	dest = ft_split(string, c);

@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 11:21:39 by mleschev          #+#    #+#             */
-/*   Updated: 2025/04/05 14:02:19 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/09/23 12:08:16 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	*nmin(void)
 {
 	char	*ff;
 
-	ff = malloc(12 * sizeof(char));
+	ff = ft_malloc(12 * sizeof(char), 0);
 	if (!ff)
 		return (NULL);
 	ff[0] = '-';
@@ -90,7 +90,7 @@ char	*ft_itoa(int n)
 		sign = -1;
 	}
 	cnt_len = cnt_len + cntlen(n);
-	result = malloc((cnt_len + 1) * sizeof(char));
+	result = ft_malloc((cnt_len + 1) * sizeof(char), 0);
 	if (!result)
 		return (NULL);
 	result[cnt_len] = '\0';
