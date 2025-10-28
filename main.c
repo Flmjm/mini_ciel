@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/21 00:26:55 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/10/28 17:02:06 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	prompt_loop(t_env *env_s)
 		cmds = manage_input(input, exit_code);	//j'ai mis ft_token a l'interieur
 		//free input dans expand var pour eviter de free des trucs utiles
 		// free(input);
-		if (cmds)
-			exec_main(cmds, env_s, exit_code);
+		//if (cmds)
+			//exec_main(cmds, env_s, exit_code);
 		// if (ft_strncmp(input, "exit", ft_strlen(input)) == 0) //temporaire -------
 		// {	
 		// 	free(input);
