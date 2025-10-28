@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:09:39 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/20 15:46:51 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/28 13:28:07 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_check_next_token_redir_append(t_token *token)
 	if (token->next == NULL)
 	{
 		ft_printf("syntax error near unexpected token 'newline'\n");
-		// exit_with_message_and_//free("syntax error near unexpected token 'newline'\n", token, 2);
+		//exit_with_message_and_//free("syntax error near unexpected token 'newline'\n", token, 2);
 	}
 	else if (token->next->type != TOKEN_WORD)
 	{

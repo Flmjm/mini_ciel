@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 18:21:57 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/20 16:47:05 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/28 13:08:43 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ t_commands *manage_input(char *str, t_exitcode *exit_code) //verifie l'input de 
 	add_history(infos->input);
 	replace_var_input(infos, exit_code);
 	token = ft_token(infos->input);
-	// print_tokens(token);
+	print_tokens(token);
 	cmds = ft_init_cmd(token);
-	// print_redirections(cmds);
+	print_redirections(cmds);
 	return (cmds);
 
 	//print_cmds(cmds);

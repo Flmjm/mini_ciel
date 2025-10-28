@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 15:43:37 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/20 17:11:50 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/28 13:15:51 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,38 @@ char *ft_check_quotes_argv(char *cmds, int len)
         return (res);
     }
     return(tmp);
+}
+
+char	*ft_check_quotes_argv(char *cmds, int len)
+{
+	int		j;
+	int		k;
+	char	*tmp;
+	char	*res;
+
+	j = 0;
+	k = len;
+	res = NULL;
+	if (cmds[j] != '"' && cmds[j] != '\'')
+		return (cmds);
+	if (cmds[k] != cmds[0])
+	{
+        while (cmds[k] != cmds[0])
+            k--;
+	}
+	else
+	{
+		while (cmds[j] == cmds[0] && cmds[k] == cmds[0])
+		{
+			j++;
+			k--;
+		}
+		tmp = ft_substr(cmds, j, k - j + 1);
+		if (j == len - k && j % 2 == 0)
+		{
+			res = ft_check_quotes_argv(tmp, ft_strlen(tmp) - 1);
+			return (res);
+		}
+	}
+	return (tmp);
 }
