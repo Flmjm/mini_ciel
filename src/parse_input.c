@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 18:21:57 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/20 16:47:05 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/23 17:22:34 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ void manage_input(char *str) //verifie l'input de readline et la passe en **argv
 	token = ft_token(infos->input);
 	print_tokens(token);
 	cmds = ft_init_cmd(token);
+	printf("apres init cmd\n");
+	print_redirections(cmds);
 	ft_check_quotes_struct_cmd(cmds);
+	printf("apres check quotes\n");
 	print_redirections(cmds);
 	//free(token);
 	//free(infos);

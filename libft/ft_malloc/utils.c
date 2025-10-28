@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 14:49:45 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/22 23:42:17 by root             ###   ########.fr       */
+/*   Updated: 2025/10/23 15:31:59 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,10 @@ void *lst_last(t_list **head)
 {
 	t_list *current;
 
+	if (!head || !*head)
+		return (NULL);
 	current = *head;
-	while (current->next)
+	while (current && current->next)
 		current = current->next;
 	return (current);
 }
