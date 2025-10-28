@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_bonus.c                                       :+:      :+:    :+:   */
+/*   exec_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:34 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/21 01:13:03 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/10/28 16:14:27 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,11 @@ void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *exit_c
 	int	i;
 
 	i = 0;
+	pipex->cmd_index = 0;
 	while (i < pipex->cmd_count)
 	{
-		
+		pipex->cmd_index++;
+		// printf("DEBUG cmdcount:%d index:%d\n", pipex->cmd_count, pipex->cmd_index);
 		if ((ft_strlen(cmds->argv[0]) == 4) && (ft_strncmp("exit", cmds->argv[0], 4) == 0))
 			ft_exit(env, 0);
 		else if ((ft_strlen(cmds->argv[0]) == 3) && (ft_strncmp("env", cmds->argv[0], 3) == 0))
@@ -109,7 +111,7 @@ void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *exit_c
 			if (pipex->pid[i] == 0 && pipex->pathname_cmd)
 				cmd_process(pipex, env->local_env, i);
 			else if (pipex->pid[i] == 0 && !pipex->pathname_cmd)
-			{	
+			{
 				ft_printf("%s : Command not found\n", pipex->cmd[0]);
 				ft_exit(env, 127);
 			}
@@ -174,7 +176,7 @@ void	create_pipe(t_pipex_b *pipex)
 	while (i < pipex->cmd_count - 1)
 	{
 		pipex->pipefd[i] = ft_malloc(sizeof(int) * 2, 0);
-		printf("DEBUG: pipefd:%p i:%d\n", pipex->pipefd[i], i);
+		// printf("DEBUG: pipefd:%p i:%d \n", pipex->pipefd[i], i);
 		if (!pipex->pipefd[i])
 			printf("Malloc pipefd");
 		if (pipe(pipex->pipefd[i]) == -1)

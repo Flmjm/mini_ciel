@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 16:06:05 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/20 03:35:11 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/10/28 16:34:51 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 
 void	cmd_process(t_pipex_b *pipex, char **env, int index)
 {
-	close_fd(pipex);
-	if (!pipex->pathname_cmd)
-		ft_printf("%s : Command not found\n", pipex->cmd[0]);
-	else
-	{
+	printf("PIPEX OUTFILE ERROR:%d\n", pipex->outfile_error);
 		if (pipex->outfile_error == 0)
 			ft_dup2_and_close(pipex->outfile, STDOUT_FILENO);
+		if (pipex->cmd_index != pipex->cmd_count)
+			ft_dup2_and_close(pipex->pipefd[0][0], STDOUT_FILENO);
+		if (pipex->cmd_index != pipex->cmd_count)
+			
 		if (pipex->infile_error == 0)
 			ft_dup2_and_close(pipex->infile, STDIN_FILENO);
-		execve(pipex->pathname_cmd, pipex->cmd, env);}
+		close_fd(pipex);
+		if (pipex->cmd_count)
+			execve(pipex->pathname_cmd, pipex->cmd, env);
 }
 
 void	close_fd(t_pipex_b *pipex)
@@ -88,7 +90,7 @@ void	ft_dup_last_outfile(t_commands *cmds, t_pipex_b *pipex)
 			pipex->outfile_error = -1;
 	}
 	else
-		pipex->outfile_error = -1;
+		pipex->outfile_error = -1; // faut rajouter creation de fichier
 }
 
 void	ft_dup_last_infiles(t_commands *cmds, t_pipex_b *pipex)
