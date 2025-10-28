@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_quotes_in_cmds.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 15:43:37 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/29 11:39:14 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/03 16:10:55 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@ void	ft_check_quotes_struct_cmd(t_commands *commands)
 	i = 0;
 	while (commands)
 	{
-		while (commands->argv[i])
+		while (commands && commands->argv[i])
 		{
 			commands->argv[i] = ft_check_quotes_argv(commands->argv[i],
 					ft_strlen(commands->argv[i]) - 1, 0, 0);
 			i++;
 		}
 		commands = commands->next;
+		i = 0;
 	}
 }
 
