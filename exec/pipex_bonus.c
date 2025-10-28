@@ -23,7 +23,6 @@ void	cmd_process(t_pipex_b *pipex, char **env, int index)
 	else if (index > 0)
 		ft_dup2_and_close(pipex->pipefd[index - 1][0], STDIN_FILENO);
 	close_fd(pipex);
-	printf("DEBUG outfil %d infil %d\n", pipex->outfile_error, pipex->infile_error);
 	if (pipex->cmd_count)
 		execve(pipex->pathname_cmd, pipex->cmd, env);
 }
