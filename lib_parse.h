@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_parse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/21 01:13:15 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/10/28 15:15:39 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,20 +128,7 @@ typedef struct t_outfiles
 
 // parse_input.c
 t_commands	*manage_input(char *str, t_exitcode *exit_code); // gere l'input, //convertis en infos puis en **argv et en liste chainees
-void	erase_in_str(t_input_info *infos, int i); // suprime proprement infos->input[i] dans sa chaine
-int		how_much_args(t_input_info *infos); // retourne le nombre d'arguments passer a readline
-int		next_space(char *str, int i); // useless
-void	replace_backslash_double_quote(t_input_info *infos); // useless
 void		replace_azt(t_input_info *info, int i);
-
-// put_input_to_array.c
-int		strlen_of_args(t_input_info *infos, int start); // start = numeros de l'argument dans infos, retourne sa taille complete
-char	**convert_input_to_array(t_input_info *infos); // recupere l'input clean et le convertis en **argv
-void	copy_arg(t_input_info *infos, char *buffer, int arg); // copie l'argument numeros arg de infos->input a buffer
-
-// list_manage.c
-int		is_redirection(char *str); // check et renvoie selon si l'argument est une direction (a changer)
-int		check_operator_in_str(const char *str); // pareil a changer
 
 // check_input.c
 void	is_complete(t_input_info *infos); // gere l'input et redirige en cas d'input incomplet + quote les backslash (note: rajouter une maniere de gerer l'historique de readline car la elle prend les deformations des backslash)
@@ -182,7 +169,7 @@ t_commands	*ft_init_cmd(t_token *token);
 
 //parse_quotes_in_cmds.c
 void	ft_check_quotes_struct_cmd(t_commands *commands);
-char *ft_check_quotes_argv(char *cmds, int len);
+char	*ft_check_quotes_argv(char *cmds, int len, int i, int j);
 
 //parse_check_next_token.c
 void	ft_check_next_token_heredoc(t_token *token);
@@ -204,11 +191,6 @@ void	prompt_loop(t_env *env_s);
 void print_tokens(t_token *tokens); //test pour voir la tokenisation
 
 
-t_commands	*sep_cmd(t_token *input);
-void	add_node_cmds(t_commands **commands, t_commands	*new);
-int		how_many_args(t_token	*input);
-void print_cmds(t_commands *cmds);
-void	print_test(t_commands **test);
 char	*clean_simple_quote(char *str); // faut rajouter le cas <<''>>
 void	clean_quote_in_argv(char **argv);
 char	*clean_double_quote(char *str); // faut rajouter le cas <<"">>
