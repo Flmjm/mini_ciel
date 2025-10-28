@@ -14,18 +14,18 @@
 
 void	cmd_process(t_pipex_b *pipex, char **env, int index)
 {
-	printf("PIPEX OUTFILE ERROR:%d\n", pipex->outfile_error);
-		if (pipex->outfile_error == 0)
-			ft_dup2_and_close(pipex->outfile, STDOUT_FILENO);
-		if (pipex->cmd_index != pipex->cmd_count)
-			ft_dup2_and_close(pipex->pipefd[0][0], STDOUT_FILENO);
-		if (pipex->cmd_index != pipex->cmd_count)
-			
-		if (pipex->infile_error == 0)
-			ft_dup2_and_close(pipex->infile, STDIN_FILENO);
-		close_fd(pipex);
-		if (pipex->cmd_count)
-			execve(pipex->pathname_cmd, pipex->cmd, env);
+	if (pipex->outfile_error == 0)
+		ft_dup2_and_close(pipex->outfile, STDOUT_FILENO);
+	else if (index < pipex->cmd_count - 1)
+		ft_dup2_and_close(pipex->pipefd[index][1], STDOUT_FILENO);
+	if (pipex->infile_error == 0)
+		ft_dup2_and_close(pipex->infile, STDIN_FILENO);
+	else if (index > 0)
+		ft_dup2_and_close(pipex->pipefd[index - 1][0], STDIN_FILENO);
+	close_fd(pipex);
+	printf("DEBUG outfil %d infil %d\n", pipex->outfile_error, pipex->infile_error);
+	if (pipex->cmd_count)
+		execve(pipex->pathname_cmd, pipex->cmd, env);
 }
 
 void	close_fd(t_pipex_b *pipex)
@@ -76,21 +76,21 @@ void	ft_dup_last_outfile(t_commands *cmds, t_pipex_b *pipex)
 
 	current = cmds;
 	while (current->outfiles && current->outfiles->next)
-		current->outfiles = current->outfiles->next;
-	last_outfile = ft_strjoin(ft_strjoin(getenv("PWD"), "/"), current->outfiles->outfile);
-	if (access(last_outfile, F_OK) == 0)
 	{
-		if (current->outfiles->type == TOKEN_REDIRECT_OUT)
-			pipex->outfile = open(current->outfiles->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		else if (current->outfiles->type == TOKEN_REDIRECT_APPEND)
-			pipex->outfile = open(current->outfiles->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (pipex->outfile > 0)
-			pipex->outfile_error = 0;
-		else
-			pipex->outfile_error = -1;
+		open(current->outfiles->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);	
+		current->outfiles = current->outfiles->next;
 	}
+	last_outfile = ft_strjoin(ft_strjoin(getenv("PWD"), "/"), current->outfiles->outfile);
+
+	if (current->outfiles->type == TOKEN_REDIRECT_OUT)
+		pipex->outfile = open(current->outfiles->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (current->outfiles->type == TOKEN_REDIRECT_APPEND)
+		pipex->outfile = open(current->outfiles->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (pipex->outfile > 0)
+		pipex->outfile_error = 0;
 	else
-		pipex->outfile_error = -1; // faut rajouter creation de fichier
+		pipex->outfile_error = -1;
+
 }
 
 void	ft_dup_last_infiles(t_commands *cmds, t_pipex_b *pipex)

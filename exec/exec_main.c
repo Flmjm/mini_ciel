@@ -19,7 +19,6 @@ int	exec_main(t_commands *cmds, t_env *env, t_exitcode *exit_code)
 	int			ret;
 
 	ret = 0;
-	// clean_quote_in_argv(cmds->argv);
 		pipex = ft_malloc(sizeof(t_pipex_b), 0);
 		if (!pipex)
 			printf("malloc pipex\n");
@@ -93,7 +92,6 @@ void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *exit_c
 	while (i < pipex->cmd_count)
 	{
 		pipex->cmd_index++;
-		// printf("DEBUG cmdcount:%d index:%d\n", pipex->cmd_count, pipex->cmd_index);
 		if ((ft_strlen(cmds->argv[0]) == 4) && (ft_strncmp("exit", cmds->argv[0], 4) == 0))
 			ft_exit(env, 0);
 		else if ((ft_strlen(cmds->argv[0]) == 3) && (ft_strncmp("env", cmds->argv[0], 3) == 0))
@@ -115,12 +113,17 @@ void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *exit_c
 				ft_printf("%s : Command not found\n", pipex->cmd[0]);
 				ft_exit(env, 127);
 			}
+			if (i > 0)
+			{
+				close(pipex->pipefd[i - 1][0]);
+				close(pipex->pipefd[i - 1][1]);
+			}
 		}
 		if (cmds->next)
 			cmds = cmds->next;
 		i++;
-		ft_wait_last_cmd(pipex, i, exit_code);
 	}
+	ft_waitpid(pipex);
 }
 
 void	last_cmd(t_pipex_b *pipex, t_commands *cmds, char **env, int i)
@@ -132,8 +135,6 @@ void	last_cmd(t_pipex_b *pipex, t_commands *cmds, char **env, int i)
 		printf("aled in lastcmd");
 	if (pipex->pid[i] == 0)
 		cmd_process(pipex, env, i);
-	// if (i > 0pipex->pipefd[i - 1][0] != -1)
-	// 	close(pipex->pipefd[i - 1][0]);
 }
 
 int	ft_waitpid(t_pipex_b *pipex)
@@ -176,7 +177,6 @@ void	create_pipe(t_pipex_b *pipex)
 	while (i < pipex->cmd_count - 1)
 	{
 		pipex->pipefd[i] = ft_malloc(sizeof(int) * 2, 0);
-		// printf("DEBUG: pipefd:%p i:%d \n", pipex->pipefd[i], i);
 		if (!pipex->pipefd[i])
 			printf("Malloc pipefd");
 		if (pipe(pipex->pipefd[i]) == -1)

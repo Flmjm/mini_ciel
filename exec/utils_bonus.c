@@ -21,7 +21,8 @@ void	init_struct_exec(t_pipex_b *pipex, t_commands *cmds, char **env)
 	pipex->outfile = -1;
 	pipex->path = NULL;
 	pipex->directories = NULL;
-	pipex->outfile_error = 1;
+	pipex->outfile_error = -1;
+	pipex->infile_error = -1;
 	pipex->pathname_cmd = NULL;
 	pipex->cmd = NULL;
 	pipex->pid = ft_malloc(pipex->cmd_count * sizeof(pid_t), 0);
