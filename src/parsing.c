@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:37:56 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/20 15:55:19 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/29 11:38:39 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,13 @@ t_commands	*ft_lstnew_command(int words)
 	new = ft_malloc(sizeof(*new), 0);
 	if (!new)
 		return (NULL);
-	new->argv = ft_malloc((words + 1) * sizeof(char *), 0);
+	if (words == 0)
+	{
+		new->argv = ft_malloc(2 * sizeof(char *), 0);
+		new->argv[0] = NULL;
+	}
+	else
+		new->argv = ft_malloc((words + 1) * sizeof(char *), 0);
 	new->infiles = NULL;
 	new->outfiles = NULL;
 	new->next = NULL;
@@ -73,8 +79,12 @@ static t_token *ft_process_node(t_token *token, t_commands *node)
 	int	i;
 
 	tmp_token = ft_add_redir(token, node);
+	if (!tmp_token)
+		return(NULL);
 	if (tmp_token->type == TOKEN_EOF)
-			tmp_token = tmp_token->next;
+		tmp_token = tmp_token->next;
+	if (!tmp_token)
+		return(NULL);
 	if (tmp_token->type == TOKEN_WORD)
 	{
 		i = 0;

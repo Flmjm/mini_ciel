@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 08:51:44 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/21 00:46:18 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/10/29 11:31:45 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ void	is_complete(t_input_info *infos) // prend en charge \ ' " pour l'instant
 		}
 		i++;
 	}
-
-
 }
 
 void	recall_readline(t_input_info *infos)

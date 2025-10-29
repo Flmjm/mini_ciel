@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/21 00:26:55 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/10/29 11:30:42 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	prompt_loop(t_env *env_s)
 		if (cmds)
 			exec_main(cmds, env_s, exit_code);
 		// if (ft_strncmp(input, "exit", ft_strlen(input)) == 0) //temporaire -------
-		// {	
+		// {
 		// 	free(input);
 		// 	ft_exit(env_s, 0);
 		// }

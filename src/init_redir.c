@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 11:15:55 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/20 15:45:24 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/29 11:40:18 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,3 +107,55 @@ t_token	*ft_add_redir(t_token *token, t_commands *node)
 	}
 	return (token);
 }
+
+
+void	print_redirections(t_commands *cmds)
+{
+int			i;
+t_infiles	*in;
+t_outfiles	*out;
+int			cmd_index;
+cmd_index = 1;
+while (cmds)
+{
+	printf("=== Commande %d ===\n", cmd_index);
+	i = 0;
+	while (cmds->argv && cmds->argv[i])
+	{
+		printf("  argv[%d]: %s\n", i, cmds->argv[i]);
+		i++;
+	}
+	in = cmds->infiles;
+	out = cmds->outfiles;
+	if (!in && !out)
+		printf("  (Aucune redirection)\n");
+	if (in)
+	{
+		printf("  Infiles:\n");
+		while (in)
+		{
+			if (in->type == FILE_HEREDOC)
+				printf("    - %s (type: << // EOF: %s)\n", in->infile, in->word_eof);
+			else if (in->type == FILE_REDIRECT_IN)
+				printf("    - %s (type: < // EOF: %s)\n", in->infile, in->word_eof);
+			in = in->next;
+		}
+	}
+	if (out)
+	{
+		printf("  Outfiles:\n");
+		while (out)
+		{
+			if (out->type == FILE_REDIRECT_APPEND)
+				printf("    - %s (type: >>)\n", out->outfile);
+			else if (out->type == FILE_REDIRECT_OUT)
+				printf("    - %s (type: >)\n", out->outfile);
+			out = out->next;
+		}
+	}
+	printf("\n");
+	cmds = cmds->next;
+	cmd_index++;
+}
+}
+

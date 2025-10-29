@@ -3,16 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   expand_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 21:45:37 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/14 14:42:20 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/29 11:40:41 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lib_parse.h"
 
-void	replace_var_input(t_input_info *infos, t_exitcode *exit_code)
+void	erase_in_str(t_input_info *infos, int i)
+{
+	char *buffer;
+	int	j;
+	j = 0;
+
+	buffer = ft_malloc(sizeof(char) * (ft_strlen(infos->input)), 0);
+	while (j < i)
+	{
+		buffer[j] = infos->input[j];
+		j++;
+	}
+	while (infos->input[i])
+	{
+		buffer[j] = infos->input[i + 1];
+		j++;
+		i++;
+	}
+	buffer[j] = '\0';
+	//free(infos->input);
+	infos->input = buffer;
+}
+
+void	 replace_var_input(t_input_info *infos, t_exitcode *exit_code)
 {
 	int	i;
 

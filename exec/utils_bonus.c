@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 16:06:05 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/20 01:51:09 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/10/29 11:41:13 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,45 +96,3 @@ void	get_pathname(char **cmd, t_pipex_b *pipex)
 	if (!path)
 		pipex->pathname_cmd = NULL;
 }
-
-// void	init_outfile(t_pipex_b *pipex)
-// {
-// 	if (access(pipex->path_outfile, F_OK) < 0)
-// 	{
-// 		pipex->outfile = open(pipex->path_outfile, O_WRONLY | O_CREAT | O_TRUNC,
-// 				0644);
-// 		if (pipex->outfile < 0)
-// 			perror(pipex->path_outfile);
-// 		else
-// 			pipex->outfile_error = 0;
-// 	}
-// 	else
-// 	{
-// 		if (access(pipex->path_outfile, W_OK) < 0)
-// 			perror(pipex->path_outfile);
-// 		else
-// 		{
-// 			pipex->outfile = open(pipex->path_outfile, O_WRONLY | O_TRUNC);
-// 			pipex->outfile_error = 0;
-// 		}
-// 	}
-// }
-
-// int	init_infile(t_pipex_b *pipex, char **av)
-// {
-// 	if (access(av[1], F_OK) == 0 && access(av[1], R_OK) < 0)
-// 	{
-// 		init_outfile(pipex);
-// 		free_struct(pipex);
-// 		return (0);
-// 	}
-// 	else if (access(av[1], F_OK) == 0)
-// 	{
-// 		pipex->infile = open(av[1], O_RDONLY);
-// 		if (pipex->infile == -1)
-// 			perror(av[1]);
-// 	}
-// 	else if (access(av[1], F_OK) < 0)
-// 		pipex->infile = open("/dev/null", O_RDONLY);
-// 	return (1);
-// }

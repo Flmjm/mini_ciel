@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 16:06:05 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/28 16:34:51 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/10/29 11:41:39 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	ft_dup_last_outfile(t_commands *cmds, t_pipex_b *pipex)
 	current = cmds;
 	while (current->outfiles && current->outfiles->next)
 	{
-		open(current->outfiles->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);	
+		open(current->outfiles->outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		current->outfiles = current->outfiles->next;
 	}
 	last_outfile = ft_strjoin(ft_strjoin(getenv("PWD"), "/"), current->outfiles->outfile);

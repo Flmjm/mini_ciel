@@ -1,34 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_check_next_token copy.c                      :+:      :+:    :+:   */
+/*   parse_check_next_token.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:09:39 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/20 15:47:01 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/29 11:40:08 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lib_parse.h"
-
-// void	recall_readline(t_token *infos)
-// {
-// 	char	*buffer;
-// 	char	*temp_input;
-
-// 	temp_input = readline(">");
-// 	if (ft_strlen(temp_input) == 0)
-// 		return ;
-// 	buffer = ft_malloc(sizeof(char) * ft_strlen(infos->value));
-// 	ft_strlcpy(buffer, infos->value, ft_strlen(infos->value) + 1);
-// 	//free(infos->value);
-// 	infos->value = ft_malloc(sizeof(char) * (ft_strlen(buffer) + ft_strlen(temp_input) + 1));
-// 	ft_strlcpy(infos->value, buffer, (ft_strlen(buffer) + ft_strlen(temp_input)));
-// 	//free(buffer);
-// 	ft_strlcat(infos->value, temp_input, ft_strlen(infos->value) + ft_strlen(temp_input) + 1);
-// 	//free(temp_input);
-// }
 
 void	ft_check_next_token_heredoc(t_token *token)
 {
