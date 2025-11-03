@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:45 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/21 00:07:44 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/10/29 11:41:28 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_pipex_b
 	int		infile_error;
 	char	*path_outfile;
 	int		cmd_count;
+	int		cmd_index;
 	pid_t	*pid;
 }			t_pipex_b;
 

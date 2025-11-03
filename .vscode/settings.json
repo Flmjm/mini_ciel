@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "lib_parse.h": "c",
+        "exec.h": "c",
+        "errno.h": "c",
+        "pipex_bonus.h": "c"
+    }
+}

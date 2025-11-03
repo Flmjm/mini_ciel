@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_quotes_in_cmds.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 15:43:37 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/28 15:15:21 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/10/29 11:39:14 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_check_quotes_argv(char *cmds, int len, int i, int j)
 	char *tmp;
 	char	quote;
 	int	open;
-	
+
 	open = 0;
 	tmp = malloc((len +1) * sizeof(char));
 	while (cmds[i])
