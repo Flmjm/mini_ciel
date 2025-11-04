@@ -172,14 +172,14 @@ void	ft_check_quotes_struct_cmd(t_commands *commands);
 char	*ft_check_quotes_argv(char *cmds, int len, int i, int j);
 
 //parse_check_next_token.c
-void	ft_check_next_token_heredoc(t_token *token);
-void	ft_check_next_token_pipe(t_token *token);
-void	ft_check_next_token_redir_in(t_token *token);
-void	ft_check_next_token_redir_out(t_token *token);
-void	ft_check_next_token_redir_append(t_token *token);
-void	ft_check_next_token_herestring(t_token *token);
+int	ft_check_next_token_heredoc(t_token *token);
+int	ft_check_next_token_pipe(t_token *token);
+int	ft_check_next_token_redir_in(t_token *token);
+int	ft_check_next_token_redir_out(t_token *token);
+int	ft_check_next_token_redir_append(t_token *token);
+int	ft_check_next_token_herestring(t_token *token);
 //void	recall_readline(t_token *infos);
-void	ft_check_next_token(t_token *token);
+int	ft_check_next_token(t_token *token);
 
 // free_errors.c
 // void	exit_with_message_and_free(char *str, t_token *token, int n);

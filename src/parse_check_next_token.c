@@ -12,94 +12,104 @@
 
 #include "../lib_parse.h"
 
-void	ft_check_next_token_heredoc(t_token *token)
+int	ft_check_next_token_heredoc(t_token *token)
 {
-	if (token->next->type >= 1 && token->next->type <= 5)
+	if (!token->next)
+	{
+		ft_printf("syntax error near unexpected token 'newline'\n");
+		return(1);
+	}
+	if (token->next->type >= 1 && token->next->type <= 5 || token->next->type == 7)
 	{
 		ft_printf("syntax error near unexpected token '%s'\n",
 			token->next->value);
-		exit(2);
+		return(1);
 	}
 	else if (token->next->type == 0)
 		token->next->type = TOKEN_EOF;
+	return(0);
 }
 
-void	ft_check_next_token_herestring(t_token *token)
+int	ft_check_next_token_herestring(t_token *token)
 {
 	if ((token->next->type >= 1 && token->next->type <= 5)
 		|| token->next->type == 7)
 	{
 		ft_printf("syntax error near unexpected token '%s'\n",
 			token->next->value);
-		exit(2);
+		return(1);
 	}
 	else
 	{
 		ft_printf("<<<: here_string not supported\n");
-		exit(2);
+		return(1);
 	}
 }
 
-void	ft_check_next_token_pipe(t_token *token)
+int	ft_check_next_token_pipe(t_token *token)
 {
 	if (token->next == NULL)
 	{
 		ft_printf("syntax error near unexpected token '%s'\n", token->value);
-		exit(2);
+		return(1);
 	}
 	else if (token->prev->type != TOKEN_WORD && token->prev->type != TOKEN_EOF)
 	{
 		ft_printf("syntax error near unexpected token '%s'\n", token->value);
-		exit(2);
+		return(1);
 	}
+	return(0);
 }
 
-void	ft_check_next_token_redir_in(t_token *token)
+int	ft_check_next_token_redir_in(t_token *token)
 {
 	if (token->next == NULL)
 	{
 		ft_printf("syntax error near unexpected token 'newline'\n");
-		exit(2);
+		return(1);
 	}
 	else if (token->next->type != TOKEN_WORD)
 	{
 		ft_printf("syntax error near unexpected token '%s'\n",
 			token->next->value);
-		exit(2);
-		;
+		return(1);
 	}
 	else if (token->next->type == TOKEN_WORD && access(token->next->value,
 			F_OK) != 0)
 	{
 		ft_printf("%s: No such file or directory\n", token->next->value);
-		exit(1);
+		return(1);
 	}
 	else if (token->next->type == TOKEN_WORD && access(token->next->value,
 			F_OK) == 0)
 	{
-		return ;
+		return (0);
 	}
 	else
+	{
 		ft_printf("unexpected error while checking next token\n");
+		return(1);
+	}
 }
 
-void	ft_check_next_token_redir_out(t_token *token)
+int	ft_check_next_token_redir_out(t_token *token)
 {
 	if (token->next == NULL)
 	{
 		ft_printf("syntax error near unexpected token 'newline'\n");
-		exit(2);
+		return(1);
 	}
 	else if (token->next->type != TOKEN_WORD)
 	{
 		ft_printf("syntax error near unexpected token '%s'\n",
 			token->next->value);
-		exit(2);
+		return(1);
 	}
 	else if (token->next->type == TOKEN_WORD)
-	{
-		return ;
-	}
+		return (0);
 	else
+	{
 		ft_printf("unexpected error while checking next token\n");
+		return(1);
+	}
 }

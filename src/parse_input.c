@@ -24,6 +24,8 @@ t_commands *manage_input(char *str, t_exitcode *exit_code) //verifie l'input de 
 	add_history(infos->input);
 	replace_var_input(infos, exit_code);
 	token = ft_token(infos->input);
+	if (!token)
+		return;
 	//print_tokens(token);
 	cmds = ft_init_cmd(token);
 	if (cmds->argv[0])

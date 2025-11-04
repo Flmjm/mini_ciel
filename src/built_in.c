@@ -43,9 +43,9 @@ char	**ft_env(char **environ, t_env *env)
 		env_copy[i] = ft_malloc(sizeof(char) * (ft_strlen(environ[i]) + 1), 0);
 		ft_strlcpy(env_copy[i], environ[i], ft_strlen(environ[i]) + 1);
 		if (ft_strncmp("OLDPWD=", env_copy[i], 7) == 0)
-			env->oldpwd = env_copy[i];
+			env->oldpwd = env_copy[i] + 7;
 		else if (ft_strncmp("PWD=", env_copy[i], 4) == 0)
-			env->pwd = env_copy[i];
+			env->pwd = env_copy[i] + 4;
 		i++;
 	}
 	env_copy[i] = NULL;

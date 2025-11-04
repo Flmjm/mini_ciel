@@ -58,23 +58,18 @@ char	*prompt_sentence(t_env *env)
 {
 	char	*result;
 	int		i;
-	char	*bblue;
+	//char	*bblue;
 
-	i = 5;
-	result = ft_malloc(sizeof(int) * (ft_strlen(env->pwd) - 1), 0);
-	// printf("DEBUG TAILLE ENVPWD: %d\n", ft_strlen(env->pwd));
+	i = 0;
+	result = ft_malloc(sizeof(char) * (ft_strlen(env->pwd) + 2 + 1), 0);
 	while(env->pwd[i])
 	{
-		result[i - 5] = env->pwd[i];
+		result[i] = env->pwd[i];
 		i++;
 	}
-	result[i - 5] = '~';
-	i++;
-	result[i - 5] = '>';
-	i++;
-	result[i - 5] = '\0';
-	bblue = ft_malloc(sizeof(int) * (ft_strlen(result) + 20), 0);
-
-
+	result[i++] = '~';
+	result[i++] = '>';
+	result[i] = '\0';
+	//bblue = ft_malloc(sizeof(char) * (ft_strlen(result) + 20), 0);
 	return(result);
 }

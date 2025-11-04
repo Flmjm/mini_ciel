@@ -12,42 +12,45 @@
 
 #include "../lib_parse.h"
 
-void	ft_check_next_token_redir_append(t_token *token)
+int	ft_check_next_token_redir_append(t_token *token)
 {
 	if (token->next == NULL)
 	{
 		ft_printf("syntax error near unexpected token 'newline'\n");
-		exit(2);
+		return(1);
 	}
 	else if (token->next->type != TOKEN_WORD)
 	{
 		ft_printf("syntax error near unexpected token '%s'\n", token->next->value);
-		exit(2);
+		return(1);
 	}
 	else if (token->next->type == TOKEN_WORD)
 	{
-		return ;
+		return (0);
 	}
 	else
+	{
 		ft_printf("unexpected error while checking next token\n");
+		return(1);
+	}
 }
 
-void	ft_check_next_token(t_token *token)
+int	ft_check_next_token(t_token *token)
 {
 	while (token != NULL)
 	{
 		if (token->type == TOKEN_HERESTRING)
-			ft_check_next_token_herestring(token);
+			return (ft_check_next_token_herestring(token));
 		else if (token->type == TOKEN_HEREDOC)
-			ft_check_next_token_heredoc(token);
+			return(ft_check_next_token_heredoc(token));
 		else if (token->type == TOKEN_PIPE)
-			ft_check_next_token_pipe(token);
+			return(ft_check_next_token_pipe(token));
 		else if (token->type == TOKEN_REDIRECT_IN)
-			ft_check_next_token_redir_in(token);
+			return(ft_check_next_token_redir_in(token));
 		else if (token->type == TOKEN_REDIRECT_OUT)
-			ft_check_next_token_redir_out(token);
+			return(ft_check_next_token_redir_out(token));
 		else if (token->type == TOKEN_REDIRECT_APPEND)
-			ft_check_next_token_redir_append(token);
+			return(ft_check_next_token_redir_append(token));
 		token = token->next;
 	}
 }

@@ -32,12 +32,15 @@ char	*get_pathname_dir(char *cmd)
 {
 	char	*temp;
 	char	*path;
-	char	buf[PATH_MAX];
+	char	*cwd;
 
 	path = NULL;
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		return(NULL);
 	temp = ft_strjoin("/", cmd);
-	path = ft_strjoin(getcwd(buf, PATH_MAX), temp);
-	free(temp);
+	path = ft_strjoin(cwd, temp);
+	free(cwd);
 	return (path);
 }
 
@@ -58,50 +61,63 @@ int	count_args(char **cmd)
 
 int	cd_home(t_env *envpwd, char *pathname, char **env)
 {
-	char	buf[PATH_MAX];
+	char	*old_pwd;
+	char	*old_copy;
 	
 	pathname = get_env_value("HOME=", env);
 	if (!pathname)
-		{
-			ft_putendl_fd("cd: HOME not set", STDERR_FILENO);
-			return (1);
-		}
-		else
-			return (update_cwd(envpwd, getcwd(buf, PATH_MAX), pathname));
+	{
+		ft_putendl_fd("cd: HOME not set", STDERR_FILENO);
+		return (1);
+	}
+	old_pwd = getcwd(NULL, 0);
+	if (!old_pwd)
+		return(1);
+	old_copy = ft_malloc(sizeof(char) * (ft_strlen(old_pwd) + 1), 0);
+	ft_strlcpy(old_copy, old_pwd, ft_strlen(old_pwd) + 1);
+	free(old_pwd);
+	return (update_cwd(envpwd, old_copy, pathname));
 }
 
 int cd_oldpwd(char **cmd, t_env *envpwd, char *tmp_cwd)
 {
-	char	buf[PATH_MAX];
-	tmp_cwd = getcwd(buf, PATH_MAX);
+	char	*old_pwd;
+
+	old_pwd = getcwd(NULL, 0);
+	if (!old_pwd)
+		return(1);
+	tmp_cwd = ft_malloc(sizeof(char) * (ft_strlen(old_pwd) + 1), 0);
+	ft_strlcpy(tmp_cwd, old_pwd, ft_strlen(old_pwd) + 1);
+	free(old_pwd);
 	if (chdir(envpwd->oldpwd) != 0)
 	{
 		perror(cmd[1]);
 		return (1);
 	}
-	else
-		return (update_cwd(envpwd, tmp_cwd, ft_strdup(envpwd->oldpwd)));
+	return (update_cwd(envpwd, tmp_cwd, ft_strdup(envpwd->oldpwd)));
 }
 
 int	ft_cd(char **cmd, char **env, t_env *envpwd)
 {
 	char *pathname;
 	char *tmp_cwd;
-	char buf[PATH_MAX];
+	char *cwd;
 
-	//////////////////////////////////////////////
 	pathname = NULL;
 	tmp_cwd = NULL;
 	printf("\\DEBUT\\\n oldpwd: %s\npwd: %s\n", envpwd->oldpwd, envpwd->pwd);
 	if (count_args(cmd) != 0)
 		return (1);
-	/////// plutôt à gérer dans le parsing ? //////
 	if (cmd[0] && (!cmd[1] || cmd[1][0] == '\0'))
 		return(cd_home(envpwd, pathname, env));
 	if (cmd[0] && cmd[1][0] == '-' && cmd[1][1] == '\0')
 		return(cd_oldpwd(cmd, envpwd, tmp_cwd));
 	pathname = get_pathname_dir(cmd[1]);
-	tmp_cwd = getcwd(buf, PATH_MAX);
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		return (1);
+	tmp_cwd = ft_malloc(sizeof(char) * (ft_strlen(cwd) + 1), 0);
+	ft_strlcpy(tmp_cwd, cwd, ft_strlen(cwd) + 1);
 	if (chdir(pathname) != 0)
 	{
 		perror(cmd[1]);
@@ -123,13 +139,26 @@ int	update_cwd(t_env *envpwd, char *s1_oldpwd, char *s2_pwd)
 int cd_main(int ac, char **av, t_env *envpwd)
 {
 	// t_env	*envpwd;
-	char		buf[PATH_MAX];
+	char *pathname;
+	char *cwd;
 
 	// envpwd = ft_malloc(sizeof(t_env), 0);
 	// envpwd->pwd = "OLDPWD=""/home/";
-	envpwd->pwd = getcwd(buf, PATH_MAX);
-	if (ac > 1)
+	if (!envpwd->pwd)
 	{
-		ft_cd(av, envpwd->local_env, envpwd);
+		pathname = get_env_value("HOME=", envpwd->local_env);
+		if (!pathname)
+			ft_putendl_fd("cd: HOME not set", STDERR_FILENO);
+		else
+			envpwd->oldpwd = pathname;
+		cwd = getcwd(NULL, 0);
+		if (!cwd)
+			return(1);
+		envpwd->pwd = ft_malloc(ft_strlen(cwd) + 1, 0);
+		ft_strlcpy(envpwd->pwd, cwd, ft_strlen(cwd) + 1);
+		free(cwd);
 	}
+	if (ac > 1)
+		ft_cd(av, envpwd->local_env, envpwd);
+	return(0);
 }

@@ -122,7 +122,8 @@ t_token	*ft_token(char *input) // segfault : '<<' , '<<<'
 			    i++;
 		}
 	}
-	ft_check_next_token(token);
+	if (ft_check_next_token(token) == 1)
+		return(NULL);
 	return (token);
 }
 
