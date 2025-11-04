@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_check_next_token2.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:09:39 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/29 11:40:02 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/04 11:36:12 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void	ft_check_next_token_redir_append(t_token *token)
 	if (token->next == NULL)
 	{
 		ft_printf("syntax error near unexpected token 'newline'\n");
-		//exit_with_message_and_//free("syntax error near unexpected token 'newline'\n", token, 2);
+		exit(2);
 	}
 	else if (token->next->type != TOKEN_WORD)
 	{
 		ft_printf("syntax error near unexpected token '%s'\n", token->next->value);
-		// exit_with_message_and_//free(NULL, token, 2);
+		exit(2);
 	}
 	else if (token->next->type == TOKEN_WORD)
 	{

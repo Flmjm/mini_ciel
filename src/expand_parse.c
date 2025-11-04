@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 21:45:37 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/29 11:40:41 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/04 11:22:46 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void	erase_in_str(t_input_info *infos, int i)
 	int	j;
 	j = 0;
 
-	buffer = ft_malloc(sizeof(char) * (ft_strlen(infos->input)), 0);
+	buffer = ft_malloc(sizeof(char) * (ft_strlen(infos->input) + 1), 0);
+	if (!buffer)
+		return;
 	while (j < i)
 	{
 		buffer[j] = infos->input[j];
@@ -31,7 +33,6 @@ void	erase_in_str(t_input_info *infos, int i)
 		i++;
 	}
 	buffer[j] = '\0';
-	//free(infos->input);
 	infos->input = buffer;
 }
 
@@ -48,23 +49,25 @@ void	 replace_var_input(t_input_info *infos, t_exitcode *exit_code)
 			i = expand_in_quote(infos, i, exit_code);
 		else if (infos->input[i] == '\'')
 			i = next_simple_quote(infos, i);
-		if (infos->input[i] == '$')
+		else if (infos->input[i] == '$')
 			expand_var(infos, i, 0, exit_code);
-		i++;
+		else
+			i++;
+		if (i >= ft_strlen(infos->input))
+			break;
 	}
 }
 int	expand_in_quote(t_input_info *infos, int i, t_exitcode *exit_code)
 {
 	i++;
-	while (infos->input[i] != '"')
+	while (infos->input[i] && infos->input[i] != '"')
 	{
-		if (infos->input[i] == '"')
-			return (i);
-		else if (infos->input[i] == '\\' && infos->input[i + 1] == '$')
+		if (infos->input[i] == '\\' && infos->input[i + 1] == '$')
 			erase_in_str(infos, i);
 		else if (infos->input[i] == '$')
 			expand_var(infos, i, 1, exit_code);
-		i++;
+		else
+			i++;
 	}
 	return (i);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:34 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/29 11:41:57 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/04 10:13:49 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,8 +148,12 @@ int	ft_waitpid(t_pipex_b *pipex)
 	status = 0;
 	while (i < pipex->cmd_count)
 	{
-		waitpid(pipex->pid[i], &status, 0);
-		ret = (status >> 8) & 0xFF;
+		if (pipex->pid[i] > 0)
+		{
+			status = 0;
+			waitpid(pipex->pid[i], &status, 0);
+			ret = (status >> 8) & 0xFF;
+		}
 		i++;
 	}
 	return (ret);
@@ -178,9 +182,9 @@ void	create_pipe(t_pipex_b *pipex)
 	{
 		pipex->pipefd[i] = ft_malloc(sizeof(int) * 2, 0);
 		if (!pipex->pipefd[i])
-			printf("Malloc pipefd");
+			ft_printf("Malloc pipefd");
 		if (pipe(pipex->pipefd[i]) == -1)
-			printf("Pipe");
+			ft_printf("Pipe");
 		i++;
 	}
 	pipex->pipefd[i] = NULL;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 16:06:05 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/29 11:41:13 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/04 10:35:30 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,21 @@ void	init_struct_exec(t_pipex_b *pipex, t_commands *cmds, char **env)
 	pipex->cmd = NULL;
 	pipex->pid = ft_malloc(pipex->cmd_count * sizeof(pid_t), 0);
 	if (!pipex->pid)
-		printf("pipex pid malloc\n");
+		ft_printf("pipex pid malloc\n");
 	pipex->pipefd = ft_malloc(sizeof(int *) * (pipex->cmd_count), 0);
 	if (!pipex->pipefd)
-		printf("Malloc pipefd");
+		ft_printf("Malloc pipefd\n");
+	while (i < pipex->cmd_count)
+		pipex->pid[i++] = -1;
+	i = 0;
 	while (i < pipex->cmd_count)
 		pipex->pipefd[i++] = NULL;
 	pipex->path = get_env_value("PATH=", env);
 	if (!pipex->path)
-		printf("Unable to get PATH");
+		ft_printf("Unable to get PATH\n");
 	pipex->directories = ft_split(pipex->path, ':');
 	if (!pipex->directories)
-		printf("Split directories");
+		ft_printf("Split directories\n");
 }
 
 int	ft_lstlen(t_commands *cmds)
@@ -95,4 +98,12 @@ void	get_pathname(char **cmd, t_pipex_b *pipex)
 	}
 	if (!path)
 		pipex->pathname_cmd = NULL;
+}
+void	ft_free(void *ptr)
+{
+	if (ptr)
+	{
+		free(ptr);
+		ptr = NULL;
+	}
 }

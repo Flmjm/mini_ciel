@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_parse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/29 11:36:55 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/03 16:15:20 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ void	ft_check_next_token_redir_out(t_token *token);
 void	ft_check_next_token_redir_append(t_token *token);
 void	ft_check_next_token_herestring(t_token *token);
 //void	recall_readline(t_token *infos);
+void	ft_check_next_token(t_token *token);
 
 // free_errors.c
 // void	exit_with_message_and_free(char *str, t_token *token, int n);

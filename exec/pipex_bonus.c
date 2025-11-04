@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 16:06:05 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/29 11:41:39 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/04 09:42:45 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,31 +100,19 @@ void	ft_dup_last_infiles(t_commands *cmds, t_pipex_b *pipex)
 	current = cmds;
 	while (current->infiles && current->infiles->next)
 		current->infiles = current->infiles->next;
-	last_infile = ft_strjoin(ft_strjoin(getenv("PWD"), "/"), current->infiles->infile);
-	if (access(last_infile, F_OK) == 0)
-	{
-		if (current->infiles->type == TOKEN_REDIRECT_IN)
-			pipex->infile = open(current->infiles->infile, O_RDONLY);
-		else if (current->infiles->type == TOKEN_HEREDOC)
-			pipex->infile = open(current->infiles->infile, O_RDONLY);
-		else if (current->infiles->type == TOKEN_HERESTRING)
-			pipex->infile = open(current->infiles->infile, O_RDONLY);
-		if (pipex->infile > 0)
-			pipex->infile_error = 0;
-		else
-			pipex->infile_error = -1;
-	}
+	printf("current infile %d\n", current->infiles->type);
+	if (current->infiles->type == FILE_HEREDOC)
+		pipex->infile = get_heredoc(current->infiles->word_eof);
 	else
-		pipex->outfile_error = -1;
-}
-
-void	ft_free(void *ptr)
-{
-	if (ptr)
-	{
-		free(ptr);
-		ptr = NULL;
+	{ 
+		last_infile = ft_strjoin(ft_strjoin(getenv("PWD"), "/"), current->infiles->infile);
+		if (access(last_infile, F_OK) == 0 && current->infiles->type == TOKEN_REDIRECT_IN)
+				pipex->infile = open(current->infiles->infile, O_RDONLY);
 	}
+	if (pipex->infile > 0)
+		pipex->infile_error = 0;
+	else
+		pipex->infile_error = -1;
 }
 
 int	is_relative_or_absolute_path(char *str)
