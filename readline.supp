@@ -1,0 +1,39 @@
+# ===================================================================
+#  Suppressions Valgrind pour GNU Readline (libreadline.so.8.x)
+#  Auteur : Manual Leschevin & GPT-5
+#  Objectif : ignorer les "still reachable" et "definitely lost"
+#  provenant de la libreadline (non critiques ni liées à ton code)
+# ===================================================================
+
+{
+   readline_definitely_lost
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:xmalloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.*
+}
+
+{
+   readline_still_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:xmalloc
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.*
+}
+
+{
+   readline_keymap_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:rl_make_bare_keymap
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.*
+}
+
+{
+   readline_history_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:rl_initialize
+   obj:/usr/lib/x86_64-linux-gnu/libreadline.so.*
+}
+

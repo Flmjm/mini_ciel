@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lib_parse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/03 16:15:20 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/07 21:20:50 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#define _XOPEN_SOURCE 700
 
 #ifndef LIB_PARSE_H
 # define LIB_PARSE_H
@@ -41,10 +43,11 @@ typedef struct s_exitcode
 
 typedef	struct s_env
 {
-	char **export;	//varibale d'en exporter
-	char **local_env; // varibale d'env locale + exporter
+	char **export;
+	char **local_env;
 	char *oldpwd;
 	char *pwd;
+	struct sigaction *signal;
 }						t_env;
 
 
@@ -126,6 +129,9 @@ typedef struct t_outfiles
 	struct t_outfiles	*next;
 }						t_outfiles;
 
+void manage_ctrlc(int sig);
+
+
 // parse_input.c
 t_commands	*manage_input(char *str, t_exitcode *exit_code); // gere l'input, //convertis en infos puis en **argv et en liste chainees
 void		replace_azt(t_input_info *info, int i);
@@ -133,7 +139,7 @@ void		replace_azt(t_input_info *info, int i);
 // check_input.c
 void	is_complete(t_input_info *infos); // gere l'input et redirige en cas d'input incomplet + quote les backslash (note: rajouter une maniere de gerer l'historique de readline car la elle prend les deformations des backslash)
 void	recall_readline(t_input_info *infos); // rappele la fonction readline de maniere propre pour certeine condition
-int		next_simple_quote(t_input_info *infos, int i); // renvoi i = prochain " comme str[i] = '"'
+int	next_simple_quote(t_input_info *infos, int i, int init); // renvoi i = prochain " comme str[i] = '"'
 void	quote_next_char(t_input_info *infos, int i); // quote str[i+ 1] proprement, ne renvoi pas i il faut penser a rajouter a 2 a sa valeur
 int		next_double_quote(t_input_info *infos, int i, int init); // renvoi i = prochain ' comme str[i] = '\''
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:45 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/29 11:41:28 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/07 21:36:45 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	ft_dup_last_infiles(t_commands *cmds, t_pipex_b *pipex);
 ///////////////////////////// main.c ////////////////////////////////////
 void		ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *exit_code);
 void		last_cmd(t_pipex_b *pipex, t_commands *cmds, char **env, int i);
-int			ft_waitpid(t_pipex_b *pipex);
+void		ft_waitpid(t_pipex_b *pipex, t_env *env, t_exitcode *exit_code);
 void		create_pipe(t_pipex_b *pipex);
 int			ft_lstlen(struct t_commands *cmds);
 int			exec_main(t_commands *cmds, t_env *env, t_exitcode *exitcode);

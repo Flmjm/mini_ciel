@@ -48,7 +48,7 @@ void	 replace_var_input(t_input_info *infos, t_exitcode *exit_code)
 		if (infos->input[i] == '"')
 			i = expand_in_quote(infos, i, exit_code);
 		else if (infos->input[i] == '\'')
-			i = next_simple_quote(infos, i);
+			i = next_simple_quote(infos, i, FALSE);
 		else if (infos->input[i] == '$')
 			expand_var(infos, i, 0, exit_code);
 		else

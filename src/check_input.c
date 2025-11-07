@@ -20,7 +20,7 @@ void	is_complete(t_input_info *infos) // prend en charge \ ' " pour l'instant
 	while (infos->input[i])
 	{
 		if (infos->input[i] == '\'')
-			i = next_simple_quote(infos, i);
+			i = next_simple_quote(infos, i, TRUE);
 		if (infos->input[i] == '"')
 			i = next_double_quote(infos, i, TRUE);
 		else if (infos->input[i] == '\\' && infos->input[i + 1] == '\0')
@@ -55,15 +55,18 @@ void	recall_readline(t_input_info *infos)
 		+ ft_strlen(temp_input) + 1);
 }
 
-int	next_simple_quote(t_input_info *infos, int i)
+int	next_simple_quote(t_input_info *infos, int i, int init)
 {
 	i = i + 1;
 	while (infos->input[i] != '\'')
 	{
-		while (infos->input[i] == '\0')
+		if (init == TRUE)
 		{
-			replace_azt(infos, i);
-			recall_readline(infos);
+			while (infos->input[i] == '\0')
+			{
+				replace_azt(infos, i);
+				recall_readline(infos);
+			}
 		}
 		if (infos->input[i] == '\'')
 			return (i);

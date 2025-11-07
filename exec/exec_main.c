@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:34 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/04 10:13:49 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/07 21:37:01 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,19 @@ void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *exit_c
 		else
 		{
 			init_cmd(pipex, cmds);
+			signal(SIGINT, SIG_IGN);
+			signal(SIGQUIT, SIG_IGN);
 			pipex->pid[i] = fork();
+			if (pipex->pid[i] == 0)
+			{
+				signal(SIGINT, SIG_DFL);
+				signal(SIGQUIT, SIG_DFL);
+			}
+			else
+			{
+				signal(SIGINT, SIG_IGN);
+				signal(SIGQUIT, SIG_IGN);
+			}
 			if (pipex->pid[i] == 0 && pipex->pathname_cmd)
 				cmd_process(pipex, env->local_env, i);
 			else if (pipex->pid[i] == 0 && !pipex->pathname_cmd)
@@ -123,7 +135,7 @@ void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *exit_c
 			cmds = cmds->next;
 		i++;
 	}
-	ft_waitpid(pipex);
+	ft_waitpid(pipex, env, exit_code);
 }
 
 void	last_cmd(t_pipex_b *pipex, t_commands *cmds, char **env, int i)
@@ -137,7 +149,7 @@ void	last_cmd(t_pipex_b *pipex, t_commands *cmds, char **env, int i)
 		cmd_process(pipex, env, i);
 }
 
-int	ft_waitpid(t_pipex_b *pipex)
+void	ft_waitpid(t_pipex_b *pipex, t_env *env, t_exitcode *exit_code)
 {
 	int	i;
 	int	ret;
@@ -156,7 +168,13 @@ int	ft_waitpid(t_pipex_b *pipex)
 		}
 		i++;
 	}
-	return (ret);
+	if (WIFEXITED(status))
+		exit_code->last_cmd = WEXITSTATUS(status);
+	env->signal->sa_handler = &manage_ctrlc;
+	sigemptyset(&env->signal->sa_mask);
+	env->signal->sa_flags = SA_RESTART;
+	sigaction(SIGINT, env->signal, NULL);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	ft_wait_last_cmd(t_pipex_b *pipex, int i_cmd, t_exitcode *exit_code)
