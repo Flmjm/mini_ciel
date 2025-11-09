@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   parse_cmds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:37:56 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/29 11:38:39 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/09 21:20:08 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib_parse.h"
+#include "../../include/lib_parse.h"
 
 int	count_words(t_token *token)
 {
@@ -78,26 +78,28 @@ static t_token *ft_process_node(t_token *token, t_commands *node)
 	t_token		*tmp_token;
 	int	i;
 
-	tmp_token = ft_add_redir(token, node);
-	if (!tmp_token)
-		return(NULL);
-	if (tmp_token->type == TOKEN_EOF)
-		tmp_token = tmp_token->next;
-	if (!tmp_token)
-		return(NULL);
-	if (tmp_token->type == TOKEN_WORD)
+	tmp_token = token;
+	i = 0;
+	while (tmp_token && tmp_token->type != TOKEN_PIPE)
 	{
-		i = 0;
-		while (tmp_token && tmp_token->type == TOKEN_WORD)
+		if (tmp_token->type == TOKEN_EOF)
+			tmp_token = tmp_token->next;
+		else if (tmp_token->type >= TOKEN_REDIRECT_IN
+			&& tmp_token->type <= TOKEN_HERESTRING)
+		{
+			tmp_token = ft_add_redir(tmp_token, node);
+		}
+		else if (tmp_token->type == TOKEN_WORD)
 		{
 			node->argv[i] = ft_strdup(tmp_token->value);
 			i++;
 			tmp_token = tmp_token->next;
 		}
-		node->argv[i] = NULL;
+		else
+			tmp_token = tmp_token->next;
 	}
-	tmp_token = ft_add_redir(tmp_token, node);
-	if (tmp_token)
+	node->argv[i] = NULL;
+	if (tmp_token && tmp_token->type == TOKEN_PIPE)
 		tmp_token = tmp_token->next;
 	return(tmp_token);
 }

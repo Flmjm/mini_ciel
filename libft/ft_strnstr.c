@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 19:29:36 by mleschev          #+#    #+#             */
-/*   Updated: 2025/04/05 04:08:34 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/08 12:07:41 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,3 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	}
 	return (NULL);
 }
-// int main() {
-//     char haystack[] = "aaabcabcd";
-//     char needle[] = "cd";
-//     char *result;
-
-//     result = ft_strnstr(haystack, needle, 8);
-
-//     if (result != NULL) {
-//         printf("Trouvé :%s\n", result);
-//     } else {
-//         printf("Non trouvé\n");
-//     }
-
-//     return 0;
-// }

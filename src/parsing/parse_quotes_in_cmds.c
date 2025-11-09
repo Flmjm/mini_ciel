@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib_parse.h"
+#include "../../include/lib_parse.h"
 
 void	ft_check_quotes_struct_cmd(t_commands *commands)
 {

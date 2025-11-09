@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 11:30:29 by mleschev          #+#    #+#             */
-/*   Updated: 2025/04/01 09:23:34 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/08 12:07:22 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,3 @@ void	*ft_memset(void *ptr, int value, size_t count)
 	}
 	return (ptr);
 }
-// int	main()
-// {
-// 	char	array[] = "Hola\n";
-// 	ft_memset(array, 'A', 4);
-// 	printf("%s", array);
-// }

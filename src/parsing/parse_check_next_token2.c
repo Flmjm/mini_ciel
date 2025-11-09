@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib_parse.h"
+#include "../../include/lib_parse.h"
 
 int	ft_check_next_token_redir_append(t_token *token)
 {

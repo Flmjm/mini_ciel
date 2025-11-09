@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib_parse.h"
+#include "../../include/lib_parse.h"
 
 t_token	*ft_lstnew_token(t_token_type type, char *content)
 {

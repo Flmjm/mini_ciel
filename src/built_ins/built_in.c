@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 19:46:26 by mleschev          #+#    #+#             */
-/*   Updated: 2025/10/21 00:24:04 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/08 22:16:47 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib_parse.h"
+#include "../../include/lib_parse.h"
+#include "../../include/lib_exec.h"
 
 int	env_built_in(t_env *env) //a besoin du char **environ qui est pris par le main apres argc et argv
 {

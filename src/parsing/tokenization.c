@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 17:44:15 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/20 16:42:07 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/09 01:46:29 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib_parse.h"
+#include "../../include/lib_parse.h"
 
 
 int	ft_get_op_length(char *input, int i, t_token_type *type)
@@ -76,7 +76,11 @@ char *ft_get_word(char *input, int start)
         }
         else
         {
-            if (input[i] == quote)
+            if (input[i] == '\'' && input[i + 1] && input[i + 2] == '\'' && quote == '"')
+            {
+                i += 2;
+            }
+            else if (input[i] == quote)
 				in_quotes = 0;
         }
         i++;
@@ -125,22 +129,4 @@ t_token	*ft_token(char *input) // segfault : '<<' , '<<<'
 	if (ft_check_next_token(token) == 1)
 		return(NULL);
 	return (token);
-}
-
-
-// fonction test pour voir les tokens
-void print_tokens(t_token *tokens) {
-    printf("\n=== TOKENS ===\n");
-    t_token *current = tokens;
-    int index = 0;
-
-    while (current) {
-        printf("[%d] %d: '%s'\n",
-               index,
-               current->type,
-               current->value);
-        current = current->next;
-		index++;
-    }
-    printf("\n");
 }

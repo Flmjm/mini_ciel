@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_bonus.c                                      :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 16:06:05 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/04 10:35:30 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/08 15:49:29 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "../../include/lib_exec.h"
 
 void	init_struct_exec(t_pipex_b *pipex, t_commands *cmds, char **env)
 {
-	int	i;
-
-	i = 0;
 	pipex->cmd_count = ft_lstlen(cmds);
 	pipex->outfile = -1;
 	pipex->path = NULL;
@@ -25,9 +22,16 @@ void	init_struct_exec(t_pipex_b *pipex, t_commands *cmds, char **env)
 	pipex->infile_error = -1;
 	pipex->pathname_cmd = NULL;
 	pipex->cmd = NULL;
+	init_struct_exec_malloc(pipex, cmds, env);
+}
+void	init_struct_exec_malloc(t_pipex_b *pipex, t_commands *cmds, char **env)
+{
+	int	i;
+
+	i = 0;
 	pipex->pid = ft_malloc(pipex->cmd_count * sizeof(pid_t), 0);
 	if (!pipex->pid)
-		ft_printf("pipex pid malloc\n");
+		ft_printf("Pipex pid malloc\n");
 	pipex->pipefd = ft_malloc(sizeof(int *) * (pipex->cmd_count), 0);
 	if (!pipex->pipefd)
 		ft_printf("Malloc pipefd\n");
@@ -99,11 +103,4 @@ void	get_pathname(char **cmd, t_pipex_b *pipex)
 	if (!path)
 		pipex->pathname_cmd = NULL;
 }
-void	ft_free(void *ptr)
-{
-	if (ptr)
-	{
-		free(ptr);
-		ptr = NULL;
-	}
-}
+

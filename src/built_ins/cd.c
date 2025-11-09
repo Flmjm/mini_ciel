@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:01:42 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/03 18:07:24 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/08 22:16:54 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../exec/pipex_bonus.h"
-
-// char	*get_env_value(char *value, char **env)
-// {
-// 	size_t	len_value;
-// 	size_t	i;
-
-// 	len_value = ft_strlen(value);
-// 	i = 0;
-// 	while (env && env[i])
-// 	{
-// 		if (ft_strncmp(env[i], value, len_value) == 0)
-// 			return (ft_strdup(env[i] + len_value));
-// 		i++;
-// 	}
-// 	return (NULL);
-// }
+#include "../../include/lib_exec.h"
 
 char	*get_pathname_dir(char *cmd)
 {
@@ -42,21 +26,6 @@ char	*get_pathname_dir(char *cmd)
 	path = ft_strjoin(cwd, temp);
 	free(cwd);
 	return (path);
-}
-
-int	count_args(char **cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd[i])
-		i++;
-	if (i > 2)
-	{
-		ft_putendl_fd("cd: too many arguments", STDERR_FILENO);
-		return (1);
-	}
-	return (0);
 }
 
 int	cd_home(t_env *envpwd, char *pathname, char **env)
@@ -105,9 +74,12 @@ int	ft_cd(char **cmd, char **env, t_env *envpwd)
 
 	pathname = NULL;
 	tmp_cwd = NULL;
-	printf("\\DEBUT\\\n oldpwd: %s\npwd: %s\n", envpwd->oldpwd, envpwd->pwd);
-	if (count_args(cmd) != 0)
+	//printf("\\DEBUT\\\n oldpwd: %s\npwd: %s\n", envpwd->oldpwd, envpwd->pwd);
+	if (argc_of_argv(cmd) > 2)
+	{
+		ft_putendl_fd("cd: too many arguments", STDERR_FILENO);
 		return (1);
+	}
 	if (cmd[0] && (!cmd[1] || cmd[1][0] == '\0'))
 		return(cd_home(envpwd, pathname, env));
 	if (cmd[0] && cmd[1][0] == '-' && cmd[1][1] == '\0')
@@ -131,8 +103,8 @@ int	update_cwd(t_env *envpwd, char *s1_oldpwd, char *s2_pwd)
 {
 	envpwd->oldpwd = s1_oldpwd;
 	envpwd->pwd = s2_pwd;
-	printf("\\APRES FCT\\\n oldpwd: %s\npwd: %s\n", envpwd->oldpwd,
-		envpwd->pwd);
+	//printf("\\APRES FCT\\\n oldpwd: %s\npwd: %s\n", envpwd->oldpwd,
+		//envpwd->pwd);
 	return (chdir(s2_pwd));
 }
 

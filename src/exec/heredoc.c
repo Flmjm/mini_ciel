@@ -3,18 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 16:55:12 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/30 17:20:47 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/08 15:24:04 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
-#include "../lib_parse.h"
-
-// Utilisation exec
-// if FILE_TYPE == HEREDOC, infile->fd = get_heredoc(infile->word_eof);
+#include "../../include/lib_exec.h"
+#include "../../include/lib_parse.h"
 
 int get_heredoc(char *delimiter)
 {

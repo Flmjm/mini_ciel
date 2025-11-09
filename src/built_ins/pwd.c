@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 16:15:52 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/10/07 15:04:14 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/08 22:17:00 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../exec/pipex_bonus.h"
-
-//check ok
+#include "../../include/lib_exec.h"
 
 int ft_pwd()
 {

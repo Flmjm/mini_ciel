@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 12:44:42 by mleschev          #+#    #+#             */
-/*   Updated: 2025/04/04 11:17:19 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/08 12:07:20 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,3 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	}
 	return (dest);
 }
-// int main() {
-// 	char s[] = {65, 66, 67, 68, 69, 0, 45};
-// 	char s0[] = { 0,  0,  0,  0,  0,  0, 0};
-//     printf("Avant memmove: %s\n", s0);
-//     memmove(s0, s, 7);
-//     printf("Après memmove: %s\n", s0);
-//     return (0);
-// }

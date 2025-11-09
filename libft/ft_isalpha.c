@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 09:27:44 by mleschev          #+#    #+#             */
-/*   Updated: 2025/04/01 11:28:48 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/08 12:07:03 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,4 @@ int	ft_isalpha(int c)
 		return (1);
 	return (0);
 }
-/*
-int	main(void)
-{
-	char c = 'a';
-	printf("%d", ft_isalpha(c));
-}*/
+

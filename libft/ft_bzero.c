@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 13:30:14 by mleschev          #+#    #+#             */
-/*   Updated: 2025/03/31 13:49:04 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/08 12:06:54 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,3 @@ void	ft_bzero(void *ptr, size_t n)
 		i++;
 	}
 }
-/*
-int main() {
-    char buffer[10];
-    
-    // Afficher le contenu initial du buffer
-    printf("Avant ft_bzero: ");
-    for (int i = 0; i < 10; i++) {
-        printf("%d ", buffer[i]);
-    }
-    printf("\n");
-    
-    // Appeler ft_bzero pour remplir le buffer de zéros
-    ft_bzero(buffer, sizeof(buffer));
-    
-    // Afficher le contenu du buffer après ft_bzero
-    printf("Après ft_bzero: ");
-    for (int i = 0; i < 10; i++) {
-        printf("%d ", buffer[i]);  // Devrait afficher des zéros
-    }
-    printf("\n");
-
-    return 0;
-}*/

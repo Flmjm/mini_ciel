@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 18:41:50 by mleschev          #+#    #+#             */
-/*   Updated: 2025/04/03 16:26:14 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/08 12:07:44 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,3 @@ char	*ft_strrchr(const char *string, int searchedChar)
 	}
 	return (NULL);
 }
-// int	main()
-// {
-// 	printf("%s\n", ft_strrchr("a b c", 'a'));
-// 	printf("%s\n", strrchr("a b c", 'a'));
-// }

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_check_next_token.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 14:09:39 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/04 11:46:28 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/09 21:11:08 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib_parse.h"
+#include "../../include/lib_parse.h"
 
 int	ft_check_next_token_heredoc(t_token *token)
 {
@@ -74,17 +74,8 @@ int	ft_check_next_token_redir_in(t_token *token)
 			token->next->value);
 		return(1);
 	}
-	else if (token->next->type == TOKEN_WORD && access(token->next->value,
-			F_OK) != 0)
-	{
-		ft_printf("%s: No such file or directory\n", token->next->value);
-		return(1);
-	}
-	else if (token->next->type == TOKEN_WORD && access(token->next->value,
-			F_OK) == 0)
-	{
+	else if (token->next->type == TOKEN_WORD)
 		return (0);
-	}
 	else
 	{
 		ft_printf("unexpected error while checking next token\n");
