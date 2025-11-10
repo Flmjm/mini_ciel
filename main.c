@@ -6,7 +6,7 @@
 /*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/08 23:10:46 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/10 11:40:55 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	prompt_loop(t_env *env_s)
 		if (!input)
 		{	
 			write(1, "^D\n",3);
-			ft_exit(env_s, 240);
+			ft_exit(env_s, NULL, 240);
 		}
 		cmds = manage_input(input, exit_code);	//j'ai mis ft_token a l'interieur
 		if (cmds)

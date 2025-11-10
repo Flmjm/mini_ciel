@@ -6,7 +6,7 @@
 /*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 16:06:05 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/09 22:19:28 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/10 12:40:01 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	cmd_process(t_pipex_b *pipex, char **env, int index)
 }
 
 
-void	init_cmd(t_pipex_b *pipex, t_commands *cmds)
+int	init_cmd(t_pipex_b *pipex, t_commands *cmds)
 {
 	pipex->cmd = cmds->argv;
 	pipex->outfile_error = 1;
@@ -39,10 +39,8 @@ void	init_cmd(t_pipex_b *pipex, t_commands *cmds)
 		get_pathname(pipex->cmd, pipex);
 	else
 		pipex->pathname_cmd = cmds->argv[0];
-	if (cmds->infiles)
-		ft_dup_infiles(cmds, pipex);
-	if (cmds->outfiles && pipex->infile_error != -1)
-		ft_dup_outfile(cmds, pipex);
+	if (cmds->redirect)
+		return(ft_init_files(cmds, pipex));
 }
 
 int	is_relative_or_absolute_path(char *str)

@@ -6,7 +6,7 @@
 /*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 19:46:26 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/08 22:16:47 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/10 11:24:41 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,6 @@ void up_shell_level(char **env)
 	}
 }
 
-void	ft_exit(t_env *env, int nbr_return)
-{
-	//free_env(env);
-	rl_clear_history();
-	ft_malloc(0, 1);
-	exit(nbr_return);
-}
 
 // void free_env(t_env *env)
 // {

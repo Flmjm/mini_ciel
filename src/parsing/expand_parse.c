@@ -6,7 +6,7 @@
 /*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 21:45:37 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/09 21:37:35 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/10 14:31:29 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	expand_var(t_input_info *infos, int i, int quote, t_exitcode *exit_code)
 	}
 	else if(ft_isalnum(infos->input[i]) || infos->input[i] == '_')
 	{
-    	while (infos->input[i] && ft_isalnum(infos->input[i]) || infos->input[i] == '_')
+    	while (infos->input[i] && (ft_isalnum(infos->input[i]) || infos->input[i] == '_'))
    		{
 			if (quote && infos->input[i] == '"')
 				break ;
@@ -109,6 +109,7 @@ void	expand_var(t_input_info *infos, int i, int quote, t_exitcode *exit_code)
         return ;
 	resize_and_copy(infos, i, j, temp_input);
 }
+
 
 void resize_and_copy(t_input_info *infos, int i, int j, char *temp_input)
 {

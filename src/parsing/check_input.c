@@ -6,7 +6,7 @@
 /*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 08:51:44 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/09 01:08:39 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/10 14:28:14 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ void	replace_azt(t_input_info *info, int i)
 }
 
 int	next_double_quote(t_input_info *infos, int i, int init)
-		// bug sur input: "\"
 {
 	i = i + 1;
 	while (infos->input[i] && infos->input[i] != '"')
@@ -125,8 +124,6 @@ void	quote_next_char(t_input_info *infos, int i)
 	char	*buffer;
 	int		j;
 
-	// int i_return ;
-	// i_return (= i + 2);
 	j = i;
 	lenght = ft_strlen(infos->input);
 	buffer = ft_malloc(sizeof(char) * (lenght + 1), 0);

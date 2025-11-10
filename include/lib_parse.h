@@ -6,7 +6,7 @@
 /*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/09 01:09:46 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/10 14:16:28 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,42 +90,18 @@ typedef struct s_redirect
 	t_file_type		type;
 	char			*filename;
 	int				fd;
+	char				*word_eof;
 	struct s_redirect	*next;
 	struct s_redirect	*prev;
 }						t_redirect;
-
-typedef struct s_ju_command
-{
-	char			**argv;
-	t_redirect		*redirection;
-	struct s_token	*next;
-	struct s_token	*prev;
-}						t_ju_command;
 
 typedef struct t_commands
 {
 	char **argv;
 	struct t_commands	*next;
-	struct t_infiles *infiles;
-	struct t_outfiles *outfiles;
+	struct t_redirect	*redirect;
 }						t_commands;
 
-typedef struct t_infiles
-{
-	char				*infile;
-	int					fd;
-	t_file_type			type;
-	char				*word_eof;
-	struct t_infiles	*next;
-}						t_infiles;
-
-typedef struct t_outfiles
-{
-	char				*outfile;
-	int					fd;
-	t_file_type			type;
-	struct t_outfiles	*next;
-}						t_outfiles;
 
 // main.c
 void 	manage_ctrlc(int sig);
@@ -150,10 +126,8 @@ void	expand_var(t_input_info *infos, int i, int quote, t_exitcode *exit_code); /
 void	resize_and_copy(t_input_info *infos, int i, int j, char *temp_input);
 
 // init_redir.c
-t_infiles	*ft_lstnew_redirect_in(char *filename, t_file_type type, char *word);
-t_outfiles	*ft_lstnew_redirect_out(char *filename, t_file_type type);
-void	ft_lstadd_infiles_back(t_infiles **lst, t_infiles *new);
-void	ft_lstadd_outfiles_back(t_outfiles **lst, t_outfiles *new);
+t_redirect	*ft_lstnew_redirect(char *filename, t_file_type type, char *word);
+void	ft_lstadd_redirect_back(t_redirect **lst, t_redirect *new);
 t_token	*ft_add_redir(t_token *token, t_commands *node);
 
 //parse_check_next_token.c
@@ -185,9 +159,11 @@ t_token	*ft_lstnew_token(t_token_type type, char *content);
 void	ft_lstadd_token_back(t_token **lst, t_token *new);
 
 //tokenization.c
+int get_op_redir_in(char *input, int i, t_token_type *type);
 int	ft_get_op_length(char *input, int i, t_token_type *type);
 char *ft_get_word(char *input, int start);
-t_token	*ft_token(char *input);
+t_token	*ft_token(char *input, int i);
+int update_i_after_word(char *input, int i, t_token *token);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 15:31:15 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/09 22:05:31 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/10 12:51:43 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,16 @@ void	exec_builtin_with_redir(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_e
 		ft_dup2_and_close(pipex->pipefd[index - 1][0], STDIN_FILENO);
 	if (pipex->outfile_error == -1 || pipex->infile_error == -1)
 	{
-		if (saved_stdin != -1)
-			ft_dup2_and_close(saved_stdin, STDIN_FILENO);
-		if (saved_stdout != -1)
-			ft_dup2_and_close(saved_stdout, STDOUT_FILENO);
+		close_saved_std(saved_stdin, saved_stdout);
 		exit_code->last_cmd = 1;
 		return ;
 	}
     exec_builtin(pipex, cmds, env, exit_code);
+	close_saved_std(saved_stdin, saved_stdout);
+}
+
+void close_saved_std(int saved_stdin, int saved_stdout)
+{
 	if (saved_stdin != -1)
 		ft_dup2_and_close(saved_stdin, STDIN_FILENO);
 	if (saved_stdout != -1)
@@ -51,7 +53,7 @@ void exec_builtin(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *ex
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
     if ((ft_strlen(cmds->argv[0]) == 4) && (ft_strncmp("exit", cmds->argv[0], 4) == 0))
-		ft_exit(env, 0);
+		exit_code->last_cmd = ft_exit(env, cmds->argv, 0);
 	else if ((ft_strlen(cmds->argv[0]) == 3) && (ft_strncmp("env", cmds->argv[0], 3) == 0))
 		exit_code->last_cmd = env_built_in(env);
 	else if ((ft_strlen(cmds->argv[0]) == 2) && (ft_strncmp("cd", cmds->argv[0], 2) == 0))

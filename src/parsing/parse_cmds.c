@@ -6,7 +6,7 @@
 /*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:37:56 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/09 21:20:08 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/10 14:32:47 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ t_commands	*ft_lstnew_command(int words)
 	}
 	else
 		new->argv = ft_malloc((words + 1) * sizeof(char *), 0);
-	new->infiles = NULL;
-	new->outfiles = NULL;
+	new->redirect = NULL;
 	new->next = NULL;
 	return (new);
 }
@@ -86,9 +85,7 @@ static t_token *ft_process_node(t_token *token, t_commands *node)
 			tmp_token = tmp_token->next;
 		else if (tmp_token->type >= TOKEN_REDIRECT_IN
 			&& tmp_token->type <= TOKEN_HERESTRING)
-		{
 			tmp_token = ft_add_redir(tmp_token, node);
-		}
 		else if (tmp_token->type == TOKEN_WORD)
 		{
 			node->argv[i] = ft_strdup(tmp_token->value);
