@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 15:31:15 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/10 12:51:43 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/11 22:28:56 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void exec_builtin(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *ex
 		exit_code->last_cmd = ft_pwd();
 	else if ((ft_strlen(cmds->argv[0]) == 6) && (ft_strncmp("export", cmds->argv[0], 6) == 0))
 	{
-		exit_code->last_cmd = 0;
-		ft_printf("export: A IMPLEMENTER\n");
+		exit_code->last_cmd = ft_export(env, cmds);
+		// ft_printf("export: A IMPLEMENTER\n");
 	}
 	else if ((ft_strlen(cmds->argv[0]) == 5) && (ft_strncmp("unset", cmds->argv[0], 5) == 0))
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_parse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/11 15:26:36 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/11 20:51:50 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,19 @@ typedef struct s_exitcode
 
 typedef	struct s_env
 {
-	char **export;	//varibale d'en exporter
-	char **local_env; // varibale d'env locale + exporter
+	char **global;
+	struct s_env_local *local;
 	char *oldpwd;
 	char *pwd;
 	struct sigaction *signal;
 
 }						t_env;
+
+typedef struct s_env_local
+{
+	char *value;
+	struct s_env_local *next;
+}						t_env_local;
 
 typedef enum e_token_type
 {
@@ -60,7 +66,8 @@ typedef enum e_token_type
 	TOKEN_REDIRECT_APPEND, // 4 - >>
 	TOKEN_HEREDOC,         // 5 - <<
 	TOKEN_EOF,             // 6 - EOF
-	TOKEN_HERESTRING	   // 7 - <<<
+	TOKEN_HERESTRING,	   // 7 - <<<
+	TOKEN_VAR			   // 8 - cmd=aled
 	}						t_token_type;
 
 typedef enum e_file_type

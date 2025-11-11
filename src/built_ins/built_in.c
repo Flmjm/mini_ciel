@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 19:46:26 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/10 11:24:41 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/11 20:23:45 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int	env_built_in(t_env *env) //a besoin du char **environ qui est pris par le ma
 	int	i;
 
 	i = 0;
-	if (!env->export)
+	if (!env->global)
 		return (1);
-	while (env->export[i])
+	while (env->global[i])
 	{
-		printf("%s\n", env->export[i]);
+		printf("%s\n", env->global[i]);
 		i++;
 	}
 	return (0);
@@ -51,6 +51,32 @@ char	**ft_env(char **environ, t_env *env)
 	}
 	env_copy[i] = NULL;
 	up_shell_level(env_copy);
+	return (env_copy);
+}
+
+void	add_var(char **environ, char *new_var, t_env *env)
+{
+	int	i;
+	int	length;
+	char **env_copy;
+	
+	length = 0;
+	i = 0;
+	while (environ[length])
+		length++;
+	env_copy = ft_malloc(sizeof(char *) * (length + 2), 0);
+	while (i != length)
+	{
+		env_copy[i] = ft_malloc(sizeof(char) * (ft_strlen(environ[i]) + 1), 0);
+		ft_strlcpy(env_copy[i], environ[i], ft_strlen(environ[i]) + 1);
+		if (ft_strncmp("OLDPWD=", env_copy[i], 7) == 0)
+			env->oldpwd = env_copy[i] + 7;
+		else if (ft_strncmp("PWD=", env_copy[i], 4) == 0)
+			env->pwd = env_copy[i] + 4;
+		i++;
+	}
+	env_copy[i] = new_var;
+	env_copy[i + 1] = NULL;
 	return (env_copy);
 }
 

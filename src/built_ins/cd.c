@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:01:42 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/11 17:06:42 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/11 20:35:04 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int cd_main(int ac, char **av, t_env *envpwd)
 	// envpwd->pwd = "OLDPWD=""/home/";
 	if (!envpwd->pwd)
 	{
-		pathname = get_env_value("HOME=", envpwd->local_env);
+		pathname = get_env_value("HOME=", envpwd->global);
 		if (!pathname)
 			ft_putendl_fd("cd: HOME not set", STDERR_FILENO);
 		else
@@ -85,6 +85,6 @@ int cd_main(int ac, char **av, t_env *envpwd)
 		free(cwd);
 	}
 	if (ac >= 1)
-		ft_cd(av, envpwd->local_env, envpwd);
+		ft_cd(av, envpwd->global, envpwd);
 	return(0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/11 14:03:18 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/11 20:42:33 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int	main(int argc, char **argv, char **environt)
 	struct sigaction *ctrlc;
 
 	env_s = ft_malloc(sizeof(t_env), 0);
-	env_s->export = ft_env(environt, env_s);
-	env_s->local_env = ft_env(environt, env_s);	//sert a init la struct et a avoir une copie des variables d'environnement
+	env_s->global = ft_env(environt, env_s);
+	env_s->local = NULL;
 	ctrlc = ft_malloc(sizeof(struct sigaction), 0);
 	env_s->signal = ctrlc;
 	ctrlc->sa_handler = manage_ctrlc;

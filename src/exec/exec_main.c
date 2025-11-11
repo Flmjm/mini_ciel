@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:34 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/10 12:57:06 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/11 20:38:35 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	exec_main(t_commands *cmds, t_env *env, t_exitcode *exit_code)
 	pipex = ft_malloc(sizeof(t_pipex_b), 0);
 	if (!pipex)
 		ft_printf("Malloc pipex\n");
-	init_struct_exec(pipex, cmds, env->local_env);
+	init_struct_exec(pipex, cmds, env->global);
 	create_pipe(pipex);
 	ft_pipex(pipex, cmds, env, exit_code);
 	return (0);
@@ -49,7 +49,7 @@ void exec_not_builtin(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode
 		signal(SIGQUIT, SIG_DFL);
 	}
 	if (pipex->pid[i] == 0 && pipex->pathname_cmd)
-		cmd_process(pipex, env->local_env, i);
+		cmd_process(pipex, env->global, i);
 	else if (pipex->pid[i] == 0 && !pipex->pathname_cmd)
 	{
 		ft_printf("%s : Command not found\n", pipex->cmd[0]);
