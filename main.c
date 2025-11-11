@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/10 11:40:55 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/11 14:03:18 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	prompt_loop(t_env *env_s)
 
 	exit_code = ft_malloc(sizeof(t_exitcode), 0);
 	exit_code->last_cmd = 0;
-
 	while (1)
 	{
 		input = readline(prompt_sentence(env_s));
@@ -39,7 +38,7 @@ void	prompt_loop(t_env *env_s)
 			write(1, "^D\n",3);
 			ft_exit(env_s, NULL, 240);
 		}
-		cmds = manage_input(input, exit_code);	//j'ai mis ft_token a l'interieur
+		cmds = manage_input(input, exit_code);
 		if (cmds)
 			exec_main(cmds, env_s, exit_code);
 	}

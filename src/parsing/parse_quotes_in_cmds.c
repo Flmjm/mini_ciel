@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 15:43:37 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/03 18:45:44 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/11 13:18:37 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ void	ft_check_quotes_struct_cmd(t_commands *commands)
 
 char	*ft_check_quotes_argv(char *cmds, int len, int i, int j)
 {
-	char *tmp;
+	char	*tmp;
 	char	quote;
-	int	open;
+	int		open;
 
 	open = 0;
-	tmp = ft_malloc((len +1) * sizeof(char), 0);
+	tmp = ft_malloc((len + 1) * sizeof(char), 0);
 	while (cmds[i])
 	{
 		if ((cmds[i] == '"' || cmds[i] == '\'') && open == 0)
@@ -56,5 +56,5 @@ char	*ft_check_quotes_argv(char *cmds, int len, int i, int j)
 			tmp[j++] = cmds[i++];
 	}
 	tmp[j] = '\0';
-	return(tmp);
+	return (tmp);
 }

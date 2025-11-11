@@ -3,24 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   lib_parse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/10 14:16:28 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/11 15:26:36 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIB_PARSE_H
 # define LIB_PARSE_H
 
+#define _POSIX_C_SOURCE 200809L
+
 # include "../libft/libft.h"
 # include "colors.h"
+# include <signal.h>
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdio.h>
 # include <unistd.h>
-# include <signal.h>
 
 # ifndef PROMPT_LINE
 #  define PROMPT_LINE BBLUE ".~Mini_ciel~> " BWHITE
@@ -118,28 +120,33 @@ void	quote_next_char(t_input_info *infos, int i); // quote str[i+ 1] proprement,
 int		next_double_quote(t_input_info *infos, int i, int init); // renvoi i = prochain ' comme str[i] = '\''
 void		replace_azt(t_input_info *info, int i);;
 
-// expand_parse.c
-void	erase_in_str(t_input_info *infos, int i);
-void	replace_var_input(t_input_info *infos, t_exitcode *exit_code); // pour ;'instant ne gere que les variables en dehors de quotes
-int		expand_in_quote(t_input_info *infos, int i, t_exitcode *exit_code);
-void	expand_var(t_input_info *infos, int i, int quote, t_exitcode *exit_code); // expans les variables d'environnement et retourne info->input malloc avec la variable d'environnement si elle existe
-void	resize_and_copy(t_input_info *infos, int i, int j, char *temp_input);
-
-// init_redir.c
-t_redirect	*ft_lstnew_redirect(char *filename, t_file_type type, char *word);
-void	ft_lstadd_redirect_back(t_redirect **lst, t_redirect *new);
-t_token	*ft_add_redir(t_token *token, t_commands *node);
-
-//parse_check_next_token.c
+//check_next_token.c
 int	ft_check_next_token_heredoc(t_token *token);
 int	ft_check_next_token_herestring(t_token *token);
 int	ft_check_next_token_pipe(t_token *token);
 int	ft_check_next_token_redir_in(t_token *token);
 int	ft_check_next_token_redir_out(t_token *token);
 
-//parse_check_next_token2.c
+//check_next_token2.c
 int	ft_check_next_token_redir_append(t_token *token);
 int	ft_check_next_token(t_token *token);
+
+// expand_parse.c
+void	replace_var_input(t_input_info *infos, t_exitcode *exit_code); // pour ;'instant ne gere que les variables en dehors de quotes
+int	expand_in_quote(t_input_info *infos, int i, t_exitcode *exit_code);
+int	extract_var_name(char *input, int i, int quote, char *env_input);
+void	expand_var(t_input_info *infos, int i, int quote, t_exitcode *exit_code); // expans les variables d'environnement et retourne info->input malloc avec la variable d'environnement si elle existe
+
+// expand_utils.c
+void	erase_in_str(t_input_info *infos, int i);
+void resize_and_copy(t_input_info *infos, int i, int j, char *temp_input);
+
+
+// init_redir.c
+t_redirect	*ft_lstnew_redirect(char *filename, t_file_type type, char *word);
+void	ft_lstadd_redirect_back(t_redirect **lst, t_redirect *new);
+void	ft_add_single_redir(t_token *token, t_commands *node);
+t_token	*ft_add_redir(t_token *token, t_commands *node);
 
 //parse_cmds.c
 int	count_words(t_token *token);
@@ -157,13 +164,16 @@ char	*ft_check_quotes_argv(char *cmds, int len, int i, int j);
 //tokenization_utils.c
 t_token	*ft_lstnew_token(t_token_type type, char *content);
 void	ft_lstadd_token_back(t_token **lst, t_token *new);
-
-//tokenization.c
+int	ft_is_separator(char c);
 int get_op_redir_in(char *input, int i, t_token_type *type);
 int	ft_get_op_length(char *input, int i, t_token_type *type);
-char *ft_get_word(char *input, int start);
+
+//tokenization.c
+int	ft_process_quotes(char *input, int i, int *in_quotes, char *quote);
+char	*ft_get_word(char *input, int start);
+int	ft_handle_operator(char *input, int i, t_token **token);
+int	ft_handle_word(char *input, int i, t_token **token);
 t_token	*ft_token(char *input, int i);
-int update_i_after_word(char *input, int i, t_token *token);
 
 
 #endif

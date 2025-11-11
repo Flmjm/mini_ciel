@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:37:56 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/10 14:32:47 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/11 13:18:09 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ void	ft_lstadd_cmd_back(t_commands **lst, t_commands *new)
 	last->next = new;
 }
 
-static t_token *ft_process_node(t_token *token, t_commands *node)
+static t_token	*ft_process_node(t_token *token, t_commands *node)
 {
-	t_token		*tmp_token;
-	int	i;
+	t_token	*tmp_token;
+	int		i;
 
 	tmp_token = token;
 	i = 0;
@@ -98,7 +98,7 @@ static t_token *ft_process_node(t_token *token, t_commands *node)
 	node->argv[i] = NULL;
 	if (tmp_token && tmp_token->type == TOKEN_PIPE)
 		tmp_token = tmp_token->next;
-	return(tmp_token);
+	return (tmp_token);
 }
 
 t_commands	*ft_init_cmd(t_token *token)
@@ -115,10 +115,9 @@ t_commands	*ft_init_cmd(t_token *token)
 		cmd_count = count_words(token);
 		node = ft_lstnew_command(cmd_count);
 		if (!node)
-			return(command);
+			return (command);
 		token = ft_process_node(token, node);
 		ft_lstadd_cmd_back(&command, node);
 	}
 	return (command);
 }
-

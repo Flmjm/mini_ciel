@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 08:51:44 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/10 14:28:14 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/11 15:26:45 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	is_complete(t_input_info *infos) // prend en charge \ ' " pour l'instant
 {
-	int i;
+	int		i;
 
 	i = 0;
 	while (infos->input[i])
@@ -47,29 +47,28 @@ void	recall_readline(t_input_info *infos)
 		return ;
 	buffer = ft_malloc(sizeof(char) * (ft_strlen(infos->input) + 1), 0);
 	ft_strlcpy(buffer, infos->input, ft_strlen(infos->input) + 1);
-	infos->input = ft_malloc(sizeof(char) * (ft_strlen(buffer)
-				+ ft_strlen(temp_input) + 1), 0);
-	ft_strlcpy(infos->input, buffer, (ft_strlen(buffer) + 1
-			+ ft_strlen(temp_input)));
-	ft_strlcat(infos->input, temp_input, ft_strlen(infos->input)
-		+ ft_strlen(temp_input) + 1);
+	infos->input = ft_malloc(sizeof(char) * (ft_strlen(buffer) + ft_strlen(temp_input) + 2), 0);
+	ft_strlcpy(infos->input, buffer, (ft_strlen(buffer) + ft_strlen(temp_input)));
+	if (ft_strlen(temp_input) > 0)
+		ft_strlcat(infos->input, temp_input, ft_strlen(buffer) + ft_strlen(temp_input) + 2);
+	ft_strlcat(infos->input, "\n", ft_strlen(buffer) + ft_strlen(temp_input) + 2);
 }
 
 int	next_simple_quote(t_input_info *infos, int i, int init)
 {
 	i = i + 1;
-	while (infos->input[i] && infos->input[i] != '\'')
+	while (infos->input[i] != '\'')
 	{
-		if (init == TRUE && infos->input[i] == '\0')
+		if (init == TRUE)
 		{
-			replace_azt(infos, i);
-			recall_readline(infos);
 			while (infos->input[i] == '\0')
 			{
 				replace_azt(infos, i);
 				recall_readline(infos);
 			}
 		}
+		if (infos->input[i] == '\'')
+			return (i);
 		i++;
 	}
 	return (i);
@@ -77,7 +76,7 @@ int	next_simple_quote(t_input_info *infos, int i, int init)
 
 void	replace_azt(t_input_info *info, int i)
 {
-	char	*temp;
+	char *temp;
 
 	temp = ft_malloc(sizeof(char) * (ft_strlen(info->input) + 2), 0);
 	ft_strlcpy(temp, info->input, ft_strlen(info->input) + 1);
@@ -86,12 +85,12 @@ void	replace_azt(t_input_info *info, int i)
 	info->input = temp;
 }
 
-int	next_double_quote(t_input_info *infos, int i, int init)
+int		next_double_quote(t_input_info *infos, int i, int init) 
 {
 	i = i + 1;
-	while (infos->input[i] && infos->input[i] != '"')
+	while (infos->input[i] != '"')
 	{
-		if (init == TRUE && infos->input[i] == '\0')
+		if (init == TRUE)
 		{
 			while (infos->input[i] == '\0')
 			{
@@ -99,31 +98,31 @@ int	next_double_quote(t_input_info *infos, int i, int init)
 				recall_readline(infos);
 			}
 		}
-		if (infos->input[i] == '\\' && infos->input[i + 1])
+		if (infos->input[i] == '"')
+			return (i);
+		else if (infos->input[i] == '\\')
 		{
-			if (infos->input[i + 1] == '\\' || infos->input[i + 1] == '"'
-				|| infos->input[i + 1] == '`')
+			if (infos->input[i + 1] == '\\' || infos->input[i + 1] == '"' || infos->input[i + 1] == '`')
 			{
 				quote_next_char(infos, i);
 				i += 2;
 			}
 			else if (infos->input[i + 1] == '$')
 				i += 2;
-			else
-				i++;
 		}
-		else
-			i++;
+		i++;
 	}
 	return (i);
 }
 
 void	quote_next_char(t_input_info *infos, int i)
 {
-	int		lenght;
-	char	*buffer;
-	int		j;
+	int	lenght;
+	char *buffer;
+	int	j;
+	//int i_return;
 
+	//i_return = i + 2;
 	j = i;
 	lenght = ft_strlen(infos->input);
 	buffer = ft_malloc(sizeof(char) * (lenght + 1), 0);
@@ -142,6 +141,6 @@ void	quote_next_char(t_input_info *infos, int i)
 		i++;
 	}
 	buffer[j] = '\0';
-	// free(infos->input);
+	//free(infos->input);
 	infos->input = buffer;
 }
