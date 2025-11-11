@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 08:51:44 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/11 15:26:45 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/11 16:49:00 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,23 @@ void	recall_readline(t_input_info *infos)
 {
 	char	*buffer;
 	char	*temp_input;
+	int		buffer_len;
+	int		temp_len;
+	int		total_len;
 
 	temp_input = readline(">");
-	if (ft_strlen(temp_input) == 0)
+	if (!temp_input)
 		return ;
-	buffer = ft_malloc(sizeof(char) * (ft_strlen(infos->input) + 1), 0);
-	ft_strlcpy(buffer, infos->input, ft_strlen(infos->input) + 1);
-	infos->input = ft_malloc(sizeof(char) * (ft_strlen(buffer) + ft_strlen(temp_input) + 2), 0);
-	ft_strlcpy(infos->input, buffer, (ft_strlen(buffer) + ft_strlen(temp_input)));
-	if (ft_strlen(temp_input) > 0)
-		ft_strlcat(infos->input, temp_input, ft_strlen(buffer) + ft_strlen(temp_input) + 2);
-	ft_strlcat(infos->input, "\n", ft_strlen(buffer) + ft_strlen(temp_input) + 2);
+	buffer_len = ft_strlen(infos->input);
+	temp_len = ft_strlen(temp_input);
+	total_len = buffer_len + temp_len + 2;
+	buffer = ft_malloc(sizeof(char) * (buffer_len + 1), 0);
+	ft_strlcpy(buffer, infos->input, buffer_len + 1);
+	infos->input = ft_malloc(sizeof(char) * total_len, 0);
+	ft_strlcpy(infos->input, buffer, total_len);
+	if (temp_len > 0)
+		ft_strlcat(infos->input, temp_input, total_len);
+	ft_strlcat(infos->input, "\n", total_len);
 }
 
 int	next_simple_quote(t_input_info *infos, int i, int init)
@@ -69,6 +75,8 @@ int	next_simple_quote(t_input_info *infos, int i, int init)
 		}
 		if (infos->input[i] == '\'')
 			return (i);
+		if (!infos->input[i])
+			break ;
 		i++;
 	}
 	return (i);

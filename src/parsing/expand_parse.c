@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 21:45:37 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/11 15:28:46 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/11 16:52:07 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	expand_var(t_input_info *infos, int i, int quote, t_exitcode *exit_code)
 		env_input[0] = '?';
 		env_input[1] = '\0';
 		temp_input = ft_itoa(exit_code->last_cmd);
-		resize_and_copy(infos, i, 1, temp_input);
+		resize_and_copy(infos, i + 1, 1, temp_input);
 		return ;
 	}
 	if (!ft_isalnum(infos->input[i]) && infos->input[i] != '_')

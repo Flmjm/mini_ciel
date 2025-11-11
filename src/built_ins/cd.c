@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:01:42 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/10 13:04:08 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/11 17:06:42 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int cd_dir(char **cmd, char **env, t_env *envpwd, char *pathname, char *tmp_cwd)
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		return (1);
-	if (pathname = cwd)
+	if (ft_strncmp(pathname, cwd, ft_strlen(pathname)) == 0)
 		return(1);
 	tmp_cwd = ft_malloc(sizeof(char) * (ft_strlen(cwd) + 1), 0);
 	ft_strlcpy(tmp_cwd, cwd, ft_strlen(cwd) + 1);
@@ -84,7 +84,7 @@ int cd_main(int ac, char **av, t_env *envpwd)
 		ft_strlcpy(envpwd->pwd, cwd, ft_strlen(cwd) + 1);
 		free(cwd);
 	}
-	if (ac > 1)
+	if (ac >= 1)
 		ft_cd(av, envpwd->local_env, envpwd);
 	return(0);
 }
