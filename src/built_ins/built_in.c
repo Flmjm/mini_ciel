@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 19:46:26 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/11 20:23:45 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/14 13:34:28 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,23 @@
 int	env_built_in(t_env *env) //a besoin du char **environ qui est pris par le main apres argc et argv
 {
 	int	i;
+	t_env_local *current;
 
+	current = env->local;
 	i = 0;
 	if (!env->global)
 		return (1);
 	while (env->global[i])
 	{
-		printf("%s\n", env->global[i]);
+		if (env->global[i][0] != '\0' && env->global[i][ft_strlen_var(env->global[i])] == '=')
+			printf("%s\n", env->global[i]);
 		i++;
+	}
+	while (current)
+	{
+		if (current->value[ft_strlen_var(current->value)] == '=')
+			printf("%s\n", current->value);
+		current = current->next;
 	}
 	return (0);
 }
@@ -59,7 +68,7 @@ void	add_var(char **environ, char *new_var, t_env *env)
 	int	i;
 	int	length;
 	char **env_copy;
-	
+
 	length = 0;
 	i = 0;
 	while (environ[length])
@@ -77,7 +86,7 @@ void	add_var(char **environ, char *new_var, t_env *env)
 	}
 	env_copy[i] = new_var;
 	env_copy[i + 1] = NULL;
-	return (env_copy);
+	return ;
 }
 
 void up_shell_level(char **env)

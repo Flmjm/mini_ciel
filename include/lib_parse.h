@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_parse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/11 20:51:50 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/14 13:24:58 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void 	manage_ctrlc(int sig);
 void	prompt_loop(t_env *env_s);
 char	*prompt_sentence(t_env *env);
 
-/// PARSING /// 
+/// PARSING ///
 
 // check_input.c
 void	is_complete(t_input_info *infos); // gere l'input et redirige en cas d'input incomplet + quote les backslash (note: rajouter une maniere de gerer l'historique de readline car la elle prend les deformations des backslash)
@@ -182,5 +182,7 @@ int	ft_handle_operator(char *input, int i, t_token **token);
 int	ft_handle_word(char *input, int i, t_token **token);
 t_token	*ft_token(char *input, int i);
 
+// export.c
+int	ft_strlen_var(const char *str);
 
 #endif
