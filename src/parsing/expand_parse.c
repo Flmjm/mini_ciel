@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 21:45:37 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/11 16:52:07 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/15 22:10:47 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	replace_var_input(t_input_info *infos, t_exitcode *exit_code)
 			i++;
 		if (i >= ft_strlen(infos->input))
 			break ;
+		if (infos->input[i] == '$' && infos->input[i + 1])
+			i++;
 	}
 }
 

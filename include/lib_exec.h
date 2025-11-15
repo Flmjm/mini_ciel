@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_exec.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:45 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/11 13:56:54 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/15 22:34:26 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void		get_pathname(char **cmd, t_pipex_b *pipex);
 int			env_built_in(t_env *env); 
 char		**ft_env(char **environ, t_env *env);	//init la struct env
 void		up_shell_level(char **env); //augmente le niveau du shell dans les variable d'env
+char		**add_var(char *new_var, t_env *env);
 
 //cd_utils.c
 char	*get_pathname_dir(char *cmd);

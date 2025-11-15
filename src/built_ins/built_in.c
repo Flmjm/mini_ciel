@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 19:46:26 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/14 13:34:28 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/15 23:12:05 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,15 @@
 int	env_built_in(t_env *env) //a besoin du char **environ qui est pris par le main apres argc et argv
 {
 	int	i;
-	t_env_local *current;
 
-	current = env->local;
 	i = 0;
 	if (!env->global)
 		return (1);
 	while (env->global[i])
 	{
-		if (env->global[i][0] != '\0' && env->global[i][ft_strlen_var(env->global[i])] == '=')
+		if (env->global[i][ft_strlen_var(env->global[i])] == '=')
 			printf("%s\n", env->global[i]);
 		i++;
-	}
-	while (current)
-	{
-		if (current->value[ft_strlen_var(current->value)] == '=')
-			printf("%s\n", current->value);
-		current = current->next;
 	}
 	return (0);
 }
@@ -63,7 +55,7 @@ char	**ft_env(char **environ, t_env *env)
 	return (env_copy);
 }
 
-void	add_var(char **environ, char *new_var, t_env *env)
+char	**add_var(char *new_var, t_env *env)
 {
 	int	i;
 	int	length;
@@ -71,13 +63,13 @@ void	add_var(char **environ, char *new_var, t_env *env)
 
 	length = 0;
 	i = 0;
-	while (environ[length])
+	while (env->global[length])
 		length++;
 	env_copy = ft_malloc(sizeof(char *) * (length + 2), 0);
 	while (i != length)
 	{
-		env_copy[i] = ft_malloc(sizeof(char) * (ft_strlen(environ[i]) + 1), 0);
-		ft_strlcpy(env_copy[i], environ[i], ft_strlen(environ[i]) + 1);
+		env_copy[i] = ft_malloc(sizeof(char) * (ft_strlen(env->global[i]) + 1), 0);
+		ft_strlcpy(env_copy[i], env->global[i], ft_strlen(env->global[i]) + 1);
 		if (ft_strncmp("OLDPWD=", env_copy[i], 7) == 0)
 			env->oldpwd = env_copy[i] + 7;
 		else if (ft_strncmp("PWD=", env_copy[i], 4) == 0)
@@ -86,7 +78,7 @@ void	add_var(char **environ, char *new_var, t_env *env)
 	}
 	env_copy[i] = new_var;
 	env_copy[i + 1] = NULL;
-	return ;
+	return (env_copy);
 }
 
 void up_shell_level(char **env)
