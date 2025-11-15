@@ -6,13 +6,13 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 20:55:43 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/15 23:18:34 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/15 23:53:44 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib_exec.h"
 
-void    ft_export(t_env *env, t_commands *cmds)
+int    ft_export(t_env *env, t_commands *cmds)
 {
     int i;
     int j;
@@ -28,7 +28,8 @@ void    ft_export(t_env *env, t_commands *cmds)
     {
         while (env->global[i])
         {
-            printf("declare -x %s\n", env->global[i]);
+			if (env->global[i][0])
+            	printf("declare -x %s\n", env->global[i]);
             i++;
         }
     }
@@ -41,9 +42,11 @@ void    ft_export(t_env *env, t_commands *cmds)
             {
 				if (ft_strncmp(env->global[j], cmds->argv[i], ft_strlen_var(env->global[j])) == 0)
                 {
+					printf("DEBUG: %s\n", env->global[j]);
 					is_already_global = 1;
 					if (cmds->argv[i][ft_strlen_var(cmds->argv[i])] == '=')
                     	env->global[j] = cmds->argv[i];
+					printf("ALED 1\n");
                 }
                 j++;
             }
@@ -52,6 +55,7 @@ void    ft_export(t_env *env, t_commands *cmds)
 				buffer = ft_malloc(sizeof(char) * (ft_strlen(cmds->argv[i]) + 1), 0);
 				ft_strlcpy(buffer, cmds->argv[i], ft_strlen(cmds->argv[i]) + 1);
 				env->global = add_var(buffer, env);
+				printf("ALED 2\n");
 			}
 			else
 				is_already_global = FALSE;
@@ -59,6 +63,7 @@ void    ft_export(t_env *env, t_commands *cmds)
             i++;
         }
     }
+	return (0);
 }
 
 int	ft_strlen_var(const char *str)

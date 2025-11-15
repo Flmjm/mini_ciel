@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:45 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/15 22:34:26 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/15 23:38:48 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,12 @@ int			env_built_in(t_env *env);
 char		**ft_env(char **environ, t_env *env);	//init la struct env
 void		up_shell_level(char **env); //augmente le niveau du shell dans les variable d'env
 char		**add_var(char *new_var, t_env *env);
+
+// unset.c
+int    ft_unset(t_env *env, t_commands *cmds);
+
+// export.c
+int    ft_export(t_env *env, t_commands *cmds);
 
 //cd_utils.c
 char	*get_pathname_dir(char *cmd);

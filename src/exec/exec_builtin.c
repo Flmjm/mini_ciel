@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 15:31:15 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/11 22:28:56 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/15 23:36:50 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ void exec_builtin(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *ex
 	}
 	else if ((ft_strlen(cmds->argv[0]) == 5) && (ft_strncmp("unset", cmds->argv[0], 5) == 0))
 	{
-		exit_code->last_cmd = 0;
-		printf("unset: A IMPLEMENTER\n");
+		exit_code->last_cmd = ft_unset(env, cmds);
 	}
 }
 
