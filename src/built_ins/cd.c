@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:01:42 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/11 20:35:04 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/16 01:21:15 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,6 @@ int cd_main(int ac, char **av, t_env *envpwd)
 		free(cwd);
 	}
 	if (ac >= 1)
-		ft_cd(av, envpwd->global, envpwd);
+		return (ft_cd(av, envpwd->global, envpwd));
 	return(0);
 }
