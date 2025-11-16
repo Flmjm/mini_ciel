@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 18:21:57 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/14 10:45:01 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/16 04:15:21 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	is_var(t_token *token)
 	i = 0;
 	while (current)
 	{
-	if (token->type == 0 && token->value > 1)
+	if (token->type == 0 && ft_strlen(token->value) > 1)
 	{
 		while (token->value[i])
 		{

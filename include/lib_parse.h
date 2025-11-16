@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/15 22:27:33 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/16 04:14:40 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,14 +94,14 @@ typedef struct s_token
 }						t_token;
 
 
-typedef struct s_redirect
+typedef struct t_redirect
 {
 	t_file_type		type;
 	char			*filename;
 	int				fd;
 	char				*word_eof;
-	struct s_redirect	*next;
-	struct s_redirect	*prev;
+	struct t_redirect	*next;
+	struct t_redirect	*prev;
 }						t_redirect;
 
 typedef struct t_commands

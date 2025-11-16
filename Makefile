@@ -1,4 +1,4 @@
-NAME = Mini_ciel
+NAME = Mini_Ciel
 
 LIBS = -lreadline -lhistory
 
