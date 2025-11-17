@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 21:45:37 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/15 22:10:47 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/17 18:02:45 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,11 @@ void	expand_var(t_input_info *infos, int i, int quote, t_exitcode *exit_code)
 	int		var_len;
 
 	i++;
+	if (ft_strncmp(infos->input + i, "EMPTY", 5) == 0)
+	{
+		expand_empty(infos, i, NULL);
+		return ;
+	}
 	if (infos->input[i] == '?')
 	{
 		env_input[0] = '?';
@@ -95,4 +100,14 @@ void	expand_var(t_input_info *infos, int i, int quote, t_exitcode *exit_code)
 	if (!temp_input)
 		return ;
 	resize_and_copy(infos, i + var_len, var_len, temp_input);
+}
+
+void	expand_empty(t_input_info *infos, int i, char *temp_input)
+{
+	if (!infos->input[i+5])
+		{
+			infos->input = NULL;
+			return ;
+		}
+		resize_and_copy(infos, i + 5, 5, temp_input);
 }

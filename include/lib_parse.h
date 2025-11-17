@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_parse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/17 03:52:13 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/17 18:03:03 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,8 @@ int					extract_var_name(char *input, int i, int quote,
 						char *env_input);
 void				expand_var(t_input_info *infos, int i, int quote,
 						t_exitcode *exit_code);
+void				expand_empty(t_input_info *infos, int i, char *temp_input);
+
 
 // expand_utils.c
 void				erase_in_str(t_input_info *infos, int i);
