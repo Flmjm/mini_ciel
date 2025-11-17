@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   init_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 11:15:55 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/11 13:35:57 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/17 02:26:31 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib_parse.h"
 
-t_redirect	*ft_lstnew_redirect(char *filename, t_file_type type, char *word)
+struct t_redirect	*ft_lstnew_redirect(char *filename, t_file_type type,
+	char *word)
 {
 	t_redirect	*new;
 

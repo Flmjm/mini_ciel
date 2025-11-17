@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 16:41:30 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/11 13:18:41 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/17 03:04:51 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib_parse.h"
 
-t_token	*ft_lstnew_token(t_token_type type, char *content)
+struct s_token	*ft_lstnew_token(t_token_type type, char *content)
 {
 	t_token	*new;
 

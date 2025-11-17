@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 17:44:15 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/11 13:20:32 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/17 03:03:07 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	ft_handle_word(char *input, int i, t_token **token)
 	return (1);
 }
 
-t_token	*ft_token(char *input, int i)
+struct s_token	*ft_token(char *input, int i)
 {
 	t_token	*token;
 	int		op_length;
