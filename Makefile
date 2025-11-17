@@ -1,4 +1,4 @@
-NAME = Mini_Ciel
+NAME = minishell
 
 LIBS = -lreadline -lhistory
 

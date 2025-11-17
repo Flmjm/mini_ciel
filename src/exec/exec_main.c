@@ -6,13 +6,12 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:34 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/15 22:59:21 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/17 00:59:41 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib_exec.h"
 #include "../../include/lib_parse.h"
-
 
 int	exec_main(t_commands *cmds, t_env *env, t_exitcode *exit_code)
 {
@@ -23,7 +22,7 @@ int	exec_main(t_commands *cmds, t_env *env, t_exitcode *exit_code)
 		ft_printf("Malloc pipex\n");
 	init_struct_exec(pipex, cmds, env->global);
 	create_pipe(pipex);
-	ft_pipex(pipex, cmds, env, exit_code);
+	ft_pipex(pipex, cmds, env);
 	return (0);
 }
 
@@ -37,12 +36,13 @@ int	argc_of_argv(char **cmds)
 	return (i);
 }
 
-void exec_not_builtin(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *exit_code, int i)
+void	exec_not_builtin(t_pipex_b *pipex,
+			t_commands *cmds, t_env *env, int i)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	pipex->pid[i] = fork();
-	exit_code->last_cmd = 0;
+	env->exitcode->last_cmd = 0;
 	if (pipex->pid[i] == 0)
 	{
 		signal(SIGINT, SIG_DFL);
@@ -62,7 +62,7 @@ void exec_not_builtin(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode
 	}
 }
 
-void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *exit_code)
+void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env)
 {
 	int	i;
 
@@ -72,10 +72,10 @@ void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *exit_c
 	{
 		pipex->cmd_index++;
 		if (init_cmd(pipex, cmds))
-			exit_code->last_cmd = 1;
+			env->exitcode->last_cmd = 1;
 		if (is_builtin(cmds->argv[0]))
 		{
-			exec_builtin_with_redir(pipex, cmds, env, exit_code);
+			exec_builtin_with_redir(pipex, cmds, env, env->exitcode);
 			if (i > 0)
 			{
 				close(pipex->pipefd[i - 1][0]);
@@ -83,12 +83,12 @@ void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *exit_c
 			}
 		}
 		else
-			exec_not_builtin(pipex, cmds, env, exit_code, i);
+			exec_not_builtin(pipex, cmds, env, i);
 		if (cmds->next)
 			cmds = cmds->next;
 		i++;
 	}
-	ft_waitpid(pipex, env, exit_code);
+	ft_waitpid(pipex, env, env->exitcode);
 }
 
 void	create_pipe(t_pipex_b *pipex)

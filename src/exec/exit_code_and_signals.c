@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exit_code_and_signals.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 12:56:49 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/10 12:57:13 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/17 01:00:22 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib_exec.h"
-
 
 void	ft_waitpid(t_pipex_b *pipex, t_env *env, t_exitcode *exit_code)
 {
@@ -41,7 +40,7 @@ void	ft_waitpid(t_pipex_b *pipex, t_env *env, t_exitcode *exit_code)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void get_exit_code(int last_status, t_exitcode *exit_code)
+void	get_exit_code(int last_status, t_exitcode *exit_code)
 {
 	if (WIFEXITED(last_status) && !exit_code->last_cmd)
 		exit_code->last_cmd = WEXITSTATUS(last_status);

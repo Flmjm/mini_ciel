@@ -6,14 +6,15 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 15:31:15 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/15 23:36:50 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/17 00:31:31 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib_exec.h"
 #include "../../include/lib_parse.h"
 
-void	exec_builtin_with_redir(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *exit_code)
+void	exec_builtin_with_redir(t_pipex_b *pipex, t_commands *cmds,
+			t_env *env, t_exitcode *exit_code)
 {
 	int	saved_stdin;
 	int	saved_stdout;
@@ -36,11 +37,11 @@ void	exec_builtin_with_redir(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_e
 		exit_code->last_cmd = 1;
 		return ;
 	}
-    exec_builtin(pipex, cmds, env, exit_code);
+	exec_builtin(pipex, cmds, env, exit_code);
 	close_saved_std(saved_stdin, saved_stdout);
 }
 
-void close_saved_std(int saved_stdin, int saved_stdout)
+void	close_saved_std(int saved_stdin, int saved_stdout)
 {
 	if (saved_stdin != -1)
 		ft_dup2_and_close(saved_stdin, STDIN_FILENO);
@@ -48,29 +49,33 @@ void close_saved_std(int saved_stdin, int saved_stdout)
 		ft_dup2_and_close(saved_stdout, STDOUT_FILENO);
 }
 
-void exec_builtin(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *exit_code)
+void	exec_builtin(t_pipex_b *pipex, t_commands *cmds,
+			t_env *env, t_exitcode *exit_code)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-    if ((ft_strlen(cmds->argv[0]) == 4) && (ft_strncmp("exit", cmds->argv[0], 4) == 0))
+	if ((ft_strlen(cmds->argv[0]) == 4)
+		&& (ft_strncmp("exit", cmds->argv[0], 4) == 0))
 		exit_code->last_cmd = ft_exit(env, cmds->argv, 0);
-	else if ((ft_strlen(cmds->argv[0]) == 3) && (ft_strncmp("env", cmds->argv[0], 3) == 0))
+	else if ((ft_strlen(cmds->argv[0]) == 3)
+		&& (ft_strncmp("env", cmds->argv[0], 3) == 0))
 		exit_code->last_cmd = env_built_in(env);
-	else if ((ft_strlen(cmds->argv[0]) == 2) && (ft_strncmp("cd", cmds->argv[0], 2) == 0))
-		exit_code->last_cmd = cd_main(argc_of_argv(cmds->argv), cmds->argv, env);
-	else if ((ft_strlen(cmds->argv[0]) == 4) && (ft_strncmp("echo", cmds->argv[0], 4) == 0))
+	else if ((ft_strlen(cmds->argv[0]) == 2)
+		&& (ft_strncmp("cd", cmds->argv[0], 2) == 0))
+		exit_code->last_cmd = cd_main(argc_of_argv(cmds->argv),
+				cmds->argv, env);
+	else if ((ft_strlen(cmds->argv[0]) == 4)
+		&& (ft_strncmp("echo", cmds->argv[0], 4) == 0))
 		exit_code->last_cmd = ft_echo(cmds->argv);
-	else if ((ft_strlen(cmds->argv[0]) == 3) && (ft_strncmp("pwd", cmds->argv[0], 3) == 0))
+	else if ((ft_strlen(cmds->argv[0]) == 3)
+		&& (ft_strncmp("pwd", cmds->argv[0], 3) == 0))
 		exit_code->last_cmd = ft_pwd();
-	else if ((ft_strlen(cmds->argv[0]) == 6) && (ft_strncmp("export", cmds->argv[0], 6) == 0))
-	{
+	else if ((ft_strlen(cmds->argv[0]) == 6)
+		&& (ft_strncmp("export", cmds->argv[0], 6) == 0))
 		exit_code->last_cmd = ft_export(env, cmds);
-		// ft_printf("export: A IMPLEMENTER\n");
-	}
-	else if ((ft_strlen(cmds->argv[0]) == 5) && (ft_strncmp("unset", cmds->argv[0], 5) == 0))
-	{
+	else if ((ft_strlen(cmds->argv[0]) == 5)
+		&& (ft_strncmp("unset", cmds->argv[0], 5) == 0))
 		exit_code->last_cmd = ft_unset(env, cmds);
-	}
 }
 
 int	is_builtin(char *cmd)
@@ -91,5 +96,3 @@ int	is_builtin(char *cmd)
 		return (1);
 	return (0);
 }
-
-

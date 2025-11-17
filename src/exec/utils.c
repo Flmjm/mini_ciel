@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 16:06:05 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/08 15:49:29 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/17 01:01:58 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	init_struct_exec(t_pipex_b *pipex, t_commands *cmds, char **env)
 	pipex->cmd = NULL;
 	init_struct_exec_malloc(pipex, cmds, env);
 }
+
 void	init_struct_exec_malloc(t_pipex_b *pipex, t_commands *cmds, char **env)
 {
 	int	i;
@@ -103,4 +104,3 @@ void	get_pathname(char **cmd, t_pipex_b *pipex)
 	if (!path)
 		pipex->pathname_cmd = NULL;
 }
-

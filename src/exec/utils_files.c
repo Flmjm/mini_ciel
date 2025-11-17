@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_files.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 15:51:09 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/10 12:45:39 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/17 01:08:05 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,25 @@ void	ft_dup2_and_close(int fd, int n)
 		close(fd);
 }
 
-
-int get_heredoc(char *delimiter)
+int	get_heredoc(char *delimiter)
 {
-    int pipefd[2];
-    char *line;
-    
-    if (pipe(pipefd) == -1)
-        return(-1);
-    while (1)
-    {
-        line = readline(">");
-        if (!line || strncmp(line, delimiter, strlen(line)) == 0)
-        {
-            free(line);
-            break;
-        }
-        write(pipefd[1], line, strlen(line));
-        write(pipefd[1], "\n", 1);
-        free(line);
-    }
-    close(pipefd[1]);
-    return(pipefd[0]);
+	int		pipefd[2];
+	char	*line;
+
+	if (pipe(pipefd) == -1)
+		return (-1);
+	while (1)
+	{
+		line = readline(">");
+		if (!line || strncmp(line, delimiter, strlen(line)) == 0)
+		{
+			free(line);
+			break ;
+		}
+		write(pipefd[1], line, strlen(line));
+		write(pipefd[1], "\n", 1);
+		free(line);
+	}
+	close(pipefd[1]);
+	return (pipefd[0]);
 }

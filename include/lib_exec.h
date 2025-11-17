@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:45 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/15 23:38:48 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/17 01:20:28 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void close_saved_std(int saved_stdin, int saved_stdout);
 //exec_main.c
 int	exec_main(t_commands *cmds, t_env *env, t_exitcode *exit_code);
 int	argc_of_argv(char **cmds);
-void exec_not_builtin(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *exit_code, int i);
-void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env, t_exitcode *exit_code);
+void	exec_not_builtin(t_pipex_b *pipex, t_commands *cmds, t_env *env, int i);
+void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env);
 void	create_pipe(t_pipex_b *pipex);
 
 //exit_code_and_signals.c
@@ -102,7 +102,8 @@ void		up_shell_level(char **env); //augmente le niveau du shell dans les variabl
 char		**add_var(char *new_var, t_env *env);
 
 // unset.c
-int    ft_unset(t_env *env, t_commands *cmds);
+int		ft_unset(t_env *env, t_commands *cmds);
+int		ft_strlen_var(const char *str);
 
 // export.c
 int    ft_export(t_env *env, t_commands *cmds);
@@ -113,7 +114,7 @@ int	cd_home(t_env *envpwd, char *pathname, char **env);
 int cd_oldpwd(char **cmd, t_env *envpwd, char *tmp_cwd);
 
 // cd.c  --> 6 fonctions + factoriser 
-int cd_dir(char **cmd, char **env, t_env *envpwd, char *pathname, char *tmp_cwd);
+int cd_dir(char **cmd, t_env *envpwd, char *pathname, char *tmp_cwd);
 int	ft_cd(char **cmd, char **env, t_env *envpwd);
 int	update_cwd(t_env *envpwd, char *s1_oldpwd, char *s2_pwd);
 int cd_main(int ac, char **av, t_env *envpwd);

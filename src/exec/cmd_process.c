@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 16:06:05 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/10 12:40:01 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/17 00:24:58 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	cmd_process(t_pipex_b *pipex, char **env, int index)
 		execve(pipex->pathname_cmd, pipex->cmd, env);
 }
 
-
 int	init_cmd(t_pipex_b *pipex, t_commands *cmds)
 {
 	pipex->cmd = cmds->argv;
@@ -40,7 +39,7 @@ int	init_cmd(t_pipex_b *pipex, t_commands *cmds)
 	else
 		pipex->pathname_cmd = cmds->argv[0];
 	if (cmds->redirect)
-		return(ft_init_files(cmds, pipex));
+		return (ft_init_files(cmds, pipex));
 }
 
 int	is_relative_or_absolute_path(char *str)

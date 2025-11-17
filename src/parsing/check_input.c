@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 08:51:44 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/11 16:49:00 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/17 01:50:59 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib_parse.h"
 
-void	is_complete(t_input_info *infos) // prend en charge \ ' " pour l'instant
+void	is_complete(t_input_info *infos)
 {
 	int		i;
 
@@ -84,7 +84,7 @@ int	next_simple_quote(t_input_info *infos, int i, int init)
 
 void	replace_azt(t_input_info *info, int i)
 {
-	char *temp;
+	char	*temp;
 
 	temp = ft_malloc(sizeof(char) * (ft_strlen(info->input) + 2), 0);
 	ft_strlcpy(temp, info->input, ft_strlen(info->input) + 1);
@@ -93,7 +93,7 @@ void	replace_azt(t_input_info *info, int i)
 	info->input = temp;
 }
 
-int		next_double_quote(t_input_info *infos, int i, int init) 
+int	next_double_quote(t_input_info *infos, int i, int init)
 {
 	i = i + 1;
 	while (infos->input[i] != '"')
@@ -101,16 +101,14 @@ int		next_double_quote(t_input_info *infos, int i, int init)
 		if (init == TRUE)
 		{
 			while (infos->input[i] == '\0')
-			{
-				replace_azt(infos, i);
-				recall_readline(infos);
-			}
+				replace_and_recall(infos, i);
 		}
 		if (infos->input[i] == '"')
 			return (i);
 		else if (infos->input[i] == '\\')
 		{
-			if (infos->input[i + 1] == '\\' || infos->input[i + 1] == '"' || infos->input[i + 1] == '`')
+			if (infos->input[i + 1] == '\\' || infos->input[i + 1] == '"'
+				|| infos->input[i + 1] == '`')
 			{
 				quote_next_char(infos, i);
 				i += 2;
@@ -121,34 +119,4 @@ int		next_double_quote(t_input_info *infos, int i, int init)
 		i++;
 	}
 	return (i);
-}
-
-void	quote_next_char(t_input_info *infos, int i)
-{
-	int	lenght;
-	char *buffer;
-	int	j;
-	//int i_return;
-
-	//i_return = i + 2;
-	j = i;
-	lenght = ft_strlen(infos->input);
-	buffer = ft_malloc(sizeof(char) * (lenght + 1), 0);
-	ft_strlcpy(buffer, infos->input, j + 1);
-	buffer[j] = '\'';
-	j++;
-	buffer[j] = infos->input[i + 1];
-	i++;
-	j++;
-	buffer[j] = '\'';
-	j++;
-	while (j <= lenght)
-	{
-		buffer[j] = infos->input[i + 1];
-		j++;
-		i++;
-	}
-	buffer[j] = '\0';
-	//free(infos->input);
-	infos->input = buffer;
 }

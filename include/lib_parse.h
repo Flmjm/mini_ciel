@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/16 04:14:40 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/17 01:51:24 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,12 @@ typedef struct s_exitcode
 typedef	struct s_env
 {
 	char **global;
-	struct s_env_local *local;
+	struct s_exitcode *exitcode;
 	char *oldpwd;
 	char *pwd;
 	struct sigaction *signal;
 
 }						t_env;
-
-typedef struct s_env_local
-{
-	char *value;
-	struct s_env_local *next;
-}						t_env_local;
 
 typedef enum e_token_type
 {
@@ -184,5 +178,8 @@ t_token	*ft_token(char *input, int i);
 
 // export.c
 int	ft_strlen_var(const char *str);
+
+// check_input_utils.c
+void	replace_and_recall(t_input_info *infos, int i);
 
 #endif

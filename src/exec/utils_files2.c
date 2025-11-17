@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_files2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 15:51:09 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/10 12:45:52 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/17 01:06:06 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,68 +22,70 @@ int	ft_init_files(t_commands *cmds, t_pipex_b *pipex)
 		if (current->type == FILE_HEREDOC || current->type == FILE_REDIRECT_IN)
 		{
 			if (ft_init_infiles(current, pipex))
-				return(1);
+				return (1);
 		}
-		else if (current->type == FILE_REDIRECT_APPEND || current->type == FILE_REDIRECT_OUT)
+		else if (current->type == FILE_REDIRECT_APPEND
+			|| current->type == FILE_REDIRECT_OUT)
 		{
 			if (ft_init_outfiles(current, pipex))
-				return(1);
+				return (1);
 		}
 		current = current->next;
 	}
-	return(0);
-}
-int ft_init_infiles(t_redirect *current, t_pipex_b *pipex)
-{
-	int fd;
-	
-	if (current->type == FILE_HEREDOC)
-				fd = get_heredoc(current->word_eof);
-			else if (current->type == FILE_REDIRECT_IN)
-			{
-				if (access(current->filename, F_OK) != 0)
-					return(error_infile(current->filename, pipex));
-				fd = open(current->filename, O_RDONLY);
-				if (fd < 0)
-					return(error_infile(current->filename, pipex));
-			}
-			if (current->next)
-				close(fd);
-			else
-			{
-				pipex->infile = fd;
-				pipex->infile_error = 0;
-			}
-		return(0);
+	return (0);
 }
 
-int error_infile(char *filename, t_pipex_b *pipex)
+int	ft_init_infiles(t_redirect *current, t_pipex_b *pipex)
+{
+	int	fd;
+
+	if (current->type == FILE_HEREDOC)
+		fd = get_heredoc(current->word_eof);
+	else if (current->type == FILE_REDIRECT_IN)
+	{
+		if (access(current->filename, F_OK) != 0)
+			return (error_infile(current->filename, pipex));
+		fd = open(current->filename, O_RDONLY);
+		if (fd < 0)
+			return (error_infile(current->filename, pipex));
+	}
+	if (current->next)
+		close(fd);
+	else
+	{
+		pipex->infile = fd;
+		pipex->infile_error = 0;
+	}
+	return (0);
+}
+
+int	error_infile(char *filename, t_pipex_b *pipex)
 {
 	perror(filename);
 	pipex->infile_error = -1;
 	return (1);
 }
 
-int ft_init_outfiles(t_redirect *current, t_pipex_b *pipex)
+int	ft_init_outfiles(t_redirect *current, t_pipex_b *pipex)
 {
-	int fd;
-	
+	int	fd;
+
 	if (current->type == TOKEN_REDIRECT_OUT)
-				fd = open(current->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-			else if (current->type == TOKEN_REDIRECT_APPEND)
-				fd = open(current->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);	
-			if (fd < 0)
-			{
-				perror(current->filename);
-				pipex->outfile_error = -1;
-				return (1);
-			}
-			if (current->next)
-				close(fd);
-			else
-			{
-				pipex->outfile = fd;
-				pipex->outfile_error = 0;
-			}
-			return(0);
+		fd = open(current->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (current->type == TOKEN_REDIRECT_APPEND)
+		fd = open(current->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (fd < 0)
+	{
+		perror(current->filename);
+		pipex->outfile_error = -1;
+		return (1);
+	}
+	if (current->next)
+		close(fd);
+	else
+	{
+		pipex->outfile = fd;
+		pipex->outfile_error = 0;
+	}
+	return (0);
 }

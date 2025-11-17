@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:40:37 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/08 12:07:25 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/11/16 23:07:15 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,4 +116,3 @@ char	**ft_split(char const *s, char c)
 	}
 	return (array);
 }
-

@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 18:21:57 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/16 04:15:21 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/17 01:11:38 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,24 @@ t_commands	*manage_input(char *str, t_exitcode *exit_code)
 
 void	is_var(t_token *token)
 {
-	int	i;
-	t_token *current;
+	int		i;
+	t_token	*current;
 
 	current = token;
 	i = 0;
 	while (current)
 	{
-	if (token->type == 0 && ft_strlen(token->value) > 1)
-	{
-		while (token->value[i])
+		if (token->type == 0 && ft_strlen(token->value) > 1)
 		{
-			if (token->value[i] == '=')
+			while (token->value[i])
 			{
-				token->type = TOKEN_VAR;
+				if (token->value[i] == '=')
+				{
+					token->type = TOKEN_VAR;
+				}
+				i++;
 			}
-			i++;
 		}
-	}
-	current = current->next;
+		current = current->next;
 	}
 }
