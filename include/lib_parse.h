@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/17 03:07:45 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/17 03:52:13 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_env
 	char				*oldpwd;
 	char				*pwd;
 	struct sigaction	*signal;
-
 }	t_env;
 
 typedef enum e_token_type

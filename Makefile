@@ -30,25 +30,25 @@ RM = rm -rf
 all: ${NAME}
 
 $(LIBFT): $(LIBFT_DIR)
-	make -C $(LIBFT_DIR) $(LIBFT_NAME)
+	@make -C $(LIBFT_DIR) $(LIBFT_NAME)
 
 ${NAME}: ${OBJS} ${LIBFT}
-		${CC} ${CFLAGS} ${OBJS} ${LIBFT} ${LIBS} -o ${NAME}
+	@${CC} ${CFLAGS} ${OBJS} ${LIBFT} ${LIBS} -o ${NAME}
 
 %.o: %.c
-	$(CC) -c $< -o $@
+	@$(CC) -c $< -o $@
 
 clean:
-		@${MAKE} -C ./libft fclean
-		@${RM} ${OBJS}
+	@${MAKE} -C ./libft fclean
+	@${RM} ${OBJS}
 
 
 test: ${OBJS} ${LIBFT}
-		${CC} -g ${OBJS} ${LIBFT} ${LIBS} -o ${NAME}
+	@${CC} -g ${OBJS} ${LIBFT} ${LIBS} -o ${NAME}
 
 
 fclean: clean
-		@${RM} ${NAME} $(LIBFT_NAME)
+	@${RM} ${NAME} $(LIBFT_NAME)
 
 re: fclean all
 

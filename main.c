@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/17 00:55:09 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/17 04:21:17 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,29 @@ void	prompt_loop(t_env *env_s)
 	}
 }
 
+void	clean_prompt(char *prompt)
+{
+	if (prompt[0] == '/')
+		ft_memmove(prompt, &prompt[1], ft_strlen(prompt));
+}
+
 char	*prompt_sentence(t_env *env)
 {
 	char	*result;
+	char	*prompt;
 	int		i;
 
 	i = 0;
-	result = ft_malloc(sizeof(char) * (ft_strlen(env->pwd) + 2 + 1), 0);
-	while (env->pwd[i])
-	{
-		result[i] = env->pwd[i];
-		i++;
-	}
-	result[i++] = '~';
-	result[i++] = '>';
-	result[i] = '\0';
+	prompt = ft_malloc(sizeof(char) * (ft_strlen(env->pwd) + 1), 0);
+	ft_strlcpy(prompt, env->pwd, ft_strlen(env->pwd) + 1);
+	clean_prompt(prompt);
+	result = ft_malloc(sizeof(char) * (ft_strlen(BCYAN)
+				+ ft_strlen(BWHITE) + ft_strlen(prompt) + 5), 0);
+	ft_strlcpy(result, BCYAN, ft_strlen(BCYAN) + 1);
+	ft_strlcat(result, prompt, ft_strlen(BCYAN) + ft_strlen(prompt) + 2);
+	ft_strlcat(result, "> ", ft_strlen(BCYAN) + ft_strlen(prompt) + 4);
+	ft_strlcat(result, BWHITE, ft_strlen(BCYAN) + ft_strlen(BWHITE)
+		+ ft_strlen(prompt) + 5);
 	return (result);
 }
 

@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 15:51:09 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/17 01:06:06 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/17 05:23:40 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,13 @@ int	ft_init_files(t_commands *cmds, t_pipex_b *pipex)
 
 int	ft_init_infiles(t_redirect *current, t_pipex_b *pipex)
 {
-	int	fd;
+	int			fd;
+	t_redirect	*next_in;
 
+	next_in = current->next;
+	while (next_in && next_in->type != FILE_HEREDOC
+		&& next_in->type != FILE_REDIRECT_IN)
+		next_in = next_in->next;
 	if (current->type == FILE_HEREDOC)
 		fd = get_heredoc(current->word_eof);
 	else if (current->type == FILE_REDIRECT_IN)
@@ -49,7 +54,7 @@ int	ft_init_infiles(t_redirect *current, t_pipex_b *pipex)
 		if (fd < 0)
 			return (error_infile(current->filename, pipex));
 	}
-	if (current->next)
+	if (next_in)
 		close(fd);
 	else
 	{
@@ -68,11 +73,16 @@ int	error_infile(char *filename, t_pipex_b *pipex)
 
 int	ft_init_outfiles(t_redirect *current, t_pipex_b *pipex)
 {
-	int	fd;
+	int			fd;
+	t_redirect	*next_out;
 
-	if (current->type == TOKEN_REDIRECT_OUT)
+	next_out = current->next;
+	while (next_out && next_out->type != FILE_REDIRECT_OUT
+		&& next_out->type != FILE_REDIRECT_APPEND)
+		next_out = next_out->next;
+	if (current->type == FILE_REDIRECT_OUT)
 		fd = open(current->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else if (current->type == TOKEN_REDIRECT_APPEND)
+	else if (current->type == FILE_REDIRECT_APPEND)
 		fd = open(current->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd < 0)
 	{
@@ -80,7 +90,7 @@ int	ft_init_outfiles(t_redirect *current, t_pipex_b *pipex)
 		pipex->outfile_error = -1;
 		return (1);
 	}
-	if (current->next)
+	if (next_out)
 		close(fd);
 	else
 	{

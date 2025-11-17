@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 11:24:33 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/16 23:31:05 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/17 03:35:02 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	clear_and_exit(int n)
 {
 	rl_clear_history();
 	ft_malloc(0, 1);
+	ft_printf(RESET);
 	exit(n);
 }
 

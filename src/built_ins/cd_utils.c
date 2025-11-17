@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 12:58:39 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/16 23:26:50 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/17 03:49:26 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	cd_home(t_env *envpwd, char *pathname, char **env)
 		return (1);
 	old_copy = ft_malloc(sizeof(char) * (ft_strlen(old_pwd) + 1), 0);
 	ft_strlcpy(old_copy, old_pwd, ft_strlen(old_pwd) + 1);
-	free(old_pwd);
 	return (update_cwd(envpwd, old_copy, pathname));
 }
 

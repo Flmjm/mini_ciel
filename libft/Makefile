@@ -31,19 +31,19 @@ ALL_OBJ = $(OBJ) $(BONUS_OBJ) $(PRINTF_OBJ) $(GNL_OBJ)
 all: $(NAME)
 
 $(NAME): $(OBJ) $(PRINTF_OBJ) $(GNL_OBJ)
-	ar rcs $(NAME) $^
+	@ar rcs $(NAME) $^
 
 bonus: $(ALL_OBJ)
-	ar rcs $(NAME) $^
+	@ar rcs $(NAME) $^
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJ) $(BONUS_OBJ) $(PRINTF_OBJ) $(GNL_OBJ)
+	@rm -f $(OBJ) $(BONUS_OBJ) $(PRINTF_OBJ) $(GNL_OBJ)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 
