@@ -1,11 +1,11 @@
-NAME = Mini_Ciel
+NAME = minishell
 
 LIBS = -lreadline -lhistory
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g3 -O0 -no-pie -g
 
-SRCS =  $(wildcard *.c src/*.c exec/*.c built_ins/*.c)
+SRCS =  $(wildcard *.c src/*/*.c)
 
 
 OBJS = $(SRCS:.c=.o)
@@ -30,25 +30,25 @@ RM = rm -rf
 all: ${NAME}
 
 $(LIBFT): $(LIBFT_DIR)
-	make -C $(LIBFT_DIR) $(LIBFT_NAME)
+	@make -C $(LIBFT_DIR) $(LIBFT_NAME)
 
 ${NAME}: ${OBJS} ${LIBFT}
-		${CC} ${CFLAGS} ${OBJS} ${LIBFT} ${LIBS} -o ${NAME}
+	@${CC} ${CFLAGS} ${OBJS} ${LIBFT} ${LIBS} -o ${NAME}
 
 %.o: %.c
-	$(CC) -c $< -o $@
+	@$(CC) -c $< -o $@
 
 clean:
-		@${MAKE} -C ./libft fclean
-		@${RM} ${OBJS}
+	@${MAKE} -C ./libft fclean
+	@${RM} ${OBJS}
 
 
 test: ${OBJS} ${LIBFT}
-		${CC} -g ${OBJS} ${LIBFT} ${LIBS} -o ${NAME}
+	@${CC} -g ${OBJS} ${LIBFT} ${LIBS} -o ${NAME}
 
 
 fclean: clean
-		@${RM} ${NAME} $(LIBFT_NAME)
+	@${RM} ${NAME} $(LIBFT_NAME)
 
 re: fclean all
 

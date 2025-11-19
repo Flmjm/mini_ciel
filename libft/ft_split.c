@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:40:37 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/23 12:03:29 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/16 23:07:15 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,33 +116,3 @@ char	**ft_split(char const *s, char c)
 	}
 	return (array);
 }
-
-// int	main(void)
-// {
-// 	int		i;
-// 	char	string[] = "Je suis un split simple";
-// 	char	c;
-// 	char	**dest;
-
-// 	i = 0;
-// 	// char	test[] = "                            ";
-// 	c = ' ';
-// 	dest = ft_split(string, c);
-// 	while (dest)
-// 	{
-// 		printf("%s", dest[i]);
-// 		i++;
-// 	}
-// 	// char **dest = ft_malloc(2 * sizeof(char *));
-// 	// dest[1] = NULL;
-// 	// dest[0] = ft_malloc((2));
-// 	// dest[0][0] = clc( string, c, 0+1, 0);
-// 	// printf("%c", dest[0][0]);
-// 	// 	dest = ft_split(string, c);
-// 	// 	while (dest != NULL)
-// 	// 	{
-// 	// 		printf("%s", dest[i]);
-// 	// 		i++;
-// 	// 	}
-// 	// 	free (dest);
-// }

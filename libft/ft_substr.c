@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 21:43:13 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/23 12:04:02 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/08 12:07:49 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,3 @@ char	*ft_substr(char const *s, unsigned int start, size_t len )
 	}
 	return (array);
 }
-// int	main()
-// {
-// 	printf("%s\n", ft_substr("0123456789", 9, 10));
-// }

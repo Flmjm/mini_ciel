@@ -1,0 +1,64 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_files.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/08 15:51:09 by juliette-ma       #+#    #+#             */
+/*   Updated: 2025/11/17 01:08:05 by manu             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../include/lib_exec.h"
+
+void	close_fd(t_pipex_b *pipex)
+{
+	int	i;
+
+	i = 0;
+	while (i < pipex->cmd_count - 1)
+	{
+		if (pipex->pipefd[i][0] != -1)
+		{
+			close(pipex->pipefd[i][0]);
+			pipex->pipefd[i][0] = -1;
+		}
+		if (pipex->pipefd[i][1] != -1)
+		{
+			close(pipex->pipefd[i][1]);
+			pipex->pipefd[i][1] = -1;
+		}
+		i++;
+	}
+}
+
+void	ft_dup2_and_close(int fd, int n)
+{
+	dup2(fd, n);
+	if (fd != -1)
+		close(fd);
+}
+
+int	get_heredoc(char *delimiter)
+{
+	int		pipefd[2];
+	char	*line;
+
+	if (pipe(pipefd) == -1)
+		return (-1);
+	while (1)
+	{
+		line = readline(">");
+		if (!line || strncmp(line, delimiter, strlen(line)) == 0)
+		{
+			free(line);
+			break ;
+		}
+		write(pipefd[1], line, strlen(line));
+		write(pipefd[1], "\n", 1);
+		free(line);
+	}
+	close(pipefd[1]);
+	return (pipefd[0]);
+}

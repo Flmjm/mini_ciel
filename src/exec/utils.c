@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_bonus.c                                      :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 16:06:05 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/29 11:41:13 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/19 14:41:25 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "../../include/lib_exec.h"
 
 void	init_struct_exec(t_pipex_b *pipex, t_commands *cmds, char **env)
 {
-	int	i;
-
-	i = 0;
 	pipex->cmd_count = ft_lstlen(cmds);
 	pipex->outfile = -1;
 	pipex->path = NULL;
@@ -25,20 +22,28 @@ void	init_struct_exec(t_pipex_b *pipex, t_commands *cmds, char **env)
 	pipex->infile_error = -1;
 	pipex->pathname_cmd = NULL;
 	pipex->cmd = NULL;
+	init_struct_exec_malloc(pipex, cmds, env);
+}
+
+void	init_struct_exec_malloc(t_pipex_b *pipex, t_commands *cmds, char **env)
+{
+	int	i;
+
+	i = 0;
 	pipex->pid = ft_malloc(pipex->cmd_count * sizeof(pid_t), 0);
 	if (!pipex->pid)
-		printf("pipex pid malloc\n");
+		ft_printf("Pipex pid malloc\n");
 	pipex->pipefd = ft_malloc(sizeof(int *) * (pipex->cmd_count), 0);
 	if (!pipex->pipefd)
-		printf("Malloc pipefd");
+		ft_printf("Malloc pipefd\n");
+	while (i < pipex->cmd_count)
+		pipex->pid[i++] = -1;
+	i = 0;
 	while (i < pipex->cmd_count)
 		pipex->pipefd[i++] = NULL;
 	pipex->path = get_env_value("PATH=", env);
-	if (!pipex->path)
-		printf("Unable to get PATH");
-	pipex->directories = ft_split(pipex->path, ':');
-	if (!pipex->directories)
-		printf("Split directories");
+	if (pipex->path)
+		pipex->directories = ft_split(pipex->path, ':');
 }
 
 int	ft_lstlen(t_commands *cmds)

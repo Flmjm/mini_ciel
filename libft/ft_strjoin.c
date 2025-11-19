@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:30:47 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/23 12:03:38 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/08 12:07:30 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	array[i + j] = '\0';
 	return (array);
 }
-// int	main()
-// {
-// 	char	s1[] = "aled o s k o u r ";
-// 	char	s2[] = "jsuis en dep!!";
-// 	printf("%s\n",ft_strjoin(s1, s2));
-// }

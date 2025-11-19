@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:56:12 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/23 12:03:59 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/08 12:07:47 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,3 @@ char	*ft_strtrim(char const *s1, char const *set)
 	copy(result, s1, start, end);
 	return (result);
 }
-// int	main(void)
-// {
-// 	char	aled[] = "rrsroskorurorro";
-// 	char	set[] = "or";
-// 	printf("%s", ft_strtrim(aled, set));
-// }

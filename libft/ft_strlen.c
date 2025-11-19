@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 11:26:25 by mleschev          #+#    #+#             */
-/*   Updated: 2025/04/05 14:20:07 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/16 23:07:59 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,3 @@ int	ft_strlen(const char *str)
 		i++;
 	return (i);
 }
-
-// int	main()
-// {
-// 	printf("%d", ft_strlen(NULL));
-// }

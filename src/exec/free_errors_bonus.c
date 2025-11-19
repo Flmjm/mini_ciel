@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free_errors_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:11:29 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/18 13:08:53 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/17 01:01:12 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
-
-// void	exit_with_message(char *str, int n)
-// {
-// 	ft_putendl_fd("Error\n", 2);
-// 	ft_putendl_fd(str, 2);
-// 	exit(n);
-// }
+#include "../../include/lib_exec.h"
 
 void	free_tab(char **tab)
 {
@@ -31,14 +24,6 @@ void	free_tab(char **tab)
 	}
 	free(tab);
 }
-
-// void	exit_with_message_and_free(char *str, t_pipex_b *pipex, int n)
-// {
-// 	if (str)
-// 		ft_putendl_fd(str, 2);
-// 	free_struct(pipex);
-// 	exit(n);
-// }
 
 void	free_struct(t_pipex_b *pipex)
 {
@@ -71,4 +56,13 @@ void	free_pipe(t_pipex_b *pipex)
 		i++;
 	}
 	free(pipex->pipefd);
+}
+
+void	ft_free(void *ptr)
+{
+	if (ptr)
+	{
+		free(ptr);
+		ptr = NULL;
+	}
 }

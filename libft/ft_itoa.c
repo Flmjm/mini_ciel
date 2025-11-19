@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 11:21:39 by mleschev          #+#    #+#             */
-/*   Updated: 2025/09/23 12:08:16 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/12 17:16:33 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,3 @@ char	*ft_itoa(int n)
 	reversenb(n, result, cnt_len, sign);
 	return (result);
 }
-// int	main(void)
-// {
-// 	printf("%s", ft_itoa(-2147483648));
-// }

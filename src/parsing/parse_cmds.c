@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   parse_cmds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 11:37:56 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/10/29 11:38:39 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/11 13:18:09 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib_parse.h"
+#include "../../include/lib_parse.h"
 
 int	count_words(t_token *token)
 {
@@ -50,8 +50,7 @@ t_commands	*ft_lstnew_command(int words)
 	}
 	else
 		new->argv = ft_malloc((words + 1) * sizeof(char *), 0);
-	new->infiles = NULL;
-	new->outfiles = NULL;
+	new->redirect = NULL;
 	new->next = NULL;
 	return (new);
 }
@@ -73,33 +72,33 @@ void	ft_lstadd_cmd_back(t_commands **lst, t_commands *new)
 	last->next = new;
 }
 
-static t_token *ft_process_node(t_token *token, t_commands *node)
+static t_token	*ft_process_node(t_token *token, t_commands *node)
 {
-	t_token		*tmp_token;
-	int	i;
+	t_token	*tmp_token;
+	int		i;
 
-	tmp_token = ft_add_redir(token, node);
-	if (!tmp_token)
-		return(NULL);
-	if (tmp_token->type == TOKEN_EOF)
-		tmp_token = tmp_token->next;
-	if (!tmp_token)
-		return(NULL);
-	if (tmp_token->type == TOKEN_WORD)
+	tmp_token = token;
+	i = 0;
+	while (tmp_token && tmp_token->type != TOKEN_PIPE)
 	{
-		i = 0;
-		while (tmp_token && tmp_token->type == TOKEN_WORD)
+		if (tmp_token->type == TOKEN_EOF)
+			tmp_token = tmp_token->next;
+		else if (tmp_token->type >= TOKEN_REDIRECT_IN
+			&& tmp_token->type <= TOKEN_HERESTRING)
+			tmp_token = ft_add_redir(tmp_token, node);
+		else if (tmp_token->type == TOKEN_WORD)
 		{
 			node->argv[i] = ft_strdup(tmp_token->value);
 			i++;
 			tmp_token = tmp_token->next;
 		}
-		node->argv[i] = NULL;
+		else
+			tmp_token = tmp_token->next;
 	}
-	tmp_token = ft_add_redir(tmp_token, node);
-	if (tmp_token)
+	node->argv[i] = NULL;
+	if (tmp_token && tmp_token->type == TOKEN_PIPE)
 		tmp_token = tmp_token->next;
-	return(tmp_token);
+	return (tmp_token);
 }
 
 t_commands	*ft_init_cmd(t_token *token)
@@ -116,10 +115,9 @@ t_commands	*ft_init_cmd(t_token *token)
 		cmd_count = count_words(token);
 		node = ft_lstnew_command(cmd_count);
 		if (!node)
-			return(command);
+			return (command);
 		token = ft_process_node(token, node);
 		ft_lstadd_cmd_back(&command, node);
 	}
 	return (command);
 }
-

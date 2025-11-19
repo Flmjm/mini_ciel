@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 16:17:56 by mleschev          #+#    #+#             */
-/*   Updated: 2025/04/04 11:11:02 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/16 23:07:50 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,3 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	dst[i] = '\0';
 	return (ft_strlen(src));
 }
-// int main()
-// {
-//     char src[] = "Hello, World!";
-//     char dst[50];
-//     // Copier les 6 premiers caractères de src dans dst
-//     ft_strlcpy(dst, src, 51);
-//     // Afficher la chaîne source et destination
-//     printf("Source: %s\n", src);
-//     printf("Destination: %s\n", dst);
-//     return 0;
-// }
