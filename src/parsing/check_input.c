@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 08:51:44 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/17 01:50:59 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/18 12:18:56 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	is_complete(t_input_info *infos)
 		}
 		i++;
 	}
+	if (infos->input[i - 1] == '\n')
+		infos->input[i - 1] = '\0';
 }
 
 void	recall_readline(t_input_info *infos)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 15:31:15 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/19 14:45:23 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/19 15:14:57 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../../include/lib_parse.h"
 
 void	exec_builtin_with_redir(t_pipex_b *pipex, t_commands *cmds,
-			t_env *env, t_exitcode *exit_code)
+			t_env *env, int i)
 {
 	int	saved_stdin;
 	int	saved_stdout;
@@ -34,10 +34,10 @@ void	exec_builtin_with_redir(t_pipex_b *pipex, t_commands *cmds,
 	if (pipex->outfile_error == -1 || pipex->infile_error == -1)
 	{
 		close_saved_std(saved_stdin, saved_stdout);
-		exit_code->last_cmd = 1;
+		env->exitcode->last_cmd = 1;
 		return ;
 	}
-	exec_builtin(pipex, cmds, env, exit_code);
+	exec_builtin(pipex, cmds, env, env->exitcode);
 	close_saved_std(saved_stdin, saved_stdout);
 }
 

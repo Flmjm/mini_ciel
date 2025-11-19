@@ -53,7 +53,7 @@ int		check_directory(char *pathname);
 
 //exec_builtin.c					
 void	exec_builtin_with_redir(t_pipex_b *pipex, t_commands *cmds,
-			t_env *env, t_exitcode *exit_code);
+			t_env *env, int i);
 void	exec_builtin(t_pipex_b *pipex, t_commands *cmds, t_env *env,
 			t_exitcode *exit_code);
 int		is_builtin(char *cmd);
@@ -76,12 +76,12 @@ void	free_struct(t_pipex_b *pipex);
 void	free_pipe(t_pipex_b *pipex);
 void	ft_free(void *ptr);
 
-//utils_files.c							
+//utils_files.c
 void	close_fd(t_pipex_b *pipex);
 void	ft_dup2_and_close(int fd, int n);
 int		get_heredoc(char *delimiter);
 
-//utils_files2.c							
+//utils_files2.c
 int		ft_init_files(t_commands *cmds, t_pipex_b *pipex);
 int		ft_init_infiles(t_redirect *current, t_pipex_b *pipex);
 int		ft_init_outfiles(t_redirect *current, t_pipex_b *pipex);
@@ -113,7 +113,7 @@ char	*get_pathname_dir(char *cmd);
 int		cd_home(t_env *envpwd, char *pathname, char **env);
 int		cd_oldpwd(char **cmd, t_env *envpwd, char *tmp_cwd);
 
-// cd.c  --> 6 fonctions + factoriser 
+// cd.c  --> 6 fonctions + factoriser
 int		cd_dir(char **cmd, t_env *envpwd, char *pathname, char *tmp_cwd);
 int		ft_cd(char **cmd, char **env, t_env *envpwd);
 int		update_cwd(t_env *envpwd, char *s1_oldpwd, char *s2_pwd);

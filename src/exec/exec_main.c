@@ -74,7 +74,7 @@ void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env)
 			env->exitcode->last_cmd = 1;
 		if (is_builtin(cmds->argv[0]))
 		{
-			exec_builtin_with_redir(pipex, cmds, env, env->exitcode);
+			exec_builtin_with_redir(pipex, cmds, env, i);
 			if (i > 0)
 			{
 				close(pipex->pipefd[i - 1][0]);
