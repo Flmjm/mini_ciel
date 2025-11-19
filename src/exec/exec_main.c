@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:34 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/19 12:18:26 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/19 14:14:49 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ int	argc_of_argv(char **cmds)
 	return (i);
 }
 
-void	exec_not_builtin(t_pipex_b *pipex,
-			t_commands *cmds, t_env *env, int i)
+void	exec_not_builtin(t_pipex_b *pipex, t_commands *cmds, t_env *env, int i)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);

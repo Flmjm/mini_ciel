@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 16:06:05 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/19 14:44:32 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/19 14:52:16 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ void	cmd_process(t_pipex_b *pipex, char **env, int index)
 		close(pipex->outfile);
 	if (pipex->infile_error == 0)
 		close(pipex->infile);
-	if (pipex->cmd_count)
+	if (pipex->cmd_count && check_directory(pipex->pathname_cmd))
+		exit(126);
+	else if (pipex->cmd_count)
 		execve(pipex->pathname_cmd, pipex->cmd, env);
 	perror("execve");
 	exit(127);
@@ -59,6 +61,18 @@ int	is_relative_or_absolute_path(char *str)
 		if (str[i] == '/')
 			return (1);
 		i++;
+	}
+	return (0);
+}
+
+int	check_directory(char *pathname)
+{
+	struct stat	buf;
+
+	if (stat(pathname, &buf) == 0 && S_ISDIR(buf.st_mode))
+	{
+		ft_printf("%s: Is a directory\n", pathname);
+		return (1);
 	}
 	return (0);
 }

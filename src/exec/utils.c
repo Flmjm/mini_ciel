@@ -42,7 +42,8 @@ void	init_struct_exec_malloc(t_pipex_b *pipex, t_commands *cmds, char **env)
 	while (i < pipex->cmd_count)
 		pipex->pipefd[i++] = NULL;
 	pipex->path = get_env_value("PATH=", env);
-	pipex->directories = ft_split(pipex->path, ':');
+	if (pipex->path)
+		pipex->directories = ft_split(pipex->path, ':');
 }
 
 int	ft_lstlen(t_commands *cmds)

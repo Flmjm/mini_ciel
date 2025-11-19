@@ -43,8 +43,8 @@ int	expand_in_quote(t_input_info *infos, int i, t_exitcode *exit_code)
 	i++;
 	while (infos->input[i] && infos->input[i] != '"')
 	{
-		if (infos->input[i] == '\'' && infos->input[i + 1]
-			&& infos->input[i + 2] == '\'')
+		if (infos->input[i] == '\'' && infos->input[i + 1] && infos->input[i
+				+ 2] == '\'')
 			i += 3;
 		else if (infos->input[i] == '\\' && infos->input[i + 1] == '$')
 			erase_in_str(infos, i);
@@ -104,7 +104,7 @@ void	expand_var(t_input_info *infos, int i, int quote, t_exitcode *exit_code)
 
 void	expand_empty(t_input_info *infos, int i, char *temp_input)
 {
-	if (!infos->input[i + 5])
+	if (!infos->input[i + 5] && i - 1 < 0)
 	{
 		infos->input = NULL;
 		return ;
