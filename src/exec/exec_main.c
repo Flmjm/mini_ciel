@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:34 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/17 05:09:37 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/19 12:18:26 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env)
 			env->exitcode->last_cmd = 1;
 		if (is_builtin(cmds->argv[0]))
 		{
-			exec_builtin_with_redir(pipex, cmds, env, env->exitcode);
+			exec_builtin_with_redir(pipex, cmds, env, i);
 			if (i > 0)
 			{
 				close(pipex->pipefd[i - 1][0]);

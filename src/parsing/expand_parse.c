@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 21:45:37 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/17 18:02:45 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/19 15:16:24 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,10 @@ void	expand_var(t_input_info *infos, int i, int quote, t_exitcode *exit_code)
 
 void	expand_empty(t_input_info *infos, int i, char *temp_input)
 {
-	if (!infos->input[i+5])
-		{
-			infos->input = NULL;
-			return ;
-		}
-		resize_and_copy(infos, i + 5, 5, temp_input);
+	if (!infos->input[i + 5])
+	{
+		infos->input = NULL;
+		return ;
+	}
+	resize_and_copy(infos, i + 5, 5, temp_input);
 }

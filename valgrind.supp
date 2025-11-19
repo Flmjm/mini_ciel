@@ -1,0 +1,16 @@
+{
+    ignore_readline_malloc
+    Memcheck:Leak
+    match-leak-kinds:reachable
+    fun:malloc
+    fun:readline
+}
+
+{
+    ignore_readline_history
+    Memcheck:Leak
+    match-leak-kinds:reachable
+    fun:malloc
+    fun:add_history
+}
+

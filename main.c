@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/17 04:21:17 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/19 15:14:15 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,26 @@ void	prompt_loop(t_env *env_s)
 
 void	clean_prompt(char *prompt)
 {
+	int	lenght;
+
 	if (prompt[0] == '/')
 		ft_memmove(prompt, &prompt[1], ft_strlen(prompt));
+	lenght = ft_strlen(ft_strrchr(prompt, '/'));
+	if (prompt[ft_strlen(prompt) - lenght + 1] && prompt[ft_strlen(prompt)
+			- lenght + 1] == '.')
+	{
+		if (prompt[ft_strlen(prompt) - lenght + 2] && prompt[ft_strlen(prompt)
+				- lenght + 2] == '.')
+		{
+			prompt[ft_strlen(prompt) - lenght] = '\0';
+			lenght = ft_strlen(ft_strrchr(prompt, '/'));
+			prompt[ft_strlen(prompt) - lenght] = '\0';
+		}
+		else
+		{
+			prompt[ft_strlen(prompt) - lenght] = '\0';
+		}
+	}
 }
 
 char	*prompt_sentence(t_env *env)
