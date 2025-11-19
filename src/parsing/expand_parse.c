@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 21:45:37 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/17 18:02:45 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/19 14:53:21 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ int	expand_in_quote(t_input_info *infos, int i, t_exitcode *exit_code)
 	i++;
 	while (infos->input[i] && infos->input[i] != '"')
 	{
-		if (infos->input[i] == '\'' && infos->input[i + 1]
-			&& infos->input[i + 2] == '\'')
+		if (infos->input[i] == '\'' && infos->input[i + 1] && infos->input[i
+				+ 2] == '\'')
 			i += 3;
 		else if (infos->input[i] == '\\' && infos->input[i + 1] == '$')
 			erase_in_str(infos, i);
@@ -104,10 +104,10 @@ void	expand_var(t_input_info *infos, int i, int quote, t_exitcode *exit_code)
 
 void	expand_empty(t_input_info *infos, int i, char *temp_input)
 {
-	if (!infos->input[i+5])
-		{
-			infos->input = NULL;
-			return ;
-		}
-		resize_and_copy(infos, i + 5, 5, temp_input);
+	if (!infos->input[i + 5] && i - 1 < 0)
+	{
+		infos->input = NULL;
+		return ;
+	}
+	resize_and_copy(infos, i + 5, 5, temp_input);
 }

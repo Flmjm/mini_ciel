@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 16:06:05 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/17 16:55:33 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/19 14:41:25 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ void	init_struct_exec_malloc(t_pipex_b *pipex, t_commands *cmds, char **env)
 	while (i < pipex->cmd_count)
 		pipex->pipefd[i++] = NULL;
 	pipex->path = get_env_value("PATH=", env);
-	if (!pipex->path)
-		ft_printf("Unable to get PATH\n");
-	pipex->directories = ft_split(pipex->path, ':');
+	if (pipex->path)
+		pipex->directories = ft_split(pipex->path, ':');
 }
 
 int	ft_lstlen(t_commands *cmds)
