@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_parse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/19 15:14:39 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/19 15:33:16 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,22 +52,22 @@ typedef struct s_env
 
 typedef enum e_token_type
 {
-	TOKEN_WORD,            // 0 - Arguments, commandes, fichiers
-	TOKEN_PIPE,            // 1 - |
-	TOKEN_REDIRECT_IN,     // 2 - <
-	TOKEN_REDIRECT_OUT,    // 3 - >
-	TOKEN_REDIRECT_APPEND, // 4 - >>
-	TOKEN_HEREDOC,         // 5 - <<
-	TOKEN_EOF,             // 6 - EOF
-	TOKEN_HERESTRING,      // 7 - <<<
+	TOKEN_WORD,				// 0 - Arguments, commandes, fichiers
+	TOKEN_PIPE,				// 1 - |
+	TOKEN_REDIRECT_IN,		// 2 - <
+	TOKEN_REDIRECT_OUT,		// 3 - >
+	TOKEN_REDIRECT_APPEND,	// 4 - >>
+	TOKEN_HEREDOC,			// 5 - <<
+	TOKEN_EOF,				// 6 - EOF
+	TOKEN_HERESTRING,		// 7 - <<<
 }						t_token_type;
 
 typedef enum e_file_type
 {
-	FILE_REDIRECT_IN = 2,     // <
-	FILE_REDIRECT_OUT = 3,    // >
-	FILE_REDIRECT_APPEND = 4, // >>
-	FILE_HEREDOC = 5,         // <<
+	FILE_REDIRECT_IN = 2,		// <
+	FILE_REDIRECT_OUT = 3,		// >
+	FILE_REDIRECT_APPEND = 4,	// >>
+	FILE_HEREDOC = 5,			// <<
 }						t_file_type;
 
 typedef struct t_input_info
@@ -129,15 +129,16 @@ int						ft_check_next_token_redir_append(t_token *token);
 int						ft_check_next_token(t_token *token);
 
 // expand_parse.c
-void				replace_var_input(t_input_info *infos,
-						t_exitcode *exit_code);
-int					expand_in_quote(t_input_info *infos, int i,
-						t_exitcode *exit_code);
-int					extract_var_name(char *input, int i, int quote,
-						char *env_input);
-void				expand_var(t_input_info *infos, int i, int quote,
-						t_exitcode *exit_code);
-void				expand_empty(t_input_info *infos, int i, char *temp_input);
+void					replace_var_input(t_input_info *infos,
+							t_exitcode *exit_code);
+int						expand_in_quote(t_input_info *infos, int i,
+							t_exitcode *exit_code);
+int						extract_var_name(char *input, int i, int quote,
+							char *env_input);
+void					expand_var(t_input_info *infos, int i, int quote,
+							t_exitcode *exit_code);
+void					expand_empty(t_input_info *infos, int i,
+							char *temp_input);
 
 // expand_utils.c
 void					erase_in_str(t_input_info *infos, int i);

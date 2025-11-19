@@ -6,7 +6,7 @@
 /*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:01:42 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/19 14:52:00 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/19 16:44:41 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_cd(char **cmd, char **env, t_env *envpwd)
 		ft_putendl_fd("cd: too many arguments", STDERR_FILENO);
 		return (1);
 	}
-	if (ft_strncmp(envpwd->pwd, cmd[1], ft_strlen(cmd[1])) == 0)
+	if (cmd[1] && (ft_strncmp(envpwd->pwd, cmd[1], ft_strlen(cmd[1])) == 0))
 		return (0);
 	if (cmd[0] && (!cmd[1] || cmd[1][0] == '\0'))
 		return (cd_home(envpwd, pathname, env));

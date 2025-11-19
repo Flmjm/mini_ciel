@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 08:51:44 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/18 12:18:56 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/19 16:37:38 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	is_complete(t_input_info *infos)
 		}
 		i++;
 	}
-	if (infos->input[i - 1] == '\n')
+	if (i > 0 && infos->input[i - 1] == '\n')
 		infos->input[i - 1] = '\0';
 }
 

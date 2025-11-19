@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 20:55:43 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/18 11:24:11 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/19 16:47:05 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	ft_export(t_env *env, t_commands *cmds)
 		while (env->global[i])
 		{
 			if (env->global[i][0])
-				printf("declare -x %s\n", env->global[i]);
+				ft_printf("declare -x %s\n", env->global[i]);
 			i++;
 		}
 	}

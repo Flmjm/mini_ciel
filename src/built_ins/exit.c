@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 11:24:33 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/17 03:35:02 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/19 15:56:50 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/lib_parse.h"
 #include "../../include/lib_exec.h"
+#include "../../include/lib_parse.h"
 
 static int	check_arg(char *av)
 {
@@ -47,7 +47,7 @@ int	ft_exit(t_env *env, char **cmds, int nbr_return)
 	if (argc > 2)
 	{
 		ft_putstr_fd("exit: too many arguments\n", 2);
-		clear_and_exit(1);
+		return (1);
 	}
 	else if (argc == 2)
 	{

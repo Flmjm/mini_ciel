@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_files.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 15:51:09 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/17 01:08:05 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/19 16:50:50 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ int	get_heredoc(char *delimiter)
 	while (1)
 	{
 		line = readline(">");
-		if (!line || strncmp(line, delimiter, strlen(line)) == 0)
+		if (!line || ft_strncmp(line, delimiter, ft_strlen(line)) == 0)
 		{
 			free(line);
 			break ;
 		}
-		write(pipefd[1], line, strlen(line));
+		write(pipefd[1], line, ft_strlen(line));
 		write(pipefd[1], "\n", 1);
 		free(line);
 	}

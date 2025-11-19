@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 19:46:26 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/16 23:19:01 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/19 16:47:13 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	env_built_in(t_env *env)
 	while (env->global[i])
 	{
 		if (env->global[i][ft_strlen_var(env->global[i])] == '=')
-			printf("%s\n", env->global[i]);
+			ft_printf("%s\n", env->global[i]);
 		i++;
 	}
 	return (0);
