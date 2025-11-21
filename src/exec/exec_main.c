@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:34 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/19 14:14:49 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/21 13:49:01 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ int	exec_main(t_commands *cmds, t_env *env, t_exitcode *exit_code)
 {
 	t_pipex_b	*pipex;
 
+	if (!cmds->argv[0])
+	{
+		exit_code->last_cmd = 0;
+		return (0);
+	}
 	pipex = ft_malloc(sizeof(t_pipex_b), 0);
 	if (!pipex)
 		ft_printf("Malloc pipex\n");

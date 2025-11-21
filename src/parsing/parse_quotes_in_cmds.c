@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_quotes_in_cmds.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 15:43:37 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/11 13:18:37 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/21 16:46:04 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,30 @@ char	*ft_check_quotes_argv(char *cmds, int len, int i, int j)
 	}
 	tmp[j] = '\0';
 	return (tmp);
+}
+
+char	*get_env_by_name(char *var_temp, t_env *env)
+{
+	char	*tmp;
+	int		i;
+	int		k;
+	int		j;
+
+	i = 0;
+	tmp = getenv(var_temp);
+	if (tmp)
+		return (tmp);
+	while (env->global[i])
+	{
+		if (ft_strncmp(var_temp, env->global[i],
+				ft_strlen_var(env->global[i])) == 0
+			&& ft_strncmp(var_temp, env->global[i],
+				ft_strlen_var(var_temp)) == 0)
+		{
+			tmp = get_var_value(0, 0, i, env);
+			return (tmp);
+		}
+		i++;
+	}
+	return (NULL);
 }

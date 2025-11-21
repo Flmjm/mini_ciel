@@ -6,13 +6,13 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 18:21:57 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/19 15:15:53 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/21 16:35:00 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib_parse.h"
 
-t_commands	*manage_input(char *str, t_exitcode *exit_code)
+t_commands	*manage_input(char *str, t_env *env)
 {
 	t_input_info	*infos;
 	t_token			*token;
@@ -22,11 +22,12 @@ t_commands	*manage_input(char *str, t_exitcode *exit_code)
 	infos->input = str;
 	is_complete(infos);
 	add_history(infos->input);
-	replace_var_input(infos, exit_code);
+	replace_var_input(infos, env);
 	token = ft_token(infos->input, 0);
 	if (!token)
 		return (NULL);
 	cmds = ft_init_cmd(token);
+	clean_var(cmds);
 	if (cmds)
 		ft_check_quotes_struct_cmd(cmds);
 	return (cmds);

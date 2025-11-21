@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/19 15:14:15 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/21 16:34:36 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	prompt_loop(t_env *env_s)
 			write(1, "^D\n", 3);
 			ft_exit(env_s, NULL, 240);
 		}
-		cmds = manage_input(input, exit_code);
+		cmds = manage_input(input, env_s);
 		if (cmds)
 			exec_main(cmds, env_s, exit_code);
 	}

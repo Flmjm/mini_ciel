@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_parse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/19 15:33:16 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/21 16:47:46 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,13 +130,12 @@ int						ft_check_next_token(t_token *token);
 
 // expand_parse.c
 void					replace_var_input(t_input_info *infos,
-							t_exitcode *exit_code);
-int						expand_in_quote(t_input_info *infos, int i,
-							t_exitcode *exit_code);
+							t_env *env);
+int						expand_in_quote(t_input_info *infos, int i, t_env *env);
 int						extract_var_name(char *input, int i, int quote,
 							char *env_input);
 void					expand_var(t_input_info *infos, int i, int quote,
-							t_exitcode *exit_code);
+							t_env *env);
 void					expand_empty(t_input_info *infos, int i,
 							char *temp_input);
 
@@ -160,12 +159,13 @@ void					ft_lstadd_cmd_back(t_commands **lst, t_commands *new);
 t_commands				*ft_init_cmd(t_token *token);
 
 // parse_input.c
-t_commands				*manage_input(char *str, t_exitcode *exit_code);
+t_commands				*manage_input(char *str, t_env *env);
 
 // parse_quotes_in_cmds.c
 void					ft_check_quotes_struct_cmd(t_commands *commands);
 char					*ft_check_quotes_argv(char *cmds, int len, int i,
 							int j);
+char					*get_env_by_name(char *var_temp, t_env *env);
 
 // tokenization_utils.c
 struct s_token			*ft_lstnew_token(t_token_type type, char *content);
@@ -188,5 +188,7 @@ int						ft_strlen_var(const char *str);
 
 // check_input_utils.c
 void					replace_and_recall(t_input_info *infos, int i);
+void					clean_var(t_commands *cmds);
+char					*get_var_value(int k, int j, int i, t_env *env);
 
 #endif

@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   check_input_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 01:48:37 by manu              #+#    #+#             */
-/*   Updated: 2025/11/17 01:50:35 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/21 16:45:45 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib_parse.h"
+
+static void	clean_cmds(int i, t_commands *cmds);
 
 void	quote_next_char(t_input_info *infos, int i)
 {
@@ -43,4 +45,45 @@ void	replace_and_recall(t_input_info *infos, int i)
 {
 	replace_azt(infos, i);
 	recall_readline(infos);
+}
+
+void	clean_var(t_commands *cmds)
+{
+	int	i;
+
+	i = 0;
+	while (cmds->argv[i])
+	{
+		if (cmds->argv[i][0] == '$' && cmds->argv[i][1])
+			clean_cmds(i, cmds);
+		if (!cmds->argv[i])
+			break ;
+		i++;
+	}
+}
+
+static void	clean_cmds(int i, t_commands *cmds)
+{
+	while (cmds->argv[i])
+	{
+		cmds->argv[i] = cmds->argv[i + 1];
+		i++;
+	}
+}
+
+char	*get_var_value(int k, int j, int i, t_env *env)
+{
+	char	*tmp;
+
+	tmp = ft_malloc(sizeof(char) * (ft_strlen(env->global[i])
+				- ft_strlen(env->global[i])), 0);
+	j = ft_strlen_var(env->global[i]) + 1;
+	while (env->global[i][j])
+	{
+		tmp[k] = env->global[i][j];
+		k++;
+		j++;
+	}
+	tmp[k] = '\0';
+	return (tmp);
 }
