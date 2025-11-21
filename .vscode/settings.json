@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "lib_parse.h": "c",
-        "lib_exec.h": "c",
-        "libft.h": "c",
-        "colors.h": "c"
-    },
-    "C_Cpp.dimInactiveRegions": true
-}
