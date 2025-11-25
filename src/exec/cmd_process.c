@@ -12,7 +12,8 @@
 
 #include "../../include/lib_exec.h"
 
-void	cmd_process(t_pipex_b *pipex, char **env, int index)
+void	cmd_process(t_pipex_b *pipex, char **env, int index,
+		t_commands *cmds, t_env *t_env)
 {
 	if (pipex->outfile_error == -1 || pipex->infile_error == -1)
 		exit(1);
@@ -29,11 +30,15 @@ void	cmd_process(t_pipex_b *pipex, char **env, int index)
 		close(pipex->outfile);
 	if (pipex->infile_error == 0)
 		close(pipex->infile);
+	if (is_builtin(cmds->argv[0]))
+	{
+		exec_builtin(pipex, cmds, t_env, t_env->exitcode);
+		exit(t_env->exitcode->last_cmd);
+	}
 	if (pipex->cmd_count && check_directory(pipex->pathname_cmd))
 		exit(126);
 	else if (pipex->cmd_count)
 		execve(pipex->pathname_cmd, pipex->cmd, env);
-	perror("execve");
 	exit(127);
 }
 

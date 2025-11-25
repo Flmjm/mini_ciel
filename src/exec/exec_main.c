@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:34 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/21 13:49:01 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/25 16:04:31 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	exec_not_builtin(t_pipex_b *pipex, t_commands *cmds, t_env *env, int i)
 		signal(SIGQUIT, SIG_DFL);
 	}
 	if (pipex->pid[i] == 0 && pipex->pathname_cmd)
-		cmd_process(pipex, env->global, i);
+		cmd_process(pipex, env->global, i, cmds, env);
 	else if (pipex->pid[i] == 0 && !pipex->pathname_cmd)
 	{
 		ft_printf("%s : Command not found\n", pipex->cmd[0]);
@@ -77,15 +77,10 @@ void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env)
 		pipex->cmd_index++;
 		if (init_cmd(pipex, cmds))
 			env->exitcode->last_cmd = 1;
-		if (is_builtin(cmds->argv[0]))
-		{
+		if (is_builtin(cmds->argv[0]) && pipex->cmd_count == 1)
 			exec_builtin_with_redir(pipex, cmds, env, i);
-			if (i > 0)
-			{
-				close(pipex->pipefd[i - 1][0]);
-				close(pipex->pipefd[i - 1][1]);
-			}
-		}
+		else if (is_builtin(cmds->argv[0]))
+			exec_builtin_pipe_with_redir(pipex, cmds, env, i);
 		else
 			exec_not_builtin(pipex, cmds, env, i);
 		if (cmds->next)

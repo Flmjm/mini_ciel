@@ -45,14 +45,17 @@ typedef struct s_pipex_b
 	pid_t	*pid;
 }			t_pipex_b;
 
-//cmd_process.c						
-void	cmd_process(t_pipex_b *pipex, char **env, int index);
+//cmd_process.c
+void	cmd_process(t_pipex_b *pipex, char **env, int index,
+			t_commands *cmds, t_env *t_env);
 int		init_cmd(t_pipex_b *pipex, t_commands *cmds);
 int		is_relative_or_absolute_path(char *str);
 int		check_directory(char *pathname);
 
-//exec_builtin.c					
+//exec_builtin.c
 void	exec_builtin_with_redir(t_pipex_b *pipex, t_commands *cmds,
+			t_env *env, int i);
+void	exec_builtin_pipe_with_redir(t_pipex_b *pipex, t_commands *cmds,
 			t_env *env, int i);
 void	exec_builtin(t_pipex_b *pipex, t_commands *cmds, t_env *env,
 			t_exitcode *exit_code);
@@ -109,7 +112,7 @@ int		ft_strlen_var(const char *str);
 int		ft_export(t_env *env, t_commands *cmds);
 
 //cd_utils.c
-char	*get_pathname_dir(char *cmd);
+char	*get_pathname_dir(char *cmd, t_env *env);
 int		cd_home(t_env *envpwd, char *pathname, char **env);
 int		cd_oldpwd(char **cmd, t_env *envpwd, char *tmp_cwd);
 
@@ -127,6 +130,6 @@ int		ft_exit(t_env *env, char **cmds, int nbr_return);
 void	clear_and_exit(int n);
 
 //pwd.c
-int		ft_pwd(void);
+int		ft_pwd(t_env *env);
 
 #endif

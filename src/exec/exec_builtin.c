@@ -69,7 +69,7 @@ void	exec_builtin(t_pipex_b *pipex, t_commands *cmds,
 		exit_code->last_cmd = ft_echo(cmds->argv);
 	else if ((ft_strlen(cmds->argv[0]) == 3)
 		&& (ft_strncmp("pwd", cmds->argv[0], 3) == 0))
-		exit_code->last_cmd = ft_pwd();
+		exit_code->last_cmd = ft_pwd(env);
 	else if ((ft_strlen(cmds->argv[0]) == 6)
 		&& (ft_strncmp("export", cmds->argv[0], 6) == 0))
 		exit_code->last_cmd = ft_export(env, cmds);
@@ -95,4 +95,24 @@ int	is_builtin(char *cmd)
 	if ((ft_strlen(cmd) == 5) && (ft_strncmp("unset", cmd, 5) == 0))
 		return (1);
 	return (0);
+}
+
+void	exec_builtin_pipe_with_redir(t_pipex_b *pipex, t_commands *cmds,
+		t_env *env, int i)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	pipex->pid[i] = fork();
+	env->exitcode->last_cmd = 0;
+	if (pipex->pid[i] == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		cmd_process(pipex, env->global, i, cmds, env);
+	}
+	if (i > 0)
+	{
+		close(pipex->pipefd[i - 1][0]);
+		close(pipex->pipefd[i - 1][1]);
+	}
 }

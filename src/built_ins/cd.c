@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 15:01:42 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/19 16:44:41 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/25 16:53:11 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,26 @@ int	cd_dir(char **cmd, t_env *envpwd, char *pathname, char *tmp_cwd)
 {
 	char	*cwd;
 
-	pathname = get_pathname_dir(cmd[1]);
+	pathname = get_pathname_dir(cmd[1], envpwd);
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
-		return (1);
+	{
+		if (envpwd->pwd)
+			cwd = ft_strdup(envpwd->pwd);
+		else
+			return (1);
+	}
 	if (ft_strncmp(pathname, cwd, ft_strlen(pathname)) == 0)
 		return (1);
 	tmp_cwd = ft_malloc(sizeof(char) * (ft_strlen(cwd) + 1), 0);
 	ft_strlcpy(tmp_cwd, cwd, ft_strlen(cwd) + 1);
+	free(cwd);
 	if (chdir(pathname) != 0)
 	{
 		perror(cmd[1]);
 		return (1);
 	}
-	else
-		return (update_cwd(envpwd, tmp_cwd, pathname));
+	return (update_cwd(envpwd, tmp_cwd, pathname));
 }
 
 int	ft_cd(char **cmd, char **env, t_env *envpwd)
@@ -74,11 +79,12 @@ int	cd_main(int ac, char **av, t_env *envpwd)
 		else
 			envpwd->oldpwd = pathname;
 		cwd = getcwd(NULL, 0);
-		if (!cwd)
-			return (1);
-		envpwd->pwd = ft_malloc(ft_strlen(cwd) + 1, 0);
-		ft_strlcpy(envpwd->pwd, cwd, ft_strlen(cwd) + 1);
-		free(cwd);
+		if (cwd)
+		{
+			envpwd->pwd = ft_malloc(ft_strlen(cwd) + 1, 0);
+			ft_strlcpy(envpwd->pwd, cwd, ft_strlen(cwd) + 1);
+			free(cwd);
+		}
 	}
 	if (ac >= 1)
 		return (ft_cd(av, envpwd->global, envpwd));
