@@ -6,12 +6,14 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/21 16:59:33 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/25 12:08:28 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/lib_parse.h"
 #include "include/lib_exec.h"
+
+void	reset_oldpwd(t_env *env);
 
 void	manage_ctrlc(int sig)
 {
@@ -36,7 +38,7 @@ void	prompt_loop(t_env *env_s)
 		input = readline(prompt_sentence(env_s));
 		if (!input)
 		{
-			write(1, "^D\n", 3);
+			write(1, "exit\n", 5);
 			ft_exit(env_s, NULL, 240);
 		}
 		cmds = manage_input(input, env_s);
@@ -81,11 +83,11 @@ char	*prompt_sentence(t_env *env)
 	ft_strlcpy(prompt, env->pwd, ft_strlen(env->pwd) + 1);
 	clean_prompt(prompt);
 	result = ft_malloc(sizeof(char) * (ft_strlen(BCYAN)
-				+ ft_strlen(BWHITE) + ft_strlen(prompt) + 5), 0);
+				+ ft_strlen(RESET) + ft_strlen(prompt) + 5), 0);
 	ft_strlcpy(result, BCYAN, ft_strlen(BCYAN) + 1);
 	ft_strlcat(result, prompt, ft_strlen(BCYAN) + ft_strlen(prompt) + 2);
 	ft_strlcat(result, "> ", ft_strlen(BCYAN) + ft_strlen(prompt) + 4);
-	ft_strlcat(result, BWHITE, ft_strlen(BCYAN) + ft_strlen(BWHITE)
+	ft_strlcat(result, RESET, ft_strlen(BCYAN) + ft_strlen(RESET)
 		+ ft_strlen(prompt) + 5);
 	return (result);
 }
