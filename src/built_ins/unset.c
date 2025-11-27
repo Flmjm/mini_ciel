@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 13:37:37 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/17 01:19:41 by manu             ###   ########.fr       */
+/*   Updated: 2025/11/27 15:23:46 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib_exec.h"
 
 static char	**delete_var(t_env *env, char *var);
+int	is_var_name_diff(char *var, char *var_global);
 
 int	ft_unset(t_env *env, t_commands *cmds)
 {
@@ -44,7 +45,7 @@ static char	**delete_var(t_env *env, char *var)
 	env_copy = ft_malloc(sizeof(char *) * (length + 2), 0);
 	while (j != length)
 	{
-		if (ft_strncmp(env->global[j], var, ft_strlen_var(env->global[j])) != 0)
+		if (is_var_name_diff(var, env->global[j]))
 		{
 			env_copy[i] = ft_malloc(sizeof(char)
 					* (ft_strlen(env->global[j]) + 1), 0);
@@ -54,7 +55,7 @@ static char	**delete_var(t_env *env, char *var)
 		}
 		j++;
 	}
-	env_copy[i + 1] = NULL;
+	env_copy[i] = NULL;
 	return (env_copy);
 }
 
@@ -68,4 +69,13 @@ int	ft_strlen_var(const char *str)
 	while (str[i] && str[i] != '=')
 		i++;
 	return (i);
+}
+
+int	is_var_name_diff(char *var, char *var_global)
+{
+	if (ft_strncmp(var_global, var, ft_strlen_var(var_global)) != 0)
+		return (1);
+	else if (ft_strncmp(var, var_global, ft_strlen_var(var)) != 0)
+		return (1);
+	return (0);
 }

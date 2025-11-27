@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 20:55:43 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/19 16:47:05 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/27 15:43:23 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib_exec.h"
 
 static int	is_var_name_valid(char *var);
+void		write_var(t_env *env, int i, int j);
 
 static int	update_var(t_commands *cmds, int i, int j, t_env *env)
 {
@@ -41,7 +42,9 @@ static int	export_with_arg(t_commands *cmds, t_env *env, int i, int j)
 		while (env->global[j])
 		{
 			if (ft_strncmp(env->global[j], cmds->argv[i]
-					, ft_strlen_var(env->global[j])) == 0)
+					, ft_strlen_var(env->global[j])) == 0
+				&& ft_strncmp(env->global[j], cmds->argv[i]
+					, ft_strlen_var(cmds->argv[i])) == 0)
 				is_already_global = update_var(cmds, i, j, env);
 			j++;
 		}
@@ -57,16 +60,18 @@ static int	export_with_arg(t_commands *cmds, t_env *env, int i, int j)
 int	ft_export(t_env *env, t_commands *cmds)
 {
 	int	i;
-	int	j;
 
-	j = 0;
 	i = 0;
 	if (!cmds->argv[1])
 	{
 		while (env->global[i])
 		{
 			if (env->global[i][0])
-				ft_printf("declare -x %s\n", env->global[i]);
+			{
+				ft_printf("declare -x ");
+				write_var(env, i, 0);
+				write(1, "\n", 1);
+			}
 			i++;
 		}
 	}
@@ -74,7 +79,7 @@ int	ft_export(t_env *env, t_commands *cmds)
 	{
 		if (cmds->next)
 			return (0);
-		return (export_with_arg(cmds, env, i, j));
+		return (export_with_arg(cmds, env, i, 0));
 	}
 	return (0);
 }
@@ -93,4 +98,23 @@ static int	is_var_name_valid(char *var)
 		i++;
 	}
 	return (0);
+}
+
+void	write_var(t_env *env, int i, int j)
+{
+	int end;
+
+	end = 0;
+	while (env->global[i][j])
+	{
+		write(1, &env->global[i][j] ,1);
+		if (env->global[i][j] == '=' && j == ft_strlen_var(env->global[i]))
+		{
+			write(1, "\"" ,1);
+			end = 1;
+		}
+		if (env->global[i][j + 1] == '\0' && end == 1)
+		write(1, "\"" ,1);
+		j++;
+	}
 }

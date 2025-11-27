@@ -6,14 +6,12 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/25 12:08:28 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/27 11:12:31 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/lib_parse.h"
 #include "include/lib_exec.h"
-
-void	reset_oldpwd(t_env *env);
 
 void	manage_ctrlc(int sig)
 {
@@ -38,7 +36,7 @@ void	prompt_loop(t_env *env_s)
 		input = readline(prompt_sentence(env_s));
 		if (!input)
 		{
-			write(1, "exit\n", 5);
+			write(1, "\nexit\n", 5);
 			ft_exit(env_s, NULL, 240);
 		}
 		cmds = manage_input(input, env_s);
@@ -98,6 +96,7 @@ int	main(int argc, char **argv, char **environt)
 	t_env				*env_s;
 	struct sigaction	*ctrlc;
 
+	int i = 0;
 	env_s = ft_malloc(sizeof(t_env), 0);
 	env_s->global = ft_env(environt, env_s);
 	ctrlc = ft_malloc(sizeof(struct sigaction), 0);

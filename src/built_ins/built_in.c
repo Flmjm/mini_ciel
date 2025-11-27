@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 19:46:26 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/19 16:47:13 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/27 11:11:08 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ char	**ft_env(char **environ, t_env *env)
 	}
 	env_copy[i] = NULL;
 	up_shell_level(env_copy);
+	if (!env->pwd)
+		env->pwd = getcwd(NULL, 0);
 	return (env_copy);
 }
 

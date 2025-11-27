@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 08:51:44 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/19 16:37:38 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/27 12:10:04 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	recall_readline(t_input_info *infos)
 	if (temp_len > 0)
 		ft_strlcat(infos->input, temp_input, total_len);
 	ft_strlcat(infos->input, "\n", total_len);
+	free(temp_input);
 }
 
 int	next_simple_quote(t_input_info *infos, int i, int init)
