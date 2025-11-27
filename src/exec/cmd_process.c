@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 16:06:05 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/21 13:47:06 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/27 18:39:45 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ int	init_cmd(t_pipex_b *pipex, t_commands *cmds)
 	pipex->cmd = cmds->argv;
 	pipex->outfile_error = 1;
 	pipex->infile_error = 1;
-	if (is_relative_or_absolute_path(cmds->argv[0]) == 0)
+	if (ft_strlen(cmds->argv[0]) == 0)
+		pipex->pathname_cmd = NULL;
+	else if (is_relative_or_absolute_path(cmds->argv[0]) == 0)
 		get_pathname(pipex->cmd, pipex);
 	else
 		pipex->pathname_cmd = cmds->argv[0];

@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/27 11:12:31 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/27 18:40:04 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	prompt_loop(t_env *env_s)
 		input = readline(prompt_sentence(env_s));
 		if (!input)
 		{
-			write(1, "\nexit\n", 5);
+			write(1, "exit\n", 5);
 			ft_exit(env_s, NULL, 240);
 		}
 		cmds = manage_input(input, env_s);
