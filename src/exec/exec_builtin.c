@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 15:31:15 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/19 15:14:57 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/27 18:59:30 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	exec_builtin_pipe_with_redir(t_pipex_b *pipex, t_commands *cmds,
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		cmd_process(pipex, env->global, i, cmds, env);
+		cmd_process(pipex, i, cmds, env);
 	}
 	if (i > 0)
 	{

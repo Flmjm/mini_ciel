@@ -6,13 +6,13 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 16:06:05 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/27 18:39:45 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/27 18:57:42 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib_exec.h"
 
-void	cmd_process(t_pipex_b *pipex, char **env, int index,
+void	cmd_process(t_pipex_b *pipex, int index,
 		t_commands *cmds, t_env *t_env)
 {
 	if (pipex->outfile_error == -1 || pipex->infile_error == -1)
@@ -38,7 +38,7 @@ void	cmd_process(t_pipex_b *pipex, char **env, int index,
 	if (pipex->cmd_count && check_directory(pipex->pathname_cmd))
 		exit(126);
 	else if (pipex->cmd_count)
-		execve(pipex->pathname_cmd, pipex->cmd, env);
+		execve(pipex->pathname_cmd, pipex->cmd, t_env->global);
 	exit(127);
 }
 

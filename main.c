@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/27 18:40:04 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/27 19:03:19 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int	main(int argc, char **argv, char **environt)
 	t_env				*env_s;
 	struct sigaction	*ctrlc;
 
-	int i = 0;
 	env_s = ft_malloc(sizeof(t_env), 0);
 	env_s->global = ft_env(environt, env_s);
 	ctrlc = ft_malloc(sizeof(struct sigaction), 0);
