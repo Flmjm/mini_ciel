@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:34 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/27 18:59:44 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/01 15:39:41 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	exec_not_builtin(t_pipex_b *pipex, t_commands *cmds, t_env *env, int i)
 		signal(SIGQUIT, SIG_DFL);
 	}
 	if (pipex->pid[i] == 0 && cmds->argv[0] && pipex->pathname_cmd)
-		cmd_process(pipex, env->global, i, cmds, env);
+		cmd_process(pipex, i, cmds, env);
 	else if (pipex->pid[i] == 0 && cmds->argv[0] && !pipex->pathname_cmd)
 	{
 		ft_printf("%s : Command not found\n", pipex->cmd[0]);
