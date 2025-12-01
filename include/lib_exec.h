@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_exec.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:45 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/27 18:58:07 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/02 00:00:15 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,15 +117,16 @@ int		ft_export(t_env *env, t_commands *cmds);
 
 //cd_utils.c
 char	*get_pathname_dir(char *cmd, t_env *env);
-int		cd_home(t_env *envpwd, char *pathname, char **env);
+int		cd_home(t_env *envpwd, char *pathname, char **env, int freeable);
 int		cd_oldpwd(char **cmd, t_env *envpwd, char *tmp_cwd);
+int		perror_and_return(char **cmd);
 
 // cd.c 
 int		cd_dir(char **cmd, t_env *envpwd, char *pathname, char *tmp_cwd);
 int		ft_cd(char **cmd, char **env, t_env *envpwd);
 int		update_cwd(t_env *envpwd, char *s1_oldpwd, char *s2_pwd);
 int		cd_main(int ac, char **av, t_env *envpwd);
-void update_env_pwd(t_env *env, char *new_pwd, char *new_oldpwd);
+void	update_env_pwd(t_env *env, char *new_pwd, char *new_oldpwd);
 
 //echo.c
 int		ft_echo(char **cmd);
