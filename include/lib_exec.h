@@ -120,11 +120,12 @@ char	*get_pathname_dir(char *cmd, t_env *env);
 int		cd_home(t_env *envpwd, char *pathname, char **env);
 int		cd_oldpwd(char **cmd, t_env *envpwd, char *tmp_cwd);
 
-// cd.c  --> 6 fonctions + factoriser
+// cd.c 
 int		cd_dir(char **cmd, t_env *envpwd, char *pathname, char *tmp_cwd);
 int		ft_cd(char **cmd, char **env, t_env *envpwd);
 int		update_cwd(t_env *envpwd, char *s1_oldpwd, char *s2_pwd);
 int		cd_main(int ac, char **av, t_env *envpwd);
+void update_env_pwd(t_env *env, char *new_pwd, char *new_oldpwd);
 
 //echo.c
 int		ft_echo(char **cmd);

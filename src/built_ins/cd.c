@@ -63,6 +63,7 @@ int	update_cwd(t_env *envpwd, char *s1_oldpwd, char *s2_pwd)
 {
 	envpwd->oldpwd = s1_oldpwd;
 	envpwd->pwd = s2_pwd;
+	update_env_pwd(envpwd, s2_pwd, s1_oldpwd);
 	return (chdir(s2_pwd));
 }
 
@@ -89,4 +90,19 @@ int	cd_main(int ac, char **av, t_env *envpwd)
 	if (ac >= 1)
 		return (ft_cd(av, envpwd->global, envpwd));
 	return (0);
+}
+
+void update_env_pwd(t_env *env, char *new_pwd, char *new_oldpwd)
+{
+	int	i;
+
+	i = 0;
+	while (env->global[i])
+	{
+		if (ft_strncmp("OLDPWD=", env->global[i], 7) == 0)
+			env->global[i] = ft_strjoin("OLDPWD=", new_oldpwd);
+		else if (ft_strncmp("PWD=", env->global[i], 4) == 0)
+			env->global[i] = ft_strjoin("PWD=", new_pwd);
+		i++;
+	}
 }

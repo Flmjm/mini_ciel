@@ -17,11 +17,11 @@ int	exec_main(t_commands *cmds, t_env *env, t_exitcode *exit_code)
 {
 	t_pipex_b	*pipex;
 
-	if (!cmds->argv[0])
-	{
-		exit_code->last_cmd = 0;
-		return (0);
-	}
+	// if (!cmds->argv[0] && !cmds->redirect)
+	// {
+	// 	exit_code->last_cmd = 0;
+	// 	return (0);
+	// }
 	pipex = ft_malloc(sizeof(t_pipex_b), 0);
 	if (!pipex)
 		ft_printf("Malloc pipex\n");
@@ -52,9 +52,9 @@ void	exec_not_builtin(t_pipex_b *pipex, t_commands *cmds, t_env *env, int i)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 	}
-	if (pipex->pid[i] == 0 && pipex->pathname_cmd)
-		cmd_process(pipex, i, cmds, env);
-	else if (pipex->pid[i] == 0 && !pipex->pathname_cmd)
+	if (pipex->pid[i] == 0 && cmds->argv[0] && pipex->pathname_cmd)
+		cmd_process(pipex, env->global, i, cmds, env);
+	else if (pipex->pid[i] == 0 && cmds->argv[0] && !pipex->pathname_cmd)
 	{
 		ft_printf("%s : Command not found\n", pipex->cmd[0]);
 		ft_exit(env, NULL, 127);
@@ -76,7 +76,11 @@ void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env)
 	{
 		pipex->cmd_index++;
 		if (init_cmd(pipex, cmds))
+		{
 			env->exitcode->last_cmd = 1;
+			i++;
+			continue ;
+		}
 		if (is_builtin(cmds->argv[0]) && pipex->cmd_count == 1)
 			exec_builtin_with_redir(pipex, cmds, env, i);
 		else if (is_builtin(cmds->argv[0]))

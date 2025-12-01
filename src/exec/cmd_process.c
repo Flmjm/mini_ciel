@@ -44,15 +44,16 @@ void	cmd_process(t_pipex_b *pipex, int index,
 
 int	init_cmd(t_pipex_b *pipex, t_commands *cmds)
 {
-	pipex->cmd = cmds->argv;
 	pipex->outfile_error = 1;
 	pipex->infile_error = 1;
-	if (ft_strlen(cmds->argv[0]) == 0)
-		pipex->pathname_cmd = NULL;
-	else if (is_relative_or_absolute_path(cmds->argv[0]) == 0)
-		get_pathname(pipex->cmd, pipex);
-	else
-		pipex->pathname_cmd = cmds->argv[0];
+	if (cmds->argv[0])
+	{
+		pipex->cmd = cmds->argv;
+		if (is_relative_or_absolute_path(cmds->argv[0]) == 0)
+			get_pathname(pipex->cmd, pipex);
+		else
+			pipex->pathname_cmd = cmds->argv[0];
+	}
 	if (cmds->redirect)
 		return (ft_init_files(cmds, pipex));
 	return (0);

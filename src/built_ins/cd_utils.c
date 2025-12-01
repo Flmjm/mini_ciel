@@ -29,6 +29,7 @@ char	*get_pathname_dir(char *cmd, t_env *env)
 	}
 	temp = ft_strjoin("/", cmd);
 	path = ft_strjoin(cwd, temp);
+	free(cwd);
 	return (path);
 }
 
