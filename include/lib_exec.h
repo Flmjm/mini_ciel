@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_exec.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:45 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/19 14:14:14 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/11/27 18:58:07 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,14 @@ typedef struct s_pipex_b
 }			t_pipex_b;
 
 //cmd_process.c
-void	cmd_process(t_pipex_b *pipex, char **env, int index,
+void	cmd_process(t_pipex_b *pipex, int index,
 			t_commands *cmds, t_env *t_env);
 int		init_cmd(t_pipex_b *pipex, t_commands *cmds);
 int		is_relative_or_absolute_path(char *str);
 int		check_directory(char *pathname);
+
+//export_utils.c
+void	write_var(t_env *env, int i, int j);
 
 //exec_builtin.c
 void	exec_builtin_with_redir(t_pipex_b *pipex, t_commands *cmds,
@@ -73,7 +76,7 @@ void	create_pipe(t_pipex_b *pipex);
 void	ft_waitpid(t_pipex_b *pipex, t_env *env, t_exitcode *exit_code);
 void	get_exit_code(int last_status, t_exitcode *exit_code);
 
-//free_errors.c							
+//free_errors.c
 void	free_tab(char **tab);
 void	free_struct(t_pipex_b *pipex);
 void	free_pipe(t_pipex_b *pipex);
@@ -90,7 +93,7 @@ int		ft_init_infiles(t_redirect *current, t_pipex_b *pipex);
 int		ft_init_outfiles(t_redirect *current, t_pipex_b *pipex);
 int		error_infile(char *filename, t_pipex_b *pipex);
 
-//utils.c								 
+//utils.c
 void	init_struct_exec(t_pipex_b *pipex, t_commands *cmds, char **env);
 void	init_struct_exec_malloc(t_pipex_b *pipex, t_commands *cmds, char **env);
 int		ft_lstlen(t_commands *cmds);
@@ -107,6 +110,7 @@ char	**add_var(char *new_var, t_env *env);
 // unset.c
 int		ft_unset(t_env *env, t_commands *cmds);
 int		ft_strlen_var(const char *str);
+int		is_var_name_diff(char *var, char *var_global);
 
 // export.c
 int		ft_export(t_env *env, t_commands *cmds);

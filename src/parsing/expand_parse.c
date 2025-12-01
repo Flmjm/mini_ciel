@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 21:45:37 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/21 16:46:39 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/28 15:16:30 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,14 @@ int	expand_in_quote(t_input_info *infos, int i, t_env *env)
 	{
 		if (infos->input[i] == '\'' && infos->input[i + 1] && infos->input[i
 				+ 2] == '\'')
-			i += 3;
+			i += 2;
 		else if (infos->input[i] == '\\' && infos->input[i + 1] == '$')
 			erase_in_str(infos, i);
 		else if (infos->input[i] == '$' && infos->input[i + 1]
 			&& (ft_isalnum(infos->input[i + 1]) || infos->input[i + 1] == '_'
 				|| infos->input[i + 1] == '?'))
 			expand_var(infos, i, 1, env);
-		else
-			i++;
+		i++;
 	}
 	return (i);
 }
@@ -97,8 +96,6 @@ void	expand_var(t_input_info *infos, int i, int quote, t_env *env)
 		return ;
 	var_len = extract_var_name(infos->input, i, quote, env_input);
 	temp_input = get_env_by_name(env_input, env);
-	if (!temp_input)
-		return ;
 	resize_and_copy(infos, i + var_len, var_len, temp_input);
 }
 

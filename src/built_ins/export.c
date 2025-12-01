@@ -6,14 +6,13 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 20:55:43 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/27 15:43:23 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/27 18:55:47 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib_exec.h"
 
 static int	is_var_name_valid(char *var);
-void		write_var(t_env *env, int i, int j);
 
 static int	update_var(t_commands *cmds, int i, int j, t_env *env)
 {
@@ -98,23 +97,4 @@ static int	is_var_name_valid(char *var)
 		i++;
 	}
 	return (0);
-}
-
-void	write_var(t_env *env, int i, int j)
-{
-	int end;
-
-	end = 0;
-	while (env->global[i][j])
-	{
-		write(1, &env->global[i][j] ,1);
-		if (env->global[i][j] == '=' && j == ft_strlen_var(env->global[i]))
-		{
-			write(1, "\"" ,1);
-			end = 1;
-		}
-		if (env->global[i][j + 1] == '\0' && end == 1)
-		write(1, "\"" ,1);
-		j++;
-	}
 }

@@ -6,14 +6,13 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 13:37:37 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/27 15:23:46 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/11/27 18:53:55 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib_exec.h"
 
 static char	**delete_var(t_env *env, char *var);
-int	is_var_name_diff(char *var, char *var_global);
 
 int	ft_unset(t_env *env, t_commands *cmds)
 {
