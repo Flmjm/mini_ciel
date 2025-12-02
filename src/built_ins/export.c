@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 20:55:43 by mleschev          #+#    #+#             */
-/*   Updated: 2025/12/01 17:46:37 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/02 10:53:49 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	add_var_to_env(t_commands *cmds, t_env *env, int i)
 	char	*buffer;
 
 	buffer = ft_malloc(sizeof(char) * (ft_strlen(cmds->argv[i]) + 1), 0);
-	ft_strlcpy(buffer, cmds->argv[i], ft_strlen(cmds->argv[i]));
+	ft_strlcpy(buffer, cmds->argv[i], ft_strlen(cmds->argv[i]) + 1);
 	env->global = add_var(buffer, env);
 }
 
