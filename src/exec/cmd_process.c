@@ -42,7 +42,7 @@ void	cmd_process(t_pipex_b *pipex, int index,
 	exit(127);
 }
 
-int	init_cmd(t_pipex_b *pipex, t_commands *cmds)
+int	init_cmd(t_pipex_b *pipex, t_commands *cmds, t_env *env)
 {
 	pipex->outfile_error = 1;
 	pipex->infile_error = 1;
@@ -55,7 +55,7 @@ int	init_cmd(t_pipex_b *pipex, t_commands *cmds)
 			pipex->pathname_cmd = cmds->argv[0];
 	}
 	if (cmds->redirect)
-		return (ft_init_files(cmds, pipex));
+		return (ft_init_files(cmds, pipex, env));
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 21:45:37 by mleschev          #+#    #+#             */
-/*   Updated: 2025/12/02 11:03:42 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/02 11:22:07 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
