@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 01:48:37 by manu              #+#    #+#             */
-/*   Updated: 2025/11/21 16:45:45 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/02 11:02:29 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,12 @@ char	*get_var_value(int k, int j, int i, t_env *env)
 	char	*tmp;
 
 	tmp = ft_malloc(sizeof(char) * (ft_strlen(env->global[i])
-				- ft_strlen(env->global[i])), 0);
-	j = ft_strlen_var(env->global[i]) + 1;
+				+ 1), 0);
+	if (env->global[i])
+		j = ft_strlen_var(env->global[i]) + 1;
+	else
+		return (NULL);
+
 	while (env->global[i][j])
 	{
 		tmp[k] = env->global[i][j];

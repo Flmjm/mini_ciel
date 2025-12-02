@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 18:21:57 by mleschev          #+#    #+#             */
-/*   Updated: 2025/12/01 23:50:31 by manu             ###   ########.fr       */
+/*   Updated: 2025/12/02 11:05:29 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib_parse.h"
 
-// void print_tokens(t_token *tokens) {
-//     printf("\n=== TOKENS ===\n");
-//     t_token *current = tokens;
-//     int index = 0;
+void print_tokens(t_token *tokens) {
+    printf("\n=== TOKENS ===\n");
+    t_token *current = tokens;
+    int index = 0;
 
-//     while (current) {
-//         printf("[%d] %d: |%s|\n",
-//                index,
-//                current->type,
-//                current->value);
-//         current = current->next;
-// 		index++;
-//     }
-//     printf("\n");
-// }
-// 
+    while (current) {
+        printf("[%d] %d: |%s|\n",
+               index,
+               current->type,
+               current->value);
+        current = current->next;
+		index++;
+    }
+    printf("\n");
+}
+
 t_commands	*manage_input(char *str, t_env *env)
 {
 	t_input_info	*infos;
@@ -40,7 +40,6 @@ t_commands	*manage_input(char *str, t_env *env)
 	add_history(infos->input);
 	replace_var_input(infos, env);
 	token = ft_token(infos->input, 0);
-	// print_tokens(token);
 	if (!token)
 		return (NULL);
 	cmds = ft_init_cmd(token);
