@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_exec.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:45 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/12/02 00:00:15 by manu             ###   ########.fr       */
+/*   Updated: 2025/12/02 11:21:59 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_pipex_b
 //cmd_process.c
 void	cmd_process(t_pipex_b *pipex, int index,
 			t_commands *cmds, t_env *t_env);
-int		init_cmd(t_pipex_b *pipex, t_commands *cmds);
+int		init_cmd(t_pipex_b *pipex, t_commands *cmds, t_env *env);
 int		is_relative_or_absolute_path(char *str);
 int		check_directory(char *pathname);
 
@@ -85,11 +85,13 @@ void	ft_free(void *ptr);
 //utils_files.c
 void	close_fd(t_pipex_b *pipex);
 void	ft_dup2_and_close(int fd, int n);
-int		get_heredoc(char *delimiter);
+int		get_heredoc(char *delimiter, t_env *env);
+char	*expand_line(char *line, t_env *env);
+
 
 //utils_files2.c
-int		ft_init_files(t_commands *cmds, t_pipex_b *pipex);
-int		ft_init_infiles(t_redirect *current, t_pipex_b *pipex);
+int		ft_init_files(t_commands *cmds, t_pipex_b *pipex, t_env *env);
+int		ft_init_infiles(t_redirect *current, t_pipex_b *pipex, t_env *env);
 int		ft_init_outfiles(t_redirect *current, t_pipex_b *pipex);
 int		error_infile(char *filename, t_pipex_b *pipex);
 

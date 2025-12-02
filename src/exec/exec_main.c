@@ -70,7 +70,7 @@ void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env)
 	while (i < pipex->cmd_count)
 	{
 		pipex->cmd_index++;
-		if (init_cmd(pipex, cmds))
+		if (init_cmd(pipex, cmds, env))
 		{
 			env->exitcode->last_cmd = 1;
 			i++;

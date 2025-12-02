@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 16:41:30 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/17 03:04:51 by manu             ###   ########.fr       */
+/*   Updated: 2025/12/02 11:27:14 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	ft_get_op_length(char *input, int i, t_token_type *type)
 {
 	if (input[i] == '|')
 	{
-		if (input[i + 1] == '|' || input[i - 1] == '|')
+		if (i != 0 && (input[i + 1] == '|' || input[i - 1] == '|'))
 			return (-1);
 		*type = TOKEN_PIPE;
 		return (1);

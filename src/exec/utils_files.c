@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_files.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
+/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 15:51:09 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/19 16:50:50 by jmalaval         ###   ########.fr       */
+/*   Updated: 2025/12/02 11:28:54 by juliette-ma      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,11 @@ void	ft_dup2_and_close(int fd, int n)
 		close(fd);
 }
 
-int	get_heredoc(char *delimiter)
+int	get_heredoc(char *delimiter, t_env *env)
 {
 	int		pipefd[2];
 	char	*line;
+	char	*expanded_line;
 
 	if (pipe(pipefd) == -1)
 		return (-1);
@@ -55,10 +56,23 @@ int	get_heredoc(char *delimiter)
 			free(line);
 			break ;
 		}
-		write(pipefd[1], line, ft_strlen(line));
+		expanded_line = expand_line(line, env);
+		write(pipefd[1], expanded_line, ft_strlen(expanded_line));
 		write(pipefd[1], "\n", 1);
-		free(line);
 	}
 	close(pipefd[1]);
 	return (pipefd[0]);
+}
+
+char	*expand_line(char *line, t_env *env)
+{
+	t_input_info	temp_info;
+
+	if (!line)
+		return (NULL);
+	temp_info.input = line;
+	temp_info.argv = NULL;
+	temp_info.nbr_args = 0;
+	replace_var_input(&temp_info, env);
+	return (temp_info.input);
 }

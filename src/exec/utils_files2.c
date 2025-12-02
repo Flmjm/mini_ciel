@@ -12,7 +12,7 @@
 
 #include "../../include/lib_exec.h"
 
-int	ft_init_files(t_commands *cmds, t_pipex_b *pipex)
+int	ft_init_files(t_commands *cmds, t_pipex_b *pipex, t_env *env)
 {
 	t_redirect	*current;
 
@@ -21,7 +21,7 @@ int	ft_init_files(t_commands *cmds, t_pipex_b *pipex)
 	{
 		if (current->type == FILE_HEREDOC || current->type == FILE_REDIRECT_IN)
 		{
-			if (ft_init_infiles(current, pipex))
+			if (ft_init_infiles(current, pipex, env))
 				return (1);
 		}
 		else if (current->type == FILE_REDIRECT_APPEND
@@ -35,7 +35,7 @@ int	ft_init_files(t_commands *cmds, t_pipex_b *pipex)
 	return (0);
 }
 
-int	ft_init_infiles(t_redirect *current, t_pipex_b *pipex)
+int	ft_init_infiles(t_redirect *current, t_pipex_b *pipex, t_env *env)
 {
 	int			fd;
 	t_redirect	*next_in;
@@ -45,7 +45,7 @@ int	ft_init_infiles(t_redirect *current, t_pipex_b *pipex)
 		&& next_in->type != FILE_REDIRECT_IN)
 		next_in = next_in->next;
 	if (current->type == FILE_HEREDOC)
-		fd = get_heredoc(current->word_eof);
+		fd = get_heredoc(current->word_eof, env);
 	else if (current->type == FILE_REDIRECT_IN)
 	{
 		if (access(current->filename, F_OK) != 0)
