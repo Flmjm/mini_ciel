@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 21:45:37 by mleschev          #+#    #+#             */
-/*   Updated: 2025/12/02 11:22:07 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/12/02 15:54:56 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,16 @@ void	replace_var_input(t_input_info *infos, t_env *env)
 		else if (infos->input[i] == '$' && infos->input[i + 1]
 			&& (ft_isalnum(infos->input[i + 1]) || infos->input[i + 1] == '_'
 				|| infos->input[i + 1] == '?'))
-			expand_var(infos, i, 0, env);
+			{
+				expand_var(infos, i, 0, env);
+				i = 0;
+			}
+		else if (infos->input[i] == '$' && infos->input[i + 1])
+			i++;
 		else if (infos->input[i])
 			i++;
 		if (i >= ft_strlen(infos->input))
 			break ;
-		if (infos->input[i] == '$' && infos->input[i + 1])
-			i++;
 	}
 }
 

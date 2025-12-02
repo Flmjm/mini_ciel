@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 00:16:16 by root              #+#    #+#             */
-/*   Updated: 2025/11/27 19:02:33 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/02 15:49:55 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define COLORS_H
 
 // Reset
-# define RESET       "\001\033[0m\002"
+# define RESET       "\033[0m"
 
 // Regular Colors
 # define BLACK       "\033[30m"
@@ -24,7 +24,7 @@
 # define BLUE        "\033[34m"
 # define PURPLE      "\033[35m"
 # define CYAN        "\033[36m"
-# define WHITE       "\001\033[37m\002"
+# define WHITE       "\033[37m"
 
 // Bold Colors
 # define BBLACK      "\033[1;30m"
@@ -33,8 +33,8 @@
 # define BYELLOW     "\033[1;33m"
 # define BBLUE       "\033[1;34m"
 # define BPURPLE     "\033[1;35m"
-# define BCYAN       "\001\033[1;36m\002"
-# define BWHITE      "\001\033[1;37m\002"
+# define BCYAN       "\033[1;36m"
+# define BWHITE      "\033[1;37m"
 
 // Underline Colors
 # define UBLACK      "\033[4;30m"
