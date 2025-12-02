@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 18:21:57 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/28 15:18:18 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/01 23:50:31 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib_parse.h"
 
-void print_tokens(t_token *tokens) {
-    printf("\n=== TOKENS ===\n");
-    t_token *current = tokens;
-    int index = 0;
+// void print_tokens(t_token *tokens) {
+//     printf("\n=== TOKENS ===\n");
+//     t_token *current = tokens;
+//     int index = 0;
 
-    while (current) {
-        printf("[%d] %d: |%s|\n",
-               index,
-               current->type,
-               current->value);
-        current = current->next;
-		index++;
-    }
-    printf("\n");
-}
-
+//     while (current) {
+//         printf("[%d] %d: |%s|\n",
+//                index,
+//                current->type,
+//                current->value);
+//         current = current->next;
+// 		index++;
+//     }
+//     printf("\n");
+// }
+// 
 t_commands	*manage_input(char *str, t_env *env)
 {
 	t_input_info	*infos;

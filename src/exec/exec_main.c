@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:34 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/12/01 17:22:49 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/02 10:47:01 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,6 @@ int	exec_main(t_commands *cmds, t_env *env, t_exitcode *exit_code)
 {
 	t_pipex_b	*pipex;
 
-	// if (!cmds->argv[0] && !cmds->redirect)
-	// {
-	// 	exit_code->last_cmd = 0;
-	// 	return (0);
-	// }
 	pipex = ft_malloc(sizeof(t_pipex_b), 0);
 	if (!pipex)
 		ft_printf("Malloc pipex\n");

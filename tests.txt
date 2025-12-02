@@ -1,0 +1,541 @@
+# ============================================================================
+# LISTE DE TESTS MANUELS POUR MINISHELL - 42
+# ============================================================================
+# 
+# Instructions :
+# 1. Lance ton minishell : ./minishell
+# 2. Copie-colle chaque bloc de commandes
+# 3. Compare le résultat avec bash (lance bash dans un autre terminal)
+# 4. Coche [✓] si le comportement est identique à bash
+#
+# ============================================================================
+
+# ============================================================================
+# SECTION 1 : COMMANDES DE BASE
+# ============================================================================
+
+[ ] echo hello world
+    → Doit afficher : hello world
+
+[ ] echo -n hello world
+    → Doit afficher : hello world (sans newline à la fin)
+
+[ ] echo -n -n -n test
+    → Doit afficher : test (sans newline)
+
+[ ] echo -nnnnn hello
+    → Doit afficher : hello (sans newline)
+
+[ ] echo
+    → Doit afficher une ligne vide
+
+[ ] echo "   hello   "
+    → Doit afficher :    hello    (avec espaces)
+
+[ ] echo    multiple    spaces
+    → Doit afficher : multiple spaces
+
+[ ] pwd
+    → Doit afficher le chemin actuel
+
+
+# ============================================================================
+# SECTION 2 : VARIABLES D'ENVIRONNEMENT
+# ============================================================================
+
+[ ] export TEST=hello
+    → Pas de sortie
+
+[ ] echo $TEST
+    → Doit afficher : hello
+
+=====================================INVALID READ 
+
+[ ] export TEST=
+    → Variable vide
+
+[ ] echo $TEST
+    → Doit afficher une ligne vide
+
+[ ] export TEST="hello world"
+    → Variable avec espaces
+
+[ ] echo $TEST
+    → Doit afficher : hello world
+
+[ ] echo $UNDEFINED_VAR
+    → Doit afficher une ligne vide (variable non définie)
+
+[ ] export A=1 B=2 C=3
+    → Plusieurs exports
+
+[ ] echo $A $B $C
+    → Doit afficher : 1 2 3
+
+[ ] export
+    → Doit afficher toutes les variables exportées
+
+[ ] unset TEST
+    → Supprime la variable
+
+[ ] echo $TEST
+    → Doit afficher une ligne vide
+
+[ ] unset NONEXISTENT
+    → Pas d'erreur
+
+# ============================================================================
+# SECTION 3 : EXIT STATUS ($?)
+# ============================================================================
+
+[ ] ls
+    → Commande qui réussit
+
+[ ] echo $?
+    → Doit afficher : 0
+
+[ ] ls /nonexistent 2>/dev/null
+    → Commande qui échoue
+
+[ ] echo $?
+    → Doit afficher un code non-zéro (souvent 2)
+
+[ ] echo $?
+    → Doit afficher : 0 (le echo précédent a réussi)
+
+[ ] false
+    → Commande qui retourne 1
+
+[ ] echo $?
+    → Doit afficher : 1
+
+[ ] true
+    → Commande qui retourne 0
+
+[ ] echo $?
+    → Doit afficher : 0
+
+# ============================================================================
+# SECTION 4 : GUILLEMETS (QUOTES)
+# ============================================================================
+
+[ ] echo 'hello world'
+    → Doit afficher : hello world
+
+[ ] echo "hello world"
+    → Doit afficher : hello world
+
+[ ] export TEST=value
+
+[ ] echo '$TEST'
+    → Doit afficher : $TEST (pas d'expansion dans quotes simples)
+
+[ ] echo "$TEST"
+    → Doit afficher : value (expansion dans quotes doubles)
+
+[ ] echo ''
+    → Doit afficher une ligne vide
+
+[ ] echo ""
+    → Doit afficher une ligne vide
+
+[ ] echo "hello 'world'"
+    → Doit afficher : hello 'world'
+
+[ ] echo 'hello "world"'
+    → Doit afficher : hello "world"
+
+[ ] echo "it's"
+    → Doit afficher : it's
+
+# ============================================================================
+# SECTION 5 : REDIRECTIONS
+# ============================================================================
+
+[ ] echo hello > test_file
+    → Crée un fichier
+
+[ ] cat test_file
+    → Doit afficher : hello
+
+[ ] echo world >> test_file
+    → Ajoute au fichier
+
+[ ] cat test_file
+    → Doit afficher :
+    hello
+    world
+
+[ ] cat < test_file
+    → Doit afficher le contenu du fichier
+
+[ ] cat < nonexistent_file
+    → Doit afficher une erreur
+
+[ ] echo test > file1 > file2
+    → Redirections multiples, seul file2 contient "test"
+
+[ ] cat file2
+    → Doit afficher : test
+
+[ ] > empty_file
+    → Crée un fichier vide
+
+[ ] ls -l empty_file
+    → Fichier existe et est vide (taille 0)
+
+[ ] rm test_file file1 file2 empty_file
+    → Nettoie les fichiers
+
+# ============================================================================
+# SECTION 6 : PIPES
+# ============================================================================
+
+[ ] echo hello | cat
+    → Doit afficher : hello
+
+[ ] echo hello | cat | cat | cat
+    → Doit afficher : hello (pipes multiples)
+
+[ ] ls | grep mini
+    → Doit filtrer les résultats
+
+[ ] echo hello | cat > pipe_file
+    → Pipe + redirection
+
+[ ] cat pipe_file
+    → Doit afficher : hello
+
+[ ] rm pipe_file
+    → Nettoie
+
+# ============================================================================
+# SECTION 7 : HEREDOC (<<)
+# ============================================================================
+
+[ ] cat << EOF
+hello
+world
+EOF
+    → Doit afficher :
+    hello
+    world
+
+[ ] export VAR=test
+
+[ ] cat << EOF
+value: $VAR
+EOF
+    → Doit afficher :
+    value: test
+    (expansion de variable)
+
+======================== ERREUR
+
+[ ] cat << 'EOF'
+value: $VAR
+EOF
+    → Doit afficher :
+    value: $VAR
+    (PAS d'expansion avec limiter quoté)
+
+[ ] cat << EOF
+
+EOF
+    → Heredoc vide (affiche juste une ligne vide)
+
+# ============================================================================
+# SECTION 8 : BUILT-IN cd
+# ============================================================================
+
+[ ] pwd
+    → Note le chemin actuel
+
+[ ] cd /tmp
+    → Change de dossier
+
+[ ] pwd
+    → Doit afficher : /tmp
+
+[ ] cd ..
+    → Remonte d'un niveau
+
+[ ] pwd
+    → Vérifie le chemin
+
+[ ] cd
+    → Sans argument, doit aller à $HOME
+
+[ ] pwd
+    → Doit afficher ton HOME
+
+[ ] cd /nonexistent
+    → Doit afficher une erreur
+
+[ ] echo $?
+    → Doit afficher un code d'erreur (souvent 1)
+
+[ ] cd -
+    → Retourne au dossier précédent
+
+[ ] pwd
+    → Vérifie le changement
+
+# ============================================================================
+# SECTION 9 : BUILT-IN env
+# ============================================================================
+
+[ ] env
+    → Affiche toutes les variables d'environnement
+
+[ ] env | grep PATH
+    → Doit trouver PATH
+
+[ ] env | grep USER
+    → Doit trouver USER
+
+[ ] export MYVAR=test123
+
+[ ] env | grep MYVAR
+    → Doit afficher : MYVAR=test123
+
+# ============================================================================
+# SECTION 10 : BUILT-IN exit
+# ============================================================================
+
+⚠️ ATTENTION : Ces tests vont fermer ton minishell !
+
+[ ] exit
+    → Doit quitter le minishell proprement
+
+[ ] ./minishell
+    exit 42
+    → Relance bash et fais : echo $?
+    → Doit afficher : 42
+
+[ ] ./minishell
+    exit abc
+    → Doit afficher une erreur (argument non numérique)
+
+[ ] ./minishell
+    exit 1 2 3
+    → Doit afficher une erreur (trop d'arguments)
+
+# ============================================================================
+# SECTION 11 : CAS COMPLEXES ET EDGE CASES
+# ============================================================================
+
+[ ] export VAR=hello
+
+[ ] echo $VARworld
+    → Doit afficher une ligne vide ($VARworld n'existe pas)
+
+[ ] echo ${VAR}world
+    → Si tu gères les accolades, doit afficher : helloworld
+
+[ ] echo $VAR$VAR
+    → Doit afficher : hellohello
+
+[ ] export EMPTY=
+
+[ ] echo prefix${EMPTY}suffix
+    → Doit afficher : prefixsuffix
+
+[ ] echo "$USER is here"
+    → Doit afficher ton username
+
+[ ] echo '$USER is here'
+    → Doit afficher : $USER is here
+
+[ ] echo    multiple    spaces    here
+    → Bash réduit les espaces multiples : multiple spaces here
+
+[ ] echo "   multiple   spaces   "
+    → Dans les quotes, espaces préservés
+
+[ ] echo hello > file && echo world >> file && cat file
+    → Doit afficher :
+    hello
+    world
+
+[ ] export A=1 && export B=2 && echo $A $B
+    → Doit afficher : 1 2
+
+[ ] echo test | grep test | cat
+    → Pipes multiples, doit afficher : test
+
+[ ] ls | cat | cat | cat | cat
+    → Doit fonctionner (beaucoup de pipes)
+
+# ============================================================================
+# SECTION 12 : GESTION D'ERREURS
+# ============================================================================
+
+[ ] commandeInexistante123
+    → Doit afficher : command not found (ou équivalent)
+
+[ ] echo $?
+    → Doit afficher : 127
+
+[ ] cat fichier_inexistant
+    → Doit afficher : No such file or directory
+
+[ ] echo $?
+    → Doit afficher : 1
+
+[ ] cd fichier_normal (pas un dossier)
+    → Doit afficher une erreur
+
+[ ] |
+    → Syntaxe invalide, doit afficher une erreur
+
+[ ] echo test |
+    → Syntaxe invalide, doit afficher une erreur
+
+[ ] echo test >
+    → Syntaxe invalide, doit afficher une erreur
+
+[ ] echo "test non fermé
+    → Quote non fermée, doit afficher une erreur ou attendre la suite
+
+# ============================================================================
+# SECTION 13 : SIGNAUX (Tests interactifs)
+# ============================================================================
+
+⚠️ Tests à faire en mode interactif :
+
+[ ] Lance ./minishell
+    Appuie sur Ctrl-C
+    → Doit afficher un nouveau prompt (ne doit PAS quitter)
+
+[ ] Lance ./minishell
+    Appuie sur Ctrl-D
+    → Doit quitter proprement (afficher "exit")
+
+[ ] Lance ./minishell
+    Appuie sur Ctrl-\
+    → Ne doit rien faire (ignorer SIGQUIT)
+
+[ ] Lance ./minishell
+    cat (sans argument)
+    Appuie sur Ctrl-C
+    → Doit tuer cat et revenir au prompt
+
+[ ] Lance ./minishell
+    cat (sans argument)
+    Appuie sur Ctrl-D
+    → Doit terminer cat proprement
+
+# ============================================================================
+# SECTION 14 : TESTS AVEC COMMANDES RÉELLES
+# ============================================================================
+
+[ ] ls -la
+    → Doit fonctionner normalement
+
+[ ] ls -la | grep mini
+    → Pipe avec options
+
+[ ] cat Makefile
+    → Doit afficher le Makefile
+
+[ ] cat Makefile | grep CC
+    → Pipe avec cat
+
+[ ] grep minishell Makefile
+    → Doit chercher dans le fichier
+
+[ ] wc -l Makefile
+    → Compte les lignes
+
+[ ] ls | wc -l
+    → Compte le nombre de fichiers
+
+[ ] echo "test" | wc -c
+    → Compte les caractères
+
+# ============================================================================
+# SECTION 15 : BUILT-INS DANS PIPES (⚠️ CAS IMPORTANT)
+# ============================================================================
+
+⚠️ Ces tests sont CRITIQUES pour la correction !
+
+[ ] pwd
+    → Note le dossier actuel
+
+[ ] echo test | cd /tmp
+    → cd dans un pipe
+
+[ ] pwd
+    → Doit afficher le MÊME dossier qu'avant !
+    → Le cd dans le pipe ne doit PAS changer le pwd du shell parent
+
+[ ] export VAR=before
+
+[ ] echo test | export VAR=after
+
+[ ] echo $VAR
+    → Doit afficher : before
+    → L'export dans le pipe ne doit PAS modifier le shell parent
+
+[ ] echo test | unset VAR
+
+[ ] echo $VAR
+    → Doit afficher : before
+    → L'unset dans le pipe ne doit PAS modifier le shell parent
+
+# ============================================================================
+# SECTION 16 : CAS TORDUS (BONUS)
+# ============================================================================
+
+[ ] echo "$?"
+    → Doit afficher : 0
+
+[ ] echo $
+    → Doit afficher : $ (dollar seul)
+
+[ ] echo $$
+    → Affiche le PID (peut différer de bash, c'est OK)
+
+[ ] echo ''''''
+    → Quotes vides multiples
+
+[ ] echo """"""
+    → Quotes doubles vides multiples
+
+[ ] echo "'"
+    → Quote simple dans double
+
+[ ] echo '"'
+    → Quote double dans simple
+
+[ ] export TEST='a=b'
+
+[ ] echo $TEST
+    → Doit afficher : a=b
+
+[ ] env | grep TEST
+    → Doit afficher : TEST=a=b
+
+# ============================================================================
+# RÉSUMÉ ET CONSEILS
+# ============================================================================
+
+Après avoir testé toutes ces commandes :
+
+✅ Si TOUT fonctionne identiquement à bash → Tu es prêt pour la correction !
+
+⚠️  Si quelques cas limites échouent → Note-les et corrige-les
+
+❌ Si beaucoup de tests échouent → Revois les bases (parsing, built-ins, pipes)
+
+Points critiques à vérifier absolument :
+1. Les built-ins (cd, export, unset) dans le shell parent (pas dans un pipe)
+2. Les built-ins dans un pipe ne doivent PAS modifier le shell parent
+3. La variable $? après chaque commande
+4. Les signaux (Ctrl-C, Ctrl-D, Ctrl-\)
+5. Les quotes (simples vs doubles, expansion ou pas)
+6. Les redirections (>, >>, <, <<)
+7. Les pipes multiples
+
+Bon courage pour la correction ! 🚀

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 12:58:39 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/11/25 16:53:57 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/12/01 23:59:57 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ char	*get_pathname_dir(char *cmd, t_env *env)
 	char	*temp;
 	char	*path;
 	char	*cwd;
+	int		freeable;
 
+	freeable = 0;
 	path = NULL;
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
@@ -27,13 +29,16 @@ char	*get_pathname_dir(char *cmd, t_env *env)
 		else
 			return (NULL);
 	}
+	else
+		freeable = 1;
 	temp = ft_strjoin("/", cmd);
 	path = ft_strjoin(cwd, temp);
-	free(cwd);
+	if (freeable)
+		free(cwd);
 	return (path);
 }
 
-int	cd_home(t_env *envpwd, char *pathname, char **env)
+int	cd_home(t_env *envpwd, char *pathname, char **env, int freeable)
 {
 	char	*old_pwd;
 	char	*old_copy;
@@ -52,9 +57,12 @@ int	cd_home(t_env *envpwd, char *pathname, char **env)
 		else
 			return (1);
 	}
+	else
+		freeable = 1;
 	old_copy = ft_malloc(sizeof(char) * (ft_strlen(old_pwd) + 1), 0);
 	ft_strlcpy(old_copy, old_pwd, ft_strlen(old_pwd) + 1);
-	free(old_pwd);
+	if (freeable)
+		free(old_pwd);
 	return (update_cwd(envpwd, old_copy, pathname));
 }
 
@@ -78,4 +86,10 @@ int	cd_oldpwd(char **cmd, t_env *envpwd, char *tmp_cwd)
 		return (1);
 	}
 	return (update_cwd(envpwd, tmp_cwd, ft_strdup(envpwd->oldpwd)));
+}
+
+int	perror_and_return(char **cmd)
+{
+	perror(cmd[1]);
+	return (1);
 }
