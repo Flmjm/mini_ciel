@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_exec.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:45 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/12/02 11:21:59 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/12/03 15:29:06 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int		check_directory(char *pathname);
 
 //export_utils.c
 void	write_var(t_env *env, int i, int j);
+int		error_in_export_arg(t_commands *cmds, int i, t_env *env);
 
 //exec_builtin.c
 void	exec_builtin_with_redir(t_pipex_b *pipex, t_commands *cmds,
@@ -87,7 +88,6 @@ void	close_fd(t_pipex_b *pipex);
 void	ft_dup2_and_close(int fd, int n);
 int		get_heredoc(char *delimiter, t_env *env);
 char	*expand_line(char *line, t_env *env);
-
 
 //utils_files2.c
 int		ft_init_files(t_commands *cmds, t_pipex_b *pipex, t_env *env);
@@ -123,7 +123,7 @@ int		cd_home(t_env *envpwd, char *pathname, char **env, int freeable);
 int		cd_oldpwd(char **cmd, t_env *envpwd, char *tmp_cwd);
 int		perror_and_return(char **cmd);
 
-// cd.c 
+// cd.c
 int		cd_dir(char **cmd, t_env *envpwd, char *pathname, char *tmp_cwd);
 int		ft_cd(char **cmd, char **env, t_env *envpwd);
 int		update_cwd(t_env *envpwd, char *s1_oldpwd, char *s2_pwd);

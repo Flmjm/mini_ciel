@@ -6,27 +6,27 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 18:21:57 by mleschev          #+#    #+#             */
-/*   Updated: 2025/12/02 11:05:29 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/03 16:34:57 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib_parse.h"
 
-void print_tokens(t_token *tokens) {
-    printf("\n=== TOKENS ===\n");
-    t_token *current = tokens;
-    int index = 0;
+// void print_tokens(t_token *tokens) {
+//     printf("\n=== TOKENS ===\n");
+//     t_token *current = tokens;
+//     int index = 0;
 
-    while (current) {
-        printf("[%d] %d: |%s|\n",
-               index,
-               current->type,
-               current->value);
-        current = current->next;
-		index++;
-    }
-    printf("\n");
-}
+//     while (current) {
+//         printf("[%d] %d: |%s|\n",
+//                index,
+//                current->type,
+//                current->value);
+//         current = current->next;
+// 		index++;
+//     }
+//     printf("\n");
+// }
 
 t_commands	*manage_input(char *str, t_env *env)
 {

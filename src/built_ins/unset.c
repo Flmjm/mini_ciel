@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 13:37:37 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/27 18:53:55 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/03 14:21:35 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	ft_unset(t_env *env, t_commands *cmds)
 		return (0);
 	while (cmds->argv[i])
 	{
-		env->global = delete_var(env, cmds->argv[i]);
+		if (ft_strlen(cmds->argv[i]) == ft_strlen_var(cmds->argv[i]))
+			env->global = delete_var(env, cmds->argv[i]);
 		i++;
 	}
 	return (0);

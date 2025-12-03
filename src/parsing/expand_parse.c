@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 21:45:37 by mleschev          #+#    #+#             */
-/*   Updated: 2025/12/02 15:54:56 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/03 16:36:13 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ void	replace_var_input(t_input_info *infos, t_env *env)
 		else if (infos->input[i] == '$' && infos->input[i + 1]
 			&& (ft_isalnum(infos->input[i + 1]) || infos->input[i + 1] == '_'
 				|| infos->input[i + 1] == '?'))
-			{
-				expand_var(infos, i, 0, env);
-				i = 0;
-			}
+		{
+			expand_var(infos, i, 0, env);
+			i = 0;
+		}
 		else if (infos->input[i] == '$' && infos->input[i + 1])
 			i++;
 		else if (infos->input[i])
@@ -54,7 +54,10 @@ int	expand_in_quote(t_input_info *infos, int i, t_env *env)
 		else if (infos->input[i] == '$' && infos->input[i + 1]
 			&& (ft_isalnum(infos->input[i + 1]) || infos->input[i + 1] == '_'
 				|| infos->input[i + 1] == '?'))
+		{
 			expand_var(infos, i, 1, env);
+			i = 0;
+		}
 		i++;
 	}
 	return (i);

@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:34 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/12/02 10:47:01 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/03 15:14:22 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,8 @@ void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env)
 	{
 		pipex->cmd_index++;
 		if (init_cmd(pipex, cmds, env))
-		{
 			env->exitcode->last_cmd = 1;
-			i++;
-			continue ;
-		}
-		if (is_builtin(cmds->argv[0]) && pipex->cmd_count == 1)
+		else if (is_builtin(cmds->argv[0]) && pipex->cmd_count == 1)
 			exec_builtin_with_redir(pipex, cmds, env, i);
 		else if (is_builtin(cmds->argv[0]))
 			exec_builtin_pipe_with_redir(pipex, cmds, env, i);

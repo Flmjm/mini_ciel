@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 01:48:37 by manu              #+#    #+#             */
-/*   Updated: 2025/12/02 11:02:29 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/03 15:30:18 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ char	*get_var_value(int k, int j, int i, t_env *env)
 		j = ft_strlen_var(env->global[i]) + 1;
 	else
 		return (NULL);
-
 	while (env->global[i][j])
 	{
 		tmp[k] = env->global[i][j];

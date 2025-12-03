@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 15:43:37 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/12/02 10:58:11 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/03 16:35:44 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ char	*get_env_by_name(char *var_temp, t_env *env)
 	int		j;
 
 	i = 0;
-
 	tmp = getenv(var_temp);
 	if (tmp)
 		return (tmp);
