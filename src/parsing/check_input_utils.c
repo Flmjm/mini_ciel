@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 01:48:37 by manu              #+#    #+#             */
-/*   Updated: 2025/12/03 15:30:18 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/04 17:04:16 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,20 @@ char	*get_var_value(int k, int j, int i, t_env *env)
 {
 	char	*tmp;
 
-	tmp = ft_malloc(sizeof(char) * (ft_strlen(env->global[i])
-				+ 1), 0);
 	if (env->global[i])
 		j = ft_strlen_var(env->global[i]) + 1;
 	else
 		return (NULL);
-	while (env->global[i][j])
+	tmp = ft_malloc(sizeof(char) * (ft_strlen(env->global[i])
+				+ 1), 0);
+	if (env->global[i][j - 1])
 	{
-		tmp[k] = env->global[i][j];
-		k++;
-		j++;
+		while (env->global[i][j])
+		{
+			tmp[k] = env->global[i][j];
+			k++;
+			j++;
+		}
 	}
 	tmp[k] = '\0';
 	return (tmp);
