@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_parse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/12/02 11:21:47 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/12/04 14:34:43 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,5 +190,9 @@ int						ft_strlen_var(const char *str);
 void					replace_and_recall(t_input_info *infos, int i);
 void					clean_var(t_commands *cmds);
 char					*get_var_value(int k, int j, int i, t_env *env);
+
+// env_utils.c
+int						ft_length_env(char **environ);
+char					**add_basic_env(char **env_copy);
 
 #endif

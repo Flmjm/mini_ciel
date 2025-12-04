@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 00:16:16 by root              #+#    #+#             */
-/*   Updated: 2025/12/03 18:18:44 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/04 14:35:41 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # define YELLOW      "\033[33m"
 # define BLUE        "\033[34m"
 # define PURPLE      "\033[35m"
-# define CYAN        "\001\033[36m\002"
-# define WHITE       "\001\033[37m\002"
+# define CYAN        "\033[36m"
+# define WHITE       "\033[37m"
 
 // Bold Colors
 # define BBLACK      "\033[1;30m"

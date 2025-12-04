@@ -10,7 +10,7 @@ SRCS =  src/built_ins/built_in.c src/built_ins/cd_utils.c src/built_ins/cd.c src
 		src/exec/free_errors_bonus.c src/exec/utils_files.c src/exec/utils_files2.c src/exec/utils.c src/parsing/check_input_utils.c \
 		src/parsing/check_input.c src/parsing/check_next_token.c src/parsing/check_next_token2.c src/parsing/expand_parse.c src/parsing/expand_utils.c \
 		src/parsing/init_redir.c src/parsing/parse_cmds.c src/parsing/parse_input.c src/parsing/parse_quotes_in_cmds.c src/parsing/tokenization_utils.c \
-		src/parsing/tokenization.c main.c src/built_ins/export_utils.c
+		src/parsing/tokenization.c main.c src/built_ins/export_utils.c src/built_ins/env_utils.c
 
 OBJS = $(SRCS:.c=.o)
 

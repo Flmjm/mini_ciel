@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_files.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juliette-malaval <juliette-malaval@stud    +#+  +:+       +#+        */
+/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 15:51:09 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/12/02 11:28:54 by juliette-ma      ###   ########.fr       */
+/*   Updated: 2025/12/04 13:50:54 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int	get_heredoc(char *delimiter, t_env *env)
 	while (1)
 	{
 		line = readline(">");
-		if (!line || ft_strncmp(line, delimiter, ft_strlen(line)) == 0)
+		if (line[0] && ft_strncmp(line, delimiter, ft_strlen(line)) == 0
+			&& ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0)
 		{
 			free(line);
 			break ;

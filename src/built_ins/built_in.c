@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/15 19:46:26 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/27 11:11:08 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/04 14:29:27 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ char	**ft_env(char **environ, t_env *env)
 
 	length = 0;
 	i = 0;
-	while (environ[length])
-		length++;
+	length = ft_length_env(environ);
 	env_copy = ft_malloc(sizeof(char *) * (length + 1), 0);
 	while (i != length)
 	{
@@ -54,6 +53,8 @@ char	**ft_env(char **environ, t_env *env)
 	up_shell_level(env_copy);
 	if (!env->pwd)
 		env->pwd = getcwd(NULL, 0);
+	if (length == 0)
+		env_copy = add_basic_env(env_copy);
 	return (env_copy);
 }
 
