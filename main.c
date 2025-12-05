@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:48:24 by mleschev          #+#    #+#             */
-/*   Updated: 2025/11/27 19:03:19 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/05 18:29:46 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	prompt_loop(t_env *env_s)
 
 	exit_code = ft_malloc(sizeof(t_exitcode), 0);
 	exit_code->last_cmd = 0;
+	exit_code->here_doc_error = 0;
 	env_s->exitcode = exit_code;
 	while (1)
 	{
@@ -102,7 +103,7 @@ int	main(int argc, char **argv, char **environt)
 	env_s->signal = ctrlc;
 	ctrlc->sa_handler = manage_ctrlc;
 	sigemptyset(&ctrlc->sa_mask);
-	ctrlc->sa_flags = SA_RESTART;
+	ctrlc->sa_flags = 0;
 	sigaction(SIGINT, ctrlc, NULL);
 	signal(SIGQUIT, SIG_IGN);
 	prompt_loop(env_s);

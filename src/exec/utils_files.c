@@ -6,11 +6,13 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 15:51:09 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/12/04 13:50:54 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/05 18:59:42 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lib_exec.h"
+
+void	here_doc_child(int *pipefd, char *delimiter);
 
 void	close_fd(t_pipex_b *pipex)
 {
@@ -43,25 +45,24 @@ void	ft_dup2_and_close(int fd, int n)
 int	get_heredoc(char *delimiter, t_env *env)
 {
 	int		pipefd[2];
-	char	*line;
-	char	*expanded_line;
+	pid_t	pid;
+	int		status;
+	int		ret;
 
 	if (pipe(pipefd) == -1)
 		return (-1);
-	while (1)
-	{
-		line = readline(">");
-		if (line[0] && ft_strncmp(line, delimiter, ft_strlen(line)) == 0
-			&& ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0)
-		{
-			free(line);
-			break ;
-		}
-		expanded_line = expand_line(line, env);
-		write(pipefd[1], expanded_line, ft_strlen(expanded_line));
-		write(pipefd[1], "\n", 1);
-	}
+	pid = fork();
+	if (pid == -1)
+		return (-1);
+	if (pid == 0)
+		here_doc_child(pipefd, delimiter);
+	signal(SIGINT, SIG_IGN);
 	close(pipefd[1]);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		ret = WEXITSTATUS(status);
+	if (ret == 131)
+		env->exitcode->here_doc_error = -1;
 	return (pipefd[0]);
 }
 

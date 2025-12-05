@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 15:53:10 by mleschev          #+#    #+#             */
-/*   Updated: 2025/12/04 14:34:43 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/05 18:29:24 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 typedef struct s_exitcode
 {
 	int					last_cmd;
+	int					here_doc_error;
 }						t_exitcode;
 
 typedef struct s_env

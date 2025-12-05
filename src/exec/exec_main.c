@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:34 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/12/03 15:14:22 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/05 18:46:36 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	exec_main(t_commands *cmds, t_env *env, t_exitcode *exit_code)
 	t_pipex_b	*pipex;
 
 	pipex = ft_malloc(sizeof(t_pipex_b), 0);
+	env->exitcode->here_doc_error = 0;
 	if (!pipex)
 		ft_printf("Malloc pipex\n");
 	init_struct_exec(pipex, cmds, env->global);
@@ -72,6 +73,8 @@ void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env)
 		pipex->cmd_index++;
 		if (init_cmd(pipex, cmds, env))
 			env->exitcode->last_cmd = 1;
+		if (env->exitcode->here_doc_error == -1)
+			return ;
 		else if (is_builtin(cmds->argv[0]) && pipex->cmd_count == 1)
 			exec_builtin_with_redir(pipex, cmds, env, i);
 		else if (is_builtin(cmds->argv[0]))
