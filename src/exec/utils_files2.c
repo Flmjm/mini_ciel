@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 15:51:09 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/12/05 18:47:35 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/10 10:43:41 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,18 @@
 int	ft_init_files(t_commands *cmds, t_pipex_b *pipex, t_env *env)
 {
 	t_redirect	*current;
+	int	i;
 
+	i = 0;
 	current = cmds->redirect;
 	while (current)
 	{
 		if (current->type == FILE_HEREDOC || current->type == FILE_REDIRECT_IN)
 		{
 			if (ft_init_infiles(current, pipex, env))
+			{
 				return (1);
+			}
 		}
 		else if (current->type == FILE_REDIRECT_APPEND
 			|| current->type == FILE_REDIRECT_OUT)
@@ -31,6 +35,7 @@ int	ft_init_files(t_commands *cmds, t_pipex_b *pipex, t_env *env)
 				return (1);
 		}
 		current = current->next;
+		i++;
 	}
 	return (0);
 }

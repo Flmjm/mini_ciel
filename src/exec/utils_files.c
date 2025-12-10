@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 15:51:09 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/12/05 18:59:42 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/10 10:37:30 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,15 @@ int	get_heredoc(char *delimiter, t_env *env)
 	if (WIFEXITED(status))
 		ret = WEXITSTATUS(status);
 	if (ret == 131)
+	{
+		close(pipefd[0]);
 		env->exitcode->here_doc_error = -1;
+		env->exitcode->last_cmd = 130;
+		return (-1);
+	}
+	else if (ret == 130)
+		printf_here_doc_error(delimiter);
+	env->exitcode->here_doc_error = 0;
 	return (pipefd[0]);
 }
 

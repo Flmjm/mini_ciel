@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:45 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/12/03 15:29:06 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/10 10:38:14 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ void	cmd_process(t_pipex_b *pipex, int index,
 int		init_cmd(t_pipex_b *pipex, t_commands *cmds, t_env *env);
 int		is_relative_or_absolute_path(char *str);
 int		check_directory(char *pathname);
+
+//here_doc.c
+void	printf_here_doc_error(char *delimiter);
 
 //export_utils.c
 void	write_var(t_env *env, int i, int j);

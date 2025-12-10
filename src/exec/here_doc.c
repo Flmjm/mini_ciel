@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 18:59:16 by mleschev          #+#    #+#             */
-/*   Updated: 2025/12/05 19:17:07 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/10 10:37:42 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,28 @@ void	here_doc_child(int *pipefd, char *delimiter)
 	{
 		line = readline(">");
 		if (!line)
+		{
+			close(pipefd[1]);
 			exit(130);
+		}
 		if (ft_strncmp(line, delimiter, strlen(delimiter)) == 0
 			&& strlen(line) == strlen(delimiter))
 		{
 			free(line);
-			exit(0);
+			break ;
 		}
 		write(pipefd[1], line, strlen(line));
 		write(pipefd[1], "\n", 1);
 		free(line);
 	}
+	close(pipefd[1]);
+	exit(0);
+}
+
+void	printf_here_doc_error(char *delimiter)
+{
+	ft_printf("minishell: warning: here-document delimited by");
+	ft_printf("end-of-file (wanted `");
+	write(2, delimiter, ft_strlen(delimiter));
+	write(2, "')\n", 3);
 }

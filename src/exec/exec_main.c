@@ -6,7 +6,7 @@
 /*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:34 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/12/05 18:46:36 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/10 10:40:21 by mleschev         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,18 @@ void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env)
 		pipex->cmd_index++;
 		if (init_cmd(pipex, cmds, env))
 			env->exitcode->last_cmd = 1;
+		if (!cmds->argv[0])
+		{
+			if (pipex->infile_error == 0)
+			{
+				close(pipex->infile);
+				pipex->infile = -1;
+			}
+			if (cmds->next)
+				cmds = cmds->next;
+			i++;
+			continue;
+		}
 		if (env->exitcode->here_doc_error == -1)
 			return ;
 		else if (is_builtin(cmds->argv[0]) && pipex->cmd_count == 1)
