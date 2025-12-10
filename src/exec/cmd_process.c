@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 16:06:05 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/11/27 18:57:42 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:04:59 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,14 @@ int	check_directory(char *pathname)
 		return (1);
 	}
 	return (0);
+}
+
+int	argc_of_argv(char **cmds)
+{
+	int	i;
+
+	i = 0;
+	while (cmds[i])
+		i++;
+	return (i);
 }

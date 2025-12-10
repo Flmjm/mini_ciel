@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_exec.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:45 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/12/10 10:38:14 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:10:11 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@
 # include "lib_parse.h"
 # include <errno.h>
 # include <fcntl.h>
+# include <signal.h>
 # include <stdio.h>
+# include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include <sys/stat.h>
 # include <unistd.h>
-# include <signal.h>
 
 typedef struct s_pipex_b
 {
@@ -45,102 +45,110 @@ typedef struct s_pipex_b
 	pid_t	*pid;
 }			t_pipex_b;
 
-//cmd_process.c
-void	cmd_process(t_pipex_b *pipex, int index,
-			t_commands *cmds, t_env *t_env);
-int		init_cmd(t_pipex_b *pipex, t_commands *cmds, t_env *env);
-int		is_relative_or_absolute_path(char *str);
-int		check_directory(char *pathname);
+// cmd_process.c
+void		cmd_process(t_pipex_b *pipex, int index, t_commands *cmds,
+				t_env *t_env);
+int			init_cmd(t_pipex_b *pipex, t_commands *cmds, t_env *env);
+int			is_relative_or_absolute_path(char *str);
+int			check_directory(char *pathname);
+int			argc_of_argv(char **cmds);
 
-//here_doc.c
-void	printf_here_doc_error(char *delimiter);
+// here_doc.c
+void		handler_heredoc(int sig);
+void		here_doc_child(int *pipefd, char *delimiter);
+void		printf_here_doc_error(char *delimiter);
+void		signal_here_doc(void);
 
-//export_utils.c
-void	write_var(t_env *env, int i, int j);
-int		error_in_export_arg(t_commands *cmds, int i, t_env *env);
+// export_utils.c
+void		write_var(t_env *env, int i, int j);
+int			error_in_export_arg(t_commands *cmds, int i, t_env *env);
 
-//exec_builtin.c
-void	exec_builtin_with_redir(t_pipex_b *pipex, t_commands *cmds,
-			t_env *env, int i);
-void	exec_builtin_pipe_with_redir(t_pipex_b *pipex, t_commands *cmds,
-			t_env *env, int i);
-void	exec_builtin(t_pipex_b *pipex, t_commands *cmds, t_env *env,
-			t_exitcode *exit_code);
-int		is_builtin(char *cmd);
-void	close_saved_std(int saved_stdin, int saved_stdout);
+// exec_builtin.c
+void		exec_builtin_with_redir(t_pipex_b *pipex, t_commands *cmds,
+				t_env *env, int i);
+void		exec_builtin_pipe_with_redir(t_pipex_b *pipex, t_commands *cmds,
+				t_env *env, int i);
+void		exec_builtin(t_pipex_b *pipex, t_commands *cmds, t_env *env,
+				t_exitcode *exit_code);
+int			is_builtin(char *cmd);
+void		close_saved_std(int saved_stdin, int saved_stdout);
 
-//exec_main.c
-int		exec_main(t_commands *cmds, t_env *env, t_exitcode *exit_code);
-int		argc_of_argv(char **cmds);
-void	exec_not_builtin(t_pipex_b *pipex, t_commands *cmds, t_env *env, int i);
-void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env);
-void	create_pipe(t_pipex_b *pipex);
+// exec_main.c
+int			exec_main(t_commands *cmds, t_env *env, t_exitcode *exit_code);
+void		exec_not_builtin(t_pipex_b *pipex, t_commands *cmds, t_env *env,
+				int i);
+void		handle_cmd_execution(t_pipex_b *pipex, t_commands *cmds, t_env *env,
+				int i);
+void		ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env);
+void		create_pipe(t_pipex_b *pipex);
 
-//exit_code_and_signals.c
-void	ft_waitpid(t_pipex_b *pipex, t_env *env, t_exitcode *exit_code);
-void	get_exit_code(int last_status, t_exitcode *exit_code);
+// exit_code_and_signals.c
+void		ft_waitpid(t_pipex_b *pipex, t_env *env, t_exitcode *exit_code);
+void		get_exit_code(int last_status, t_exitcode *exit_code);
 
-//free_errors.c
-void	free_tab(char **tab);
-void	free_struct(t_pipex_b *pipex);
-void	free_pipe(t_pipex_b *pipex);
-void	ft_free(void *ptr);
+// free_errors.c
+void		free_tab(char **tab);
+void		free_struct(t_pipex_b *pipex);
+void		free_pipe(t_pipex_b *pipex);
+void		ft_free(void *ptr);
 
-//utils_files.c
-void	close_fd(t_pipex_b *pipex);
-void	ft_dup2_and_close(int fd, int n);
-int		get_heredoc(char *delimiter, t_env *env);
-char	*expand_line(char *line, t_env *env);
+// utils_files.c
+void		close_fd(t_pipex_b *pipex);
+void		ft_dup2_and_close(int fd, int n);
+int			get_heredoc(int pipefd[2], char *delimiter, t_env *env, pid_t pid);
+int			init_here_doc(char *delimiter, t_env *env);
+char		*expand_line(char *line, t_env *env);
 
-//utils_files2.c
-int		ft_init_files(t_commands *cmds, t_pipex_b *pipex, t_env *env);
-int		ft_init_infiles(t_redirect *current, t_pipex_b *pipex, t_env *env);
-int		ft_init_outfiles(t_redirect *current, t_pipex_b *pipex);
-int		error_infile(char *filename, t_pipex_b *pipex);
+// utils_files2.c
+int			ft_init_files(t_commands *cmds, t_pipex_b *pipex, t_env *env);
+int			ft_init_infiles(t_redirect *current, t_pipex_b *pipex, t_env *env);
+int			ft_init_outfiles(t_redirect *current, t_pipex_b *pipex);
+int			error_infile(char *filename, t_pipex_b *pipex);
 
-//utils.c
-void	init_struct_exec(t_pipex_b *pipex, t_commands *cmds, char **env);
-void	init_struct_exec_malloc(t_pipex_b *pipex, t_commands *cmds, char **env);
-int		ft_lstlen(t_commands *cmds);
-char	*get_env_value(char *value, char **env);
-void	get_pathname(char **cmd, t_pipex_b *pipex);
+// utils.c
+void		init_struct_exec(t_pipex_b *pipex, t_commands *cmds, char **env);
+void		init_struct_exec_malloc(t_pipex_b *pipex, t_commands *cmds,
+				char **env);
+int			ft_lstlen(t_commands *cmds);
+char		*get_env_value(char *value, char **env);
+void		get_pathname(char **cmd, t_pipex_b *pipex);
 
 /// BUILT_INS ///
-//built_in.c
-int		env_built_in(t_env *env);
-char	**ft_env(char **environ, t_env *env);
-void	up_shell_level(char **env);
-char	**add_var(char *new_var, t_env *env);
+// built_in.c
+int			env_built_in(t_env *env);
+char		**ft_env(char **environ, t_env *env);
+void		up_shell_level(char **env);
+char		**add_var(char *new_var, t_env *env);
 
 // unset.c
-int		ft_unset(t_env *env, t_commands *cmds);
-int		ft_strlen_var(const char *str);
-int		is_var_name_diff(char *var, char *var_global);
+int			ft_unset(t_env *env, t_commands *cmds);
+int			ft_strlen_var(const char *str);
+int			is_var_name_diff(char *var, char *var_global);
 
 // export.c
-int		ft_export(t_env *env, t_commands *cmds);
+int			ft_export(t_env *env, t_commands *cmds);
 
-//cd_utils.c
-char	*get_pathname_dir(char *cmd, t_env *env);
-int		cd_home(t_env *envpwd, char *pathname, char **env, int freeable);
-int		cd_oldpwd(char **cmd, t_env *envpwd, char *tmp_cwd);
-int		perror_and_return(char **cmd);
+// cd_utils.c
+char		*get_pathname_dir(char *cmd, t_env *env);
+int			cd_home(t_env *envpwd, char *pathname, char **env, int freeable);
+int			cd_oldpwd(char **cmd, t_env *envpwd, char *tmp_cwd);
+int			perror_and_return(char **cmd);
 
 // cd.c
-int		cd_dir(char **cmd, t_env *envpwd, char *pathname, char *tmp_cwd);
-int		ft_cd(char **cmd, char **env, t_env *envpwd);
-int		update_cwd(t_env *envpwd, char *s1_oldpwd, char *s2_pwd);
-int		cd_main(int ac, char **av, t_env *envpwd);
-void	update_env_pwd(t_env *env, char *new_pwd, char *new_oldpwd);
+int			cd_dir(char **cmd, t_env *envpwd, char *pathname, char *tmp_cwd);
+int			ft_cd(char **cmd, char **env, t_env *envpwd);
+int			update_cwd(t_env *envpwd, char *s1_oldpwd, char *s2_pwd);
+int			cd_main(int ac, char **av, t_env *envpwd);
+void		update_env_pwd(t_env *env, char *new_pwd, char *new_oldpwd);
 
-//echo.c
-int		ft_echo(char **cmd);
+// echo.c
+int			ft_echo(char **cmd);
 
-//exit.c
-int		ft_exit(t_env *env, char **cmds, int nbr_return);
-void	clear_and_exit(int n);
+// exit.c
+int			ft_exit(t_env *env, char **cmds, int nbr_return);
+void		clear_and_exit(int n);
 
-//pwd.c
-int		ft_pwd(t_env *env);
+// pwd.c
+int			ft_pwd(t_env *env);
 
 #endif

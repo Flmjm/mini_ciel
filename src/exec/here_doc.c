@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 18:59:16 by mleschev          #+#    #+#             */
-/*   Updated: 2025/12/10 10:37:42 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/10 14:54:10 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,9 @@ void	handler_heredoc(int sig)
 
 void	here_doc_child(int *pipefd, char *delimiter)
 {
-	char				*line;
-	struct sigaction	sa;
+	char	*line;
 
-	sa.sa_handler = handler_heredoc;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
-	sigaction(SIGINT, &sa, NULL);
-	signal(SIGQUIT, SIG_IGN);
+	signal_here_doc();
 	close(pipefd[0]);
 	while (1)
 	{
@@ -49,6 +44,17 @@ void	here_doc_child(int *pipefd, char *delimiter)
 	}
 	close(pipefd[1]);
 	exit(0);
+}
+
+void	signal_here_doc(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_handler = handler_heredoc;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	printf_here_doc_error(char *delimiter)

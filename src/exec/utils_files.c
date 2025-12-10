@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_files.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 15:51:09 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/12/10 10:37:30 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:07:33 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,11 @@ void	ft_dup2_and_close(int fd, int n)
 		close(fd);
 }
 
-int	get_heredoc(char *delimiter, t_env *env)
+int	get_heredoc(int pipefd[2], char *delimiter, t_env *env, pid_t pid)
 {
-	int		pipefd[2];
-	pid_t	pid;
-	int		status;
-	int		ret;
+	int	status;
+	int	ret;
 
-	if (pipe(pipefd) == -1)
-		return (-1);
-	pid = fork();
-	if (pid == -1)
-		return (-1);
 	if (pid == 0)
 		here_doc_child(pipefd, delimiter);
 	signal(SIGINT, SIG_IGN);
@@ -72,6 +65,19 @@ int	get_heredoc(char *delimiter, t_env *env)
 		printf_here_doc_error(delimiter);
 	env->exitcode->here_doc_error = 0;
 	return (pipefd[0]);
+}
+
+int	init_here_doc(char *delimiter, t_env *env)
+{
+	int		pipefd[2];
+	pid_t	pid;
+
+	if (pipe(pipefd) == -1)
+		return (-1);
+	pid = fork();
+	if (pid == -1)
+		return (-1);
+	return (get_heredoc(pipefd, delimiter, env, pid));
 }
 
 char	*expand_line(char *line, t_env *env)

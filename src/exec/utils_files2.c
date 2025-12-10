@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_files2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 15:51:09 by juliette-ma       #+#    #+#             */
-/*   Updated: 2025/12/10 10:43:41 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:09:08 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_init_files(t_commands *cmds, t_pipex_b *pipex, t_env *env)
 {
 	t_redirect	*current;
-	int	i;
+	int			i;
 
 	i = 0;
 	current = cmds->redirect;
@@ -50,7 +50,7 @@ int	ft_init_infiles(t_redirect *current, t_pipex_b *pipex, t_env *env)
 		&& next_in->type != FILE_REDIRECT_IN)
 		next_in = next_in->next;
 	if (current->type == FILE_HEREDOC)
-		fd = get_heredoc(current->word_eof, env);
+		fd = init_here_doc(current->word_eof, env);
 	else if (current->type == FILE_REDIRECT_IN)
 	{
 		if (access(current->filename, F_OK) != 0)

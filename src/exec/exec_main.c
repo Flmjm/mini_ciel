@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 13:06:34 by jmalaval          #+#    #+#             */
-/*   Updated: 2025/12/10 10:40:21 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:06:06 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,6 @@ int	exec_main(t_commands *cmds, t_env *env, t_exitcode *exit_code)
 	create_pipe(pipex);
 	ft_pipex(pipex, cmds, env);
 	return (0);
-}
-
-int	argc_of_argv(char **cmds)
-{
-	int	i;
-
-	i = 0;
-	while (cmds[i])
-		i++;
-	return (i);
 }
 
 void	exec_not_builtin(t_pipex_b *pipex, t_commands *cmds, t_env *env, int i)
@@ -62,6 +52,28 @@ void	exec_not_builtin(t_pipex_b *pipex, t_commands *cmds, t_env *env, int i)
 	}
 }
 
+void	handle_cmd_execution(t_pipex_b *pipex, t_commands *cmds, t_env *env,
+		int i)
+{
+	if (!cmds->argv[0])
+	{
+		if (pipex->infile_error == 0)
+		{
+			close(pipex->infile);
+			pipex->infile = -1;
+		}
+		return ;
+	}
+	if (env->exitcode->here_doc_error == -1)
+		return ;
+	else if (is_builtin(cmds->argv[0]) && pipex->cmd_count == 1)
+		exec_builtin_with_redir(pipex, cmds, env, i);
+	else if (is_builtin(cmds->argv[0]))
+		exec_builtin_pipe_with_redir(pipex, cmds, env, i);
+	else
+		exec_not_builtin(pipex, cmds, env, i);
+}
+
 void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env)
 {
 	int	i;
@@ -73,26 +85,9 @@ void	ft_pipex(t_pipex_b *pipex, t_commands *cmds, t_env *env)
 		pipex->cmd_index++;
 		if (init_cmd(pipex, cmds, env))
 			env->exitcode->last_cmd = 1;
-		if (!cmds->argv[0])
-		{
-			if (pipex->infile_error == 0)
-			{
-				close(pipex->infile);
-				pipex->infile = -1;
-			}
-			if (cmds->next)
-				cmds = cmds->next;
-			i++;
-			continue;
-		}
+		handle_cmd_execution(pipex, cmds, env, i);
 		if (env->exitcode->here_doc_error == -1)
-			return ;
-		else if (is_builtin(cmds->argv[0]) && pipex->cmd_count == 1)
-			exec_builtin_with_redir(pipex, cmds, env, i);
-		else if (is_builtin(cmds->argv[0]))
-			exec_builtin_pipe_with_redir(pipex, cmds, env, i);
-		else
-			exec_not_builtin(pipex, cmds, env, i);
+			break ;
 		if (cmds->next)
 			cmds = cmds->next;
 		i++;
