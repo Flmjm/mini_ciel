@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleschev <mleschev@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmalaval <jmalaval@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 20:55:43 by mleschev          #+#    #+#             */
-/*   Updated: 2025/12/03 16:45:35 by mleschev         ###   ########.fr       */
+/*   Updated: 2025/12/10 16:19:00 by jmalaval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	ft_export(t_env *env, t_commands *cmds)
 	{
 		if (cmds->next)
 			return (0);
-		return (export_with_arg(cmds, env, -1, 0));
+		return (export_with_arg(cmds, env, 0, 0));
 	}
 	return (0);
 }
